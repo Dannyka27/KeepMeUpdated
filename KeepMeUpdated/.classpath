@@ -6,27 +6,32 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/commons-lang3-3.8.1.jar">
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX 14">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar">
+	<classpathentry kind="lib" path="lib/UCanAccess/commons-lang3-3.8.1.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/hsqldb-2.5.0.jar">
+	<classpathentry kind="lib" path="lib/UCanAccess/commons-logging-1.2.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/jackcess-3.0.1.jar">
+	<classpathentry kind="lib" path="lib/UCanAccess/hsqldb-2.5.0.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/ucanaccess-5.0.0.jar">
+	<classpathentry kind="lib" path="lib/UCanAccess/jackcess-3.0.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/UCanAccess/ucanaccess-5.0.0.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
