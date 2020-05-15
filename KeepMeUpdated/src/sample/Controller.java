@@ -1,16 +1,16 @@
 package sample;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javafx.beans.binding.StringExpression;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
 
 
 public class Controller {
@@ -49,6 +49,8 @@ public class Controller {
     {
         dvsortieren.setValue("A-Z");
         dvsortieren.setItems(dvsortierenList);   
+        
+        //wfilmeliste.getI
         
         vtabellelinks.setCellValueFactory(c -> new SimpleStringProperty(((CellDataFeatures) c).getValue().toString()));
         //vtabellerechts.setCellValueFactory(c -> new SimpleStringProperty(((CellDataFeatures) c).getValue().toString()));

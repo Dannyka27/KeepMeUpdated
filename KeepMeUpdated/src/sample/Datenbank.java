@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.LinkedList;
 
 public class Datenbank
 {
@@ -70,6 +69,24 @@ public class Datenbank
 		return null;
 	}
 	
+	public boolean dbAusführen(String query)
+	{
+		try {
+			Statement st = conn.createStatement(
+				ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );
+			
+			return st.execute(query);
+		} catch (SQLException e)
+		{
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
 	public ResultSet dbAbfrage(String query)
 	{
 		try {
@@ -77,11 +94,13 @@ public class Datenbank
 				ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_READ_ONLY
             );
+			
 			ResultSet rs = st.executeQuery(query);
 			return rs;
 		} catch (SQLException e)
 		{
 			System.err.println(e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return null;
@@ -114,7 +133,7 @@ public class Datenbank
 	{
 		try {
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM " + tabellenname + " ORDER BY Titel ASC"); //ASC = Sortieren von A-Z
+			ResultSet rs = st.executeQuery("SELECT * FROM " + tabellenname + " ORDER BY Titel ASC"); //ASC = Sortieren von A-Z, DESC sortieren von Z-A
 			System.out.println(rs.toString());
 			
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -126,8 +145,8 @@ public class Datenbank
 				{
 					if (i > 1)
 						System.out.print(",  ");
-					String columnValue = rs.getString(i);
-					System.out.print(columnValue + " " + rsmd.getColumnName(i));
+					System.out.printf("%-20s", rs.getString(i));
+					//System.out.print(columnValue + " " + rsmd.getColumnName(i));
 				}
 				System.out.println("");
 			}
