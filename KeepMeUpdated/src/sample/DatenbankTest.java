@@ -2,6 +2,8 @@ package sample;
 
 import java.util.Arrays;
 
+import datenhaltung.Datenbank;
+
 public class DatenbankTest
 {
 	public static Datenbank db = new Datenbank("C:\\Users\\clair\\OneDrive\\FH\\Semester 2\\Informatik 2\\Praktikum\\Medien.accdb");

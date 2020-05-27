@@ -1,4 +1,4 @@
-package sample;
+package datenhaltung;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -34,7 +34,7 @@ public class Datenbank
 			e.printStackTrace();
 		} catch (SQLException e)
 		{
-			System.err.println("Fehler beim öffnen der Access Datei");
+			System.err.println("Fehler beim ï¿½ffnen der Access Datei");
 			e.printStackTrace();
 		}
 	}
@@ -69,7 +69,7 @@ public class Datenbank
 		return null;
 	}
 	
-	public boolean dbAusführen(String query)
+	public boolean dbAusfuehren(String query)
 	{
 		try {
 			Statement st = conn.createStatement(
