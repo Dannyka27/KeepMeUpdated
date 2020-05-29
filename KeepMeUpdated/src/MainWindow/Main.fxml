@@ -37,7 +37,7 @@
                                 </rowConstraints>
                                  <children>
                                     <Label text="Sortieren nach:" />
-                                    <ChoiceBox fx:id="videoSortierenChoiceBox" prefHeight="26.0" prefWidth="235.0" GridPane.columnIndex="1" />
+                                    <ChoiceBox fx:id="videoSortierenChoiceBox"  prefWidth="235.0" GridPane.columnIndex="1" />
                                  </children>
                                  <VBox.margin>
                                     <Insets bottom="15.0" left="50.0" right="50.0" top="20.0" />
@@ -53,7 +53,7 @@
                                     <Insets bottom="20.0" left="50.0" right="50.0" />
                                  </VBox.margin>
                                  <content>
-                                    <Accordion fx:id="videothekAccordion" prefHeight="75.0" prefWidth="480.0" />
+                                    <Accordion fx:id="videothekAccordion" prefWidth="480.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -94,7 +94,7 @@
                                     <Insets bottom="20.0" left="50.0" right="50.0" />
                                  </VBox.margin>
                                  <content>
-                                    <Accordion fx:id="audiothekAccordion" prefHeight="75.0" prefWidth="480.0" />
+                                    <Accordion fx:id="audiothekAccordion" prefWidth="480.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -135,7 +135,7 @@
                                     <Insets bottom="20.0" left="50.0" right="50.0" />
                                  </VBox.margin>
                                  <content>
-                                    <Accordion fx:id="bibliothekAccordion" prefHeight="75.0" prefWidth="480.0" />
+                                    <Accordion fx:id="bibliothekAccordion" prefWidth="480.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -176,7 +176,7 @@
                                     <Insets bottom="20.0" left="50.0" right="50.0" />
                                  </VBox.margin>
                                  <content>
-                                    <Accordion fx:id="gamesAccordion" prefHeight="75.0" prefWidth="480.0" />
+                                    <Accordion fx:id="gamesAccordion" prefWidth="480.0" />
                                  </content>
                               </ScrollPane>
                            </children>
