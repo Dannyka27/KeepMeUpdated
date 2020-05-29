@@ -118,8 +118,6 @@ public class MainController
 		gamesSortierenChoiceBox.setItems(gamesSortierenList);
 
 		// CLUDGE
-//		videothekAccordion.getPanes().clear();
-
 		ResultSet rs = Main.db.dbAbfrage("SELECT * FROM " + "Filme" + " ORDER BY Titel ASC");
 
 		try
@@ -144,7 +142,6 @@ public class MainController
 			System.err.println(e.getMessage());
 		}
 
-//		audiothekAccordion.getPanes().clear();
 
 		rs = Main.db.dbAbfrage("SELECT * FROM " + "Musik" + " ORDER BY Titel ASC");
 
@@ -167,7 +164,6 @@ public class MainController
 			System.err.println(e.getMessage());
 		}
 		
-//		bibliothekAccordion.getPanes().clear();
 
 		rs = Main.db.dbAbfrage("SELECT * FROM " + "Bücher" + " ORDER BY Titel ASC");
 
@@ -192,8 +188,7 @@ public class MainController
 		{
 			System.err.println(e.getMessage());
 		}
-		
-//		gamesAccordion.getPanes().clear();
+
 
 		rs = Main.db.dbAbfrage("SELECT * FROM " + "Spiele" + " ORDER BY Titel ASC");
 
