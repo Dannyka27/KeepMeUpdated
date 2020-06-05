@@ -16,7 +16,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class Controller {
+public class Controller 
+{
     @FXML
     private AnchorPane hAnchorPane;
     @FXML
@@ -50,7 +51,8 @@ public class Controller {
     }
 
     @FXML
-    void initialize() {
+    void initialize() 
+    {
         boxenFuellen();
         hMediumChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -59,7 +61,8 @@ public class Controller {
                 {
                     try {
                         fensteroeffnen(485, "/Hinzufuegen/HinzufuegenFilm.fxml");
-                    } catch (Exception e) {
+                    } catch (Exception e) 
+                    {
                         e.printStackTrace();
                     }
                 }
@@ -68,7 +71,8 @@ public class Controller {
                     try {
                         fensteroeffnen(525, "/Hinzufuegen/HinzufuegenSerie.fxml");
 
-                    } catch (Exception e) {
+                    } catch (Exception e) 
+                    {
                         e.printStackTrace();
                     }
                 }
@@ -76,7 +80,8 @@ public class Controller {
                 {
                     try {
                         fensteroeffnen(400, "/Hinzufuegen/HinzufuegenMusik.fxml");
-                    } catch (Exception e) {
+                    } catch (Exception e) 
+                    {
                         e.printStackTrace();
                     }
                 }
@@ -84,7 +89,8 @@ public class Controller {
                 {
                     try {
                         fensteroeffnen(445, "/Hinzufuegen/HinzufuegenHoerspiel.fxml");
-                    } catch (Exception e) {
+                    } catch (Exception e) 
+                    {
                         e.printStackTrace();
                     }
                 }
@@ -92,7 +98,8 @@ public class Controller {
                 {
                     try {
                         fensteroeffnen(485, "/Hinzufuegen/HinzufuegenGame.fxml");
-                    } catch (Exception e) {
+                    } catch (Exception e) 
+                    {
                         e.printStackTrace();
                     }
                 }
@@ -100,7 +107,8 @@ public class Controller {
                 {
                     try {
                         fensteroeffnen(530, "/Hinzufuegen/HinzufuegenBuch.fxml");
-                    } catch (Exception e) {
+                    } catch (Exception e) 
+                    {
                         e.printStackTrace();
                     }
                 }
@@ -108,7 +116,8 @@ public class Controller {
                 {
                     try {
                         fensteroeffnen(445, "/Hinzufuegen/HinzufuegenZeitschrift.fxml");
-                    } catch (Exception e) {
+                    } catch (Exception e) 
+                    {
                         e.printStackTrace();
                     }
                 }
@@ -155,7 +164,8 @@ public class Controller {
     {   //TODO abschließen und Speichern des Eingabevorgangs
     }
 
-    public void hAbbruchOnAction(ActionEvent actionEvent) {
+    public void hAbbruchOnAction(ActionEvent actionEvent) 
+    {
         //stage = fenster der Szene wo der Button sitzt
         Stage akutelleStage = (Stage) hAbbruchButton.getScene().getWindow();
         akutelleStage.close();

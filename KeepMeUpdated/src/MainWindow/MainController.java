@@ -86,7 +86,8 @@ public class MainController {
     ObservableList<String> gamesSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Plattform", "Franchise", "Standort", "Altersgruppe");
 
     @FXML
-    public void hinzufuegenOnAction(ActionEvent actionEvent) throws Exception {
+    public void hinzufuegenOnAction(ActionEvent actionEvent) throws Exception 
+    		{
             if(videothekTab.isSelected())
             {
                 fensteroeffnen("/Hinzufuegen/HinzufuegenFilm.fxml", "Hinzufügen");
@@ -103,7 +104,8 @@ public class MainController {
             {
                 fensteroeffnen("/Hinzufuegen/HinzufuegenGame.fxml", "Hinzufügen");
             }
-             else if(wishlistTab.isSelected()) {
+             else if(wishlistTab.isSelected()) 
+            {
                 fensteroeffnen("/Wishlist/WishlistFilm.fxml", "Wunsch offenbaren");
             }
     }
@@ -311,12 +313,18 @@ public class MainController {
     	//actionEvent.get
     }
 
-    public void bearbeitenOnAction(ActionEvent actionEvent) {
+    public void bearbeitenOnAction(ActionEvent actionEvent) 
+    {
+    	
     }
 
-    public void wloeschenOnAction(ActionEvent actionEvent) {
+    public void wloeschenOnAction(ActionEvent actionEvent) 
+    {
+    	
     }
 
-    public void wbearbeitenOnAction(ActionEvent actionEvent) {
+    public void wbearbeitenOnAction(ActionEvent actionEvent) 
+    {
+    	
     }
 }
