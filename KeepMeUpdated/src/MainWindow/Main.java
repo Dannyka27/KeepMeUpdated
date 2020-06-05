@@ -10,12 +10,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application 
 {
-	public static Datenbank db = new Datenbank("C:\\Users\\clair\\OneDrive\\FH\\Semester 2\\Informatik 2\\Praktikum\\Medien.accdb");;
+	public static Datenbank db = new Datenbank("C:\\Users\\clair\\OneDrive\\FH\\Semester 2\\Informatik 2\\Praktikum\\Medien.accdb");
 		
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-    	db.druckeTabellenTitel("Serien");
+    	db.druckeTabellenTitel("Hörspiele");
     	
         Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
         primaryStage.setTitle("Medienkatalog");
