@@ -29,4 +29,13 @@ public class HinzufuegenSerieController extends ControllerFranchise{
         hSeasonChoiceBox.setValue("1");
         hSeasonChoiceBox.setItems(hSeasonChoiceBoxList);
     }
+
+    public void promptTypBox(String typ)
+    {
+        hTypChoiceBox.setValue(typ);
+    }
+    public void promptSeasonBox(String season)
+    {
+        hSeasonChoiceBox.setValue(season);
+    }
 }

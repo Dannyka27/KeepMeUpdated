@@ -9,8 +9,6 @@ import javafx.scene.control.TextField;
 
 public class WishlistFilmController extends WControllerFranchise{
     @FXML
-    private TextField wLinkTextField;
-    @FXML
     private Label wTypLabel;
     @FXML
     private ChoiceBox<String> wTypChoiceBox;
@@ -23,5 +21,10 @@ public class WishlistFilmController extends WControllerFranchise{
         super.initialize();
         wTypChoiceBox.setValue("Normal");
         wTypChoiceBox.setItems(wTypChoiceBoxList);
+    }
+
+    public void promptTyp(String typ)
+    {
+        wTypChoiceBox.setValue(typ);
     }
 }

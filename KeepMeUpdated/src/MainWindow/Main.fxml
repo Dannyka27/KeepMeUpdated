@@ -55,14 +55,7 @@
                                     <Insets bottom="20.0" left="50.0" right="50.0" />
                                  </VBox.margin>
                                  <content>
-                                    <Accordion fx:id="videothekAccordion" prefWidth="480.0">
-                                       <contextMenu>
-                                          <ContextMenu>
-                                            <items>
-                                              <MenuItem mnemonicParsing="false" onAction="#loeschenOnAction" text="Löschen" />
-                                              <MenuItem mnemonicParsing="false" onAction="#bearbeitenOnAction" text="Bearbeiten" />                                            </items>
-                                          </ContextMenu>
-                                       </contextMenu></Accordion>
+                                    <Accordion fx:id="videothekAccordion" prefWidth="480.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -103,14 +96,7 @@
                                     <Insets bottom="20.0" left="50.0" right="50.0" />
                                  </VBox.margin>
                                  <content>
-                                    <Accordion fx:id="audiothekAccordion" prefWidth="480.0">
-                                       <contextMenu>
-                                          <ContextMenu>
-                                            <items>
-                                              <MenuItem mnemonicParsing="false" onAction="#loeschenOnAction" text="Löschen" />
-                                              <MenuItem mnemonicParsing="false" onAction="#bearbeitenOnAction" text="Bearbeiten" />                                            </items>
-                                          </ContextMenu>
-                                       </contextMenu></Accordion>
+                                    <Accordion fx:id="audiothekAccordion" prefWidth="480.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -151,14 +137,7 @@
                                     <Insets bottom="20.0" left="50.0" right="50.0" />
                                  </VBox.margin>
                                  <content>
-                                    <Accordion fx:id="bibliothekAccordion" prefWidth="480.0">
-                                       <contextMenu>
-                                          <ContextMenu>
-                                            <items>
-                                              <MenuItem mnemonicParsing="false" onAction="#loeschenOnAction" text="Löschen" />
-                                              <MenuItem mnemonicParsing="false" onAction="#bearbeitenOnAction" text="Bearbeiten" />                                            </items>
-                                          </ContextMenu>
-                                       </contextMenu></Accordion>
+                                    <Accordion fx:id="bibliothekAccordion" prefWidth="480.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -199,14 +178,7 @@
                                     <Insets bottom="20.0" left="50.0" right="50.0" />
                                  </VBox.margin>
                                  <content>
-                                    <Accordion fx:id="gamesAccordion" prefWidth="480.0">
-                                       <contextMenu>
-                                          <ContextMenu>
-                                            <items>
-                                              <MenuItem mnemonicParsing="false" onAction="#loeschenOnAction" text="Löschen" />
-                                              <MenuItem mnemonicParsing="false" onAction="#bearbeitenOnAction" text="Bearbeiten" />                                            </items>
-                                          </ContextMenu>
-                                       </contextMenu></Accordion>
+                                    <Accordion fx:id="gamesAccordion" prefWidth="480.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -243,8 +215,9 @@
                                           <Label text="Filme" />
                                           <TableView fx:id="filmeTableView" prefHeight="200.0" prefWidth="200.0">
                                             <columns>
-                                              <TableColumn prefWidth="75.0" text="Titel" />
-                                              <TableColumn prefWidth="75.0" text="Untertitel" />
+                                              <TableColumn fx:id="filmeTitelC" prefWidth="75.0" text="Titel" />
+                                              <TableColumn fx:id="filmeUntertitelC" prefWidth="75.0" text="Untertitel" />
+                                                <TableColumn fx:id="filmeLinkC" prefWidth="75.0" text="Link" />
                                             </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -254,6 +227,7 @@
                                                   <items>
                                                     <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
                                                     <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
+                                                    <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
                                                   </items>
                                                 </ContextMenu>
                                              </contextMenu>
@@ -265,8 +239,9 @@
                                           <Label text="Serien" />
                                           <TableView fx:id="serienTableView" prefHeight="200.0" prefWidth="200.0">
                                             <columns>
-                                              <TableColumn prefWidth="75.0" text="Titel" />
-                                              <TableColumn prefWidth="75.0" text="Untertitel" />
+                                              <TableColumn fx:id="serienTitelC" prefWidth="75.0" text="Titel" />
+                                              <TableColumn fx:id="serienUntertitelC" prefWidth="75.0" text="Untertitel" />
+                                                <TableColumn fx:id="serienLinkC" prefWidth="75.0" text="Link" />
                                             </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -276,6 +251,7 @@
                                                   <items>
                                                     <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
                                                     <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
+                                                    <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
                                                   </items>
                                                 </ContextMenu>
                                              </contextMenu>
@@ -287,8 +263,9 @@
                                           <Label text="Games" />
                                           <TableView fx:id="gamesTableView" prefHeight="200.0" prefWidth="200.0">
                                             <columns>
-                                              <TableColumn prefWidth="75.0" text="Titel" />
-                                              <TableColumn prefWidth="75.0" text="Untertitel" />
+                                              <TableColumn fx:id="gamesTitelC" prefWidth="75.0" text="Titel" />
+                                              <TableColumn fx:id="gamesUntertitelC" prefWidth="75.0" text="Untertitel" />
+                                                <TableColumn fx:id="gamesLinkC" prefWidth="75.0" text="Link" />
                                             </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -298,6 +275,7 @@
                                                   <items>
                                                     <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
                                                     <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
+                                                    <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
                                                   </items>
                                                 </ContextMenu>
                                              </contextMenu>
@@ -309,8 +287,9 @@
                                           <Label text="Hörspiele" />
                                           <TableView fx:id="hoerspieleTableView" prefHeight="200.0" prefWidth="200.0">
                                             <columns>
-                                              <TableColumn prefWidth="75.0" text="Titel" />
-                                              <TableColumn prefWidth="75.0" text="Untertitel" />
+                                              <TableColumn fx:id="hoerspielTitelC" prefWidth="75.0" text="Titel" />
+                                              <TableColumn fx:id="hoerspielUntertitelC" prefWidth="75.0" text="Untertitel" />
+                                                <TableColumn fx:id="hoerspielLinkC" prefWidth="75.0" text="Link" />
                                             </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -319,7 +298,9 @@
                                                 <ContextMenu>
                                                   <items>
                                                     <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
-                                                    <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />                                                  </items>
+                                                    <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
+                                                    <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
+                                                  </items>
                                                 </ContextMenu>
                                              </contextMenu>
                                           </TableView>
@@ -330,8 +311,9 @@
                                           <Label text="Musik" />
                                           <TableView fx:id="musikTableView" prefHeight="200.0" prefWidth="200.0">
                                             <columns>
-                                              <TableColumn prefWidth="75.0" text="Titel" />
-                                              <TableColumn prefWidth="75.0" text="Untertitel" />
+                                              <TableColumn fx:id="musikTitelC" prefWidth="75.0" text="Titel" />
+                                              <TableColumn fx:id="musikUntertitelC" prefWidth="75.0" text="Untertitel" />
+                                                <TableColumn fx:id="musikLinkC" prefWidth="75.0" text="Link" />
                                             </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -340,7 +322,9 @@
                                                 <ContextMenu>
                                                   <items>
                                                     <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
-                                                    <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />                                                  </items>
+                                                    <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
+                                                    <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
+                                                  </items>
                                                 </ContextMenu>
                                              </contextMenu>
                                           </TableView>
@@ -351,8 +335,9 @@
                                           <Label text="Bücher" />
                                           <TableView fx:id="buecherTableView" prefHeight="200.0" prefWidth="200.0">
                                              <columns>
-                                                <TableColumn prefWidth="75.0" text="Titel" />
-                                                <TableColumn prefWidth="75.0" text="Untertitel" />
+                                                <TableColumn fx:id="buecherTitelC" prefWidth="75.0" text="Titel" />
+                                                <TableColumn fx:id="buecherUntertitelC" prefWidth="75.0" text="Untertitel" />
+                                                <TableColumn fx:id="buecherLinkC" prefWidth="75.0" text="Link" />
                                              </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -361,7 +346,9 @@
                                                 <ContextMenu>
                                                   <items>
                                                     <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
-                                                    <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />                                                  </items>
+                                                    <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
+                                                    <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
+                                                  </items>
                                                 </ContextMenu>
                                              </contextMenu>
                                           </TableView>
@@ -372,8 +359,9 @@
                                           <Label text="Zeitschriften" />
                                           <TableView fx:id="zeitschriftenTableView" prefHeight="200.0" prefWidth="200.0">
                                              <columns>
-                                                <TableColumn prefWidth="75.0" text="Titel" />
-                                                <TableColumn prefWidth="75.0" text="Untertitel" />
+                                                <TableColumn fx:id="zeitschriftenTitelC" prefWidth="75.0" text="Titel" />
+                                                <TableColumn fx:id="zeitschriftenUntertitelC" prefWidth="75.0" text="Untertitel" />
+                                                <TableColumn fx:id="zeitschriftenLinkC" prefWidth="75.0" text="Link" />
                                              </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -382,7 +370,9 @@
                                                 <ContextMenu>
                                                   <items>
                                                     <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
-                                                    <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />                                                  </items>
+                                                    <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
+                                                    <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
+                                                  </items>
                                                 </ContextMenu>
                                              </contextMenu>
                                           </TableView>

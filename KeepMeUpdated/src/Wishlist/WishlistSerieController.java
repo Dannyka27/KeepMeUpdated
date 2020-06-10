@@ -9,8 +9,6 @@ import javafx.scene.control.TextField;
 
 public class WishlistSerieController extends WControllerFranchise {
     @FXML
-    private TextField wLinkTextField;
-    @FXML
     private Label wTypLabel;
     @FXML
     private Label wSeasonLabel;
@@ -20,8 +18,6 @@ public class WishlistSerieController extends WControllerFranchise {
     private ChoiceBox<String> wTypChoiceBox;
 
     final ObservableList<String> wTypChoiceBoxList = FXCollections.observableArrayList("Normal", "Blu-ray");
-
-
     final ObservableList<String> wSeasonChoiceBoxList = FXCollections.observableArrayList("1", "2", "3","4","5","6","7","8","9","10");
 
     @FXML
@@ -33,5 +29,14 @@ public class WishlistSerieController extends WControllerFranchise {
         wTypChoiceBox.setItems(wTypChoiceBoxList);
         wSeasonChoiceBox.setValue("1");
         wSeasonChoiceBox.setItems(wSeasonChoiceBoxList);
+    }
+
+    public void promptTypBox(String typ)
+    {
+        wTypChoiceBox.setValue(typ);
+    }
+    public void promptSeasonBox(String season)
+    {
+        wSeasonChoiceBox.setValue(season);
     }
 }

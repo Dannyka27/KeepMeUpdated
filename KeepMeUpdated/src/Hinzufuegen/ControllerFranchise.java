@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.*;
 
-
 public class ControllerFranchise extends ControllerAlter{
     @FXML
     private TextField hFranchiseTextField;
@@ -22,5 +21,10 @@ public class ControllerFranchise extends ControllerAlter{
             }
         }
         );
+    }
+    public void promptFranchise(String franchise)
+    {
+        if(franchise != null)
+        {hFranchiseTextField.setPromptText(franchise);}
     }
 }

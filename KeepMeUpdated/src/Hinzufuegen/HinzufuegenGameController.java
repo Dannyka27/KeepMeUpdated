@@ -15,14 +15,16 @@ public class HinzufuegenGameController extends ControllerFranchise{
 
     final ObservableList<String> hgPlattformChoiceBoxList = FXCollections.observableArrayList("PS4", "PC");
 
-
     @FXML
     void initialize() {
         hMediumChoiceBox.setValue("Games");
         super.initialize();
-
         hgPlattformChoiceBox.setValue("PS4");
         hgPlattformChoiceBox.setItems(hgPlattformChoiceBoxList);
+    }
 
+    public void promptPlattformBox(String plattform)
+    {
+        hgPlattformChoiceBox.setValue(plattform);
     }
 }

@@ -46,6 +46,11 @@
                         <Insets bottom="20.0" left="30.0" right="30.0" />
                     </VBox.margin>
                 </TextField>
+            <TextField fx:id="wFranchiseTextField" layoutX="40.0" layoutY="153.0" promptText="Franchise">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="30.0" right="30.0" />
+               </VBox.margin>
+            </TextField>
             <TextField fx:id="wLinkTextField" promptText="Link">
                <VBox.margin>
                   <Insets bottom="20.0" left="30.0" right="30.0" />

@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="wAnchorPane" prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Wishlist.WishlistZeitschriftController">
+<AnchorPane fx:id="wAnchorPane" prefHeight="503.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Wishlist.WishlistZeitschriftController">
     <children>
-        <VBox alignment="TOP_CENTER" prefHeight="450.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="TOP_CENTER" prefHeight="503.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label text="Wunsch offenbaren">
                     <VBox.margin>
@@ -47,6 +47,11 @@
                     </VBox.margin>
                 </TextField>
             <TextField fx:id="wLinkTextField" promptText="Link">
+               <VBox.margin>
+                  <Insets bottom="20.0" left="30.0" right="30.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="wzAusgabeTextField" layoutX="40.0" layoutY="152.0" promptText="Ausgabe">
                <VBox.margin>
                   <Insets bottom="20.0" left="30.0" right="30.0" />
                </VBox.margin>

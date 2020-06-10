@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 
 public class WishlistZeitschriftController extends WController{
     @FXML
-    private TextField wLinkTextField;
+    private TextField wzAusgabeTextField;
     @FXML
     private TextField wzHerausgeberTextField;
     @FXML
@@ -19,12 +19,26 @@ public class WishlistZeitschriftController extends WController{
 
     final ObservableList<String> wzGenreList = FXCollections.observableArrayList("Informatik", "Fotografie", "Anmation");
 
-
     @FXML
     void initialize() {
         wMediumChoiceBox.setValue("Zeitschriften");
         super.initialize();
         wzGenreChoiceBox.setValue("Informatik");
         wzGenreChoiceBox.setItems(wzGenreList);
+    }
+
+    public void promptAusgabe(String ausgabe)
+    {
+        if(ausgabe != null)
+        {wzAusgabeTextField.setPromptText(ausgabe);}
+    }
+    public void promptHerausgeber(String herausgeber)
+    {
+        if(herausgeber != null)
+        {wzHerausgeberTextField.setPromptText(herausgeber);}
+    }
+    public void promptGenreBox(String genre)
+    {
+        wzGenreChoiceBox.setValue(genre);
     }
 }

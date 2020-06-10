@@ -11,6 +11,7 @@ public class ControllerAlter extends Controller{
     private Label hAlterLabel;
     @FXML
     private ChoiceBox<String> hAlterChoiceBox;
+
     final ObservableList<String> hAlterChoiceBoxList = FXCollections.observableArrayList("Kinder", "Familie", "Eltern");
 
     @FXML
@@ -19,5 +20,9 @@ public class ControllerAlter extends Controller{
         super.initialize();
         hAlterChoiceBox.setValue("Familie");
         hAlterChoiceBox.setItems(hAlterChoiceBoxList);
+    }
+    public void promptAlterBox(String alter)
+    {
+        hAlterChoiceBox.setValue(alter);
     }
 }

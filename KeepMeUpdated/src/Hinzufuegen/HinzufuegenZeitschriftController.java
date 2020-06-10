@@ -9,6 +9,8 @@ import javafx.scene.control.TextField;
 
 public class HinzufuegenZeitschriftController extends Controller{
     @FXML
+    private TextField hAusgabeTextField;
+    @FXML
     private TextField hzHerausgeberTextField;
     @FXML
     private Label hzGenreLabel;
@@ -17,12 +19,26 @@ public class HinzufuegenZeitschriftController extends Controller{
 
     final ObservableList<String> hzGenreList = FXCollections.observableArrayList("Informatik", "Fotografie", "Anmation");
 
-
     @FXML
     void initialize() {
         hMediumChoiceBox.setValue("Zeitschriften");
         super.initialize();
         hzGenreChoiceBox.setValue("Informatik");
         hzGenreChoiceBox.setItems(hzGenreList);
+    }
+
+    public void promptAusgabe(String ausgabe)
+    {
+        if(ausgabe != null)
+        {hzHerausgeberTextField.setPromptText(ausgabe);}
+    }
+    public void promptHerausgeber(String herausgeber)
+    {
+        if(herausgeber != null)
+        {hzHerausgeberTextField.setPromptText(herausgeber);}
+    }
+    public void promptGenreBox(String genre)
+    {
+        hzGenreChoiceBox.setValue(genre);
     }
 }

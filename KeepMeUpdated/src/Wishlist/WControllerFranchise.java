@@ -22,4 +22,9 @@ public class WControllerFranchise extends WControllerAlter{
                 }
         );
     }
+    public void promptFranchise(String franchise)
+    {
+        if(franchise != null)
+        {wFranchiseTextField.setPromptText(franchise);}
+    }
 }

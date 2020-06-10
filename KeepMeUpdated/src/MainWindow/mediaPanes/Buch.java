@@ -1,12 +1,12 @@
 package MainWindow.mediaPanes;
 
-@SuppressWarnings("unused")
 public class Buch extends Medium
 {
-	private String genre; 
+	private String genre;
 	private String autor;
 	private String franchise;
 	private String altersgruppe;
+
 	public Buch(int ID, String titel, String untertitel, String genre, String standort, String autor,
 			String zusatzinformationen, String franchise, String altersgruppe, String link)
 	{
@@ -15,12 +15,18 @@ public class Buch extends Medium
 		this.autor = autor;
 		this.franchise = franchise;
 		this.altersgruppe = altersgruppe;
-		
-		setzeInfos(String.format("Genre: %s%n" +
-				"Autor: %s%n" +
-				"Franchise: %s%n" +
-				"Altersgruppe: %s", genre, autor, franchise, altersgruppe));
+
+		updateRahmenInfos();
 	}
-	
-	
+
+	@Override
+	protected void updateInfos()
+	{
+		super.updateInfos();
+		addInfo("Genre", genre);
+		addInfo("Autor", autor);
+		addInfo("Franchise", franchise);
+		addInfo("Altersgruppe", altersgruppe);
+	}
+
 }

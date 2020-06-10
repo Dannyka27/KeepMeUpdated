@@ -1,6 +1,5 @@
 package Wishlist;
 
-import Hinzufuegen.HinzufuegenMusikController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,7 +9,7 @@ import javafx.scene.control.TextField;
 
 public class WishlistMusikController extends WController {
     @FXML
-    private TextField wLinkTextField;
+    private TextField wFranchiseTextField;
     @FXML
     private Label wmGenreLabel;
     @FXML
@@ -24,5 +23,15 @@ public class WishlistMusikController extends WController {
         super.initialize();
         wmGenreChoiceBox.setValue("Metal");
         wmGenreChoiceBox.setItems(wmGenreChoiceBoxList);
+    }
+
+    public void promptGenreBox(String genre)
+    {
+        wmGenreChoiceBox.setValue(genre);
+    }
+    public void promptFranchise(String franchise)
+    {
+        if(franchise != null)
+        {wFranchiseTextField.setPromptText(franchise);}
     }
 }

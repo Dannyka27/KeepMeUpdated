@@ -1,6 +1,5 @@
 package Wishlist;
 
-import Hinzufuegen.HinzufuegenBuchController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,8 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class WishlistBuchController extends WControllerFranchise{
-    @FXML
-    private TextField wLinkTextField;
     @FXML
     private Label wbGenreLabel;
     @FXML
@@ -28,12 +25,13 @@ public class WishlistBuchController extends WControllerFranchise{
         wbGenreChoiceBox.setValue("Krimi");
         wbGenreChoiceBox.setItems(wbGenreList);
     }
+    public void promptGenreBox(String genre)
+    {
+        wbGenreChoiceBox.setValue(genre);
+    }
 
-
-
-
-
-
-
-
+    public void promptAutor(String autor)
+    {
+        wbAutorTextField.setPromptText(autor);
+    }
 }

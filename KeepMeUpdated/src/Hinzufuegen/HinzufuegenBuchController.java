@@ -7,7 +7,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-
 public class HinzufuegenBuchController extends ControllerFranchise{
     @FXML
     private Label hbGenreLabel;
@@ -16,9 +15,7 @@ public class HinzufuegenBuchController extends ControllerFranchise{
     @FXML
     private TextField hbAutorTextField;
 
-
     final ObservableList<String> hbGenreList = FXCollections.observableArrayList("Tatsachenroman", "Fantasy", "Urban Fantasy", "Romantikthriller", "Mystery Thriller", "Cyberpunk", "Abenteuerroman", "Exit-Krimi", "Krimi", "dystopisches Science-Fiction", "historischer Roman", "Thriller", "Jugendthriller", "Comedy", "Sachbuch", "Liebesroman", "Horror", "Animal Fantasy");
-
 
     @FXML
     void initialize()
@@ -27,5 +24,15 @@ public class HinzufuegenBuchController extends ControllerFranchise{
         super.initialize();
         hbGenreChoiceBox.setValue("Krimi");
         hbGenreChoiceBox.setItems(hbGenreList);
+    }
+
+    public void promptGenreBox(String genre)
+    {
+        hbGenreChoiceBox.setValue(genre);
+    }
+
+    public void promptAutor(String autor)
+    {
+        hbAutorTextField.setPromptText(autor);
     }
 }

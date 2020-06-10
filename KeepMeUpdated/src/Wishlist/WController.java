@@ -30,6 +30,8 @@ public class WController {
     @FXML
     private TextField wTitelTextField;
     @FXML
+    private TextField wLinkTextField;
+    @FXML
     private TextField wUntertitelTextField;
     @FXML
     private TextField wZusatzinfoTextField;
@@ -75,7 +77,7 @@ public class WController {
                 else if (medium.equals("Musik"))
                 {
                     try {
-                        fensteroeffnen(445, "/Wishlist/WishlistMusik.fxml");
+                        fensteroeffnen(490, "/Wishlist/WishlistMusik.fxml");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -107,7 +109,7 @@ public class WController {
                 else if (medium.equals("Zeitschriften"))
                 {
                     try {
-                        fensteroeffnen(490, "/Wishlist/WishlistZeitschrift.fxml");
+                        fensteroeffnen(535, "/Wishlist/WishlistZeitschrift.fxml");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -141,6 +143,33 @@ public class WController {
                     }
                 }
         );
+    }
+    public void promptTitel(String titel)
+    {
+        wTitelTextField.setPromptText(titel);
+    }
+    public void promptUntertitel(String untertitel)
+    {
+        if(untertitel != null)
+        {wUntertitelTextField.setPromptText(untertitel);}
+    }
+    public void promptZusatzinfo(String zusatzinfo)
+    {
+        if(zusatzinfo != null)
+        {wZusatzinfoTextField.setPromptText(zusatzinfo);}
+    }
+    public void promptMediumBox(String medium)
+    {
+        wMediumChoiceBox.setValue(medium);
+    }
+    public void promptStandortBox(String standort)
+    {
+        wStandortChoiceBox.setValue(standort);
+    }
+    public void promptLink(String link)
+    {
+        if(link != null)
+        {wZusatzinfoTextField.setPromptText(link);}
     }
 
     private void fensteroeffnen(int height, String pfad) throws Exception

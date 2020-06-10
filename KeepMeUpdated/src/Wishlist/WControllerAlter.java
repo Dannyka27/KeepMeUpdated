@@ -20,4 +20,8 @@ public class WControllerAlter extends WController{
         wAlterChoiceBox.setValue("Familie");
         wAlterChoiceBox.setItems(wAlterChoiceBoxList);
     }
+    public void promptAlterBox(String alter)
+    {
+        wAlterChoiceBox.setValue(alter);
+    }
 }

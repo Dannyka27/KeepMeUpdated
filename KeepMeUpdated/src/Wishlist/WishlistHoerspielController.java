@@ -1,14 +1,11 @@
 package Wishlist;
 
-import Hinzufuegen.HinzufuegenHoerspielController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
 public class WishlistHoerspielController extends WControllerAlter {
-    @FXML
-    private TextField wLinkTextField;
     @FXML
     private TextField wFolgeTextField;
 
@@ -44,5 +41,11 @@ public class WishlistHoerspielController extends WControllerAlter {
             return false;
 
         }
+    }
+
+    public void promptFolge(String folge)
+    {
+        if(folge != null)
+        {wFolgeTextField.setPromptText(folge);}
     }
 }

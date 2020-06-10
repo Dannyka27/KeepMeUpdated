@@ -5,9 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
-
 public class HinzufuegenHoerspielController extends ControllerAlter{
-
     @FXML
     private TextField hFolgeTextField;
 
@@ -15,7 +13,6 @@ public class HinzufuegenHoerspielController extends ControllerAlter{
     void initialize() {
         hMediumChoiceBox.setValue("Hörspiele");
         super.initialize();
-
         hFolgeTextField.setOnKeyPressed(keyEvent ->
         {
             if(keyEvent.getCode() == KeyCode.ENTER)
@@ -28,12 +25,14 @@ public class HinzufuegenHoerspielController extends ControllerAlter{
 
     private boolean isInt(TextField hFolgeTextField)
     {
-        try{
+        try
+        {
             int folge = Integer.parseInt(hFolgeTextField.getText());
             System.out.println("Folge Nummer: " + folge);
             return true;
         }
-        catch(NumberFormatException e){
+        catch(NumberFormatException e)
+        {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Falsche Folgennummer");
             alert.setHeaderText("Eyy, gib gefälligst ne Zahl ein!");
@@ -41,7 +40,12 @@ public class HinzufuegenHoerspielController extends ControllerAlter{
             alert.showAndWait();
             System.out.println("Error: " + hFolgeTextField.getText() + " ist keine adquate Folgennummer");
             return false;
-
+        }
     }
+
+    public void promptFolge(String folge)
+    {
+        if(folge != null)
+        {hFolgeTextField.setPromptText(folge);}
     }
 }

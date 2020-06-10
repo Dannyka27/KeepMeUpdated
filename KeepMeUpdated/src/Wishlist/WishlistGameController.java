@@ -9,8 +9,6 @@ import javafx.scene.control.TextField;
 
 public class WishlistGameController extends WControllerFranchise {
     @FXML
-    private TextField wLinkTextField;
-    @FXML
     private Label wgPlattformLabel;
     @FXML
     private ChoiceBox<String> wgPlattformChoiceBox;
@@ -22,9 +20,13 @@ public class WishlistGameController extends WControllerFranchise {
     void initialize() {
         wMediumChoiceBox.setValue("Games");
         super.initialize();
-
         wgPlattformChoiceBox.setValue("PS4");
         wgPlattformChoiceBox.setItems(wgPlattformChoiceBoxList);
 
+    }
+
+    public void promptPlattformBox(String plattform)
+    {
+        wgPlattformChoiceBox.setValue(plattform);
     }
 }
