@@ -628,6 +628,7 @@ public class MainController {
     {
         //ausgewählte Zeile rausfinden
         Film filmbearbeiten = filmeTableView.getSelectionModel().getSelectedItem();
+        System.out.println("Bearbeiten!");
     }
 
     public void wwunschuebertragenOnAction(ActionEvent actionEvent) {
@@ -778,80 +779,45 @@ public class MainController {
         }
         try
         {
-            //Anlegen der TitledPanes, die jeweils eine Gridpane mit den Informationen aus der Datenbank enthalten
             while (rs.next())
             {
-                /*Anlegen der GridPane mit Padding und Gaps;
-                ZusÃ¤tzlich Initialisierung eines ZÃ¤hlers a, der hochgezÃ¤hlt wird, wenn in der Datenbank Daten verfÃ¼gbar sind,
-                damit die GridPane lÃ¼ckenlos gefÃ¼llt wird*/
-                GridPane l = new GridPane();
-                l.setPadding(new Insets(10,10,10,20));
-                l.setVgap(10);
-                l.setHgap(5);
-                int a = 0;
-                if(rs.getString("Link") == null) {
-                    if (rs.getString("Franchise") != null) {
-                        Label tmpBez = new Label("Franchise:");
-                        Label tmp = new Label(rs.getString("Franchise"));
-                        l.add(tmpBez, 0, a); //der ZÃ¤hler wird als Angabe der Zeilennummer genutzt
-                        l.add(tmp, 1, a);
-                        a++; //und anschlieÃŸend eins hochgezÃ¤hlt
-                    }
-                    if (rs.getString("Typ") != null) {
-                        Label tmpBez = new Label("Typ:");
-                        Label tmp = new Label(rs.getString("Typ"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Altersgruppe") != null) {
-                        Label tmpBez = new Label("Altersgruppe:");
-                        Label tmp = new Label(rs.getString("Altersgruppe"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Season") != null) {
-                        Label tmpBez = new Label("Season:");
-                        Label tmp = new Label(rs.getString("Season"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Zusatzinformationen") != null) {
-                        Label tmpBez = new Label("Zusatzinformationen:");
-                        Label tmp = new Label(rs.getString("Zusatzinformationen"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Standort") != null) {
-                        Label tmpBez = new Label("Standort:");
-                        Label tmp = new Label(rs.getString("Standort"));
-                        /*Jedes Element der Datenbank hat einen Standort, daher werden hier auch die Button fÃ¼r
-                        bearbeiten und lÃ¶schen angelegt, da sie so immer sichtbar sind, danach wird ihnen die OnAction-Methode
-                        zugewiesen, die dieselbe ist wie aus dem ContextMenu heraus*/
-                        Button bearbeiten = new Button("Bearbeiten");
-                        bearbeiten.setOnAction(this::bearbeitenOnAction);
-                        Button loeschen = new Button("Löschen");
-                        loeschen.setOnAction(this::loeschenOnAction);
-                        //Labels und Button werden in die GridPane eingefÃ¼gt
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        l.add(bearbeiten, 2, a);
-                        l.add(loeschen, 3, a);
-                    }
-                     /*es wird geprÃ¼ft, ob ein Untertitel existiert, dafÃ¼r wird die Abfrage aus der Datenbank in einem
-                     temporÃ¤ren String gespeichert. Wenn ein Untertitel existiert, wird der String mit ': ' vorne ergÃ¤nzt.
-                     Wenn nicht wird der String auf '' gesetzt.
-                     Dann wird der TitledPane der Titel aus der Datenbank, der temporÃ¤ren String und die Gridpane hinzugefÃ¼gt*/
-                    String tempUntertitel = rs.getString("Untertitel");
-                    if (tempUntertitel != null) {
-                        tempUntertitel = ": " + tempUntertitel;
-                    } else {
-                        tempUntertitel = "";
-                    }
-                    videothekAccordion.getPanes().add(new TitledPane(rs.getString("Titel") + tempUntertitel, l));
+            	// Alles was nen Link hat, gehört in die Wishlist, 
+            	// der Rest wird in die jeweilige Klasse verpackt und ins Accordion eingefügt
+                if(rs.getString("Link") == null) 
+                { 
+                	if(rs.getString("Typ").equalsIgnoreCase("Filme"))
+                	{
+                		Film film = new Film(
+                        		rs.getInt("ID"), 
+                        		rs.getString("Titel"), 
+                        		rs.getString("Untertitel"), 
+                        		rs.getString("Altersgruppe"), 
+                        		rs.getString("Medium"),
+                        		rs.getString("Zusatzinformationen"),
+                        		rs.getString("Standort"), 
+                        		rs.getString("Franchise"),
+                                rs.getString("Link")
+                        );
+                        videothekAccordion.getPanes().add(film);
+                	}
+                	else if(rs.getString("Typ").equalsIgnoreCase("Serien"))
+                	{
+                		Serie serie = new Serie(
+                				rs.getInt("ID"),
+                				rs.getString("Titel"), 
+                				rs.getString("Untertitel"),
+                				rs.getString("Season"), 
+                				rs.getString("Zusatzinformationen"), 
+                				rs.getString("Altersgruppe"),
+                				rs.getString("Standort"),
+                				rs.getString("Franchise"),
+                				rs.getString("Medium"), 
+                				rs.getString("Link")
+        				);
+                		videothekAccordion.getPanes().add(serie);
+                	}
+                	else
+                		System.err.println("Warning: " + rs.getString("Typ")  + " ist kein Film/Serie!");
                 }
             }
         } catch (SQLException e)
@@ -899,66 +865,40 @@ public class MainController {
         {
             while (rs.next())
             {
-                GridPane l = new GridPane();
-                l.setPadding(new Insets(10,10,10,20));
-                l.setVgap(10);
-                l.setHgap(5);
-                int a = 0;
-                if(rs.getString("Link") == null) {
-                    if (rs.getString("Franchise") != null) {
-                        Label tmpBez = new Label("Franchise:");
-                        Label tmp = new Label(rs.getString("Franchise"));
-                        l.add(tmpBez, 0, a); //der ZÃ¤hler wird als Angabe der Zeilennummer genutzt
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Typ") != null) {
-                        Label tmpBez = new Label("Typ:");
-                        Label tmp = new Label(rs.getString("Typ"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Altersgruppe") != null) {
-                        Label tmpBez = new Label("Altersgruppe:");
-                        Label tmp = new Label(rs.getString("Altersgruppe"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Folge") != null) {
-                        Label tmpBez = new Label("Folge:");
-                        Label tmp = new Label(rs.getString("Folge"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Zusatzinformationen") != null) {
-                        Label tmpBez = new Label("Zusatzinformationen:");
-                        Label tmp = new Label(rs.getString("Zusatzinformationen"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Standort") != null) {
-                        Label tmpBez = new Label("Standort:");
-                        Label tmp = new Label(rs.getString("Standort"));
-                        Button bearbeiten = new Button("Bearbeiten");
-                        bearbeiten.setOnAction(this::bearbeitenOnAction);
-                        Button loeschen = new Button("Löschen");
-                        loeschen.setOnAction(this::loeschenOnAction);
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        l.add(bearbeiten, 2, a);
-                        l.add(loeschen, 3, a);
-                    }
-                    String tempUntertitel = rs.getString("Untertitel");
-                    if (tempUntertitel != null){
-                        tempUntertitel = ": " + tempUntertitel;
-                    } else {
-                        tempUntertitel = "";
-                    }
-                    audiothekAccordion.getPanes().add(new TitledPane(rs.getString("Titel") + tempUntertitel, l));
+                // Alles was nen Link hat, gehört in die Wishlist, 
+            	// der Rest wird in die jeweilige Klasse verpackt und ins Accordion eingefügt
+                if(rs.getString("Link") == null) 
+                {
+					if(rs.getString("Typ").equalsIgnoreCase("Hörspiele"))
+					{
+						Hoerspiel hoerspiel = new Hoerspiel(
+								rs.getInt("ID"), 
+								rs.getString("Titel"), 
+								rs.getString("Untertitel"),
+								rs.getInt("Folge"), 
+								rs.getString("Zusatzinformationen"),
+								rs.getString("Altersgruppe"),
+								rs.getString("Standort"),
+								rs.getString("Link")
+						);
+
+	                    audiothekAccordion.getPanes().add(hoerspiel);
+					}
+					else if(rs.getString("Typ").equalsIgnoreCase("Musik"))
+					{
+						Musik musik = new Musik(rs.getInt("ID"),
+								rs.getString("Titel"), 
+								rs.getString("Untertitel"), 
+								rs.getString("Genre"),
+								rs.getString("Franchise"),
+								rs.getString("Zusatzinformationen"), 
+								rs.getString("Standort"), 
+								rs.getString("Link")
+						);
+						audiothekAccordion.getPanes().add(musik);
+					}
+					else
+						System.err.println("Warning: " + rs.getString("Typ")  + " ist kein Hörbuch/Musik!");
                 }
             }
         } catch (SQLException e)
@@ -966,6 +906,7 @@ public class MainController {
             System.err.println(e.getMessage());
         }
     }
+    
     public void biblioSortieren(String s)
     {
         bibliothekAccordion.getPanes().clear();
@@ -1008,89 +949,44 @@ public class MainController {
         {
             while (rs.next())
             {
-                GridPane l = new GridPane();
-                l.setPadding(new Insets(10,10,10,20));
-                l.setVgap(10);
-                l.setHgap(5);
-                int a = 0;
-                if(rs.getString("Link") == null) {
-                    if (rs.getString("Franchise") != null) {
-                        Label tmpBez = new Label("Franchise:");
-                        Label tmp = new Label(rs.getString("Franchise"));
-                        l.add(tmpBez, 0, a); //der ZÃ¤hler wird als Angabe der Zeilennummer genutzt
-                        l.add(tmp, 1, a);
-                        a++; //und anschlieÃŸend eins hochgezÃ¤hlt
-                    }
-                    if (rs.getString("Genre") != null) {
-                        Label tmpBez = new Label("Genre:");
-                        Label tmp = new Label(rs.getString("Genre"));
-                        l.add(tmpBez, 0, a); //der ZÃ¤hler wird als Angabe der Zeilennummer genutzt
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Autor") != null) {
-                        Label tmpBez = new Label("Autor:");
-                        Label tmp = new Label(rs.getString("Autor"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Herausgeber") != null) {
-                        Label tmpBez = new Label("Herausgeber:");
-                        Label tmp = new Label(rs.getString("Herausgeber"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Ausgabe") != null) {
-                        Label tmpBez = new Label("Ausgabe:");
-                        Label tmp = new Label(rs.getString("Ausgabe"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Typ") != null) {
-                        Label tmpBez = new Label("Typ:");
-                        Label tmp = new Label(rs.getString("Typ"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Altersgruppe") != null) {
-                        Label tmpBez = new Label("Altersgruppe:");
-                        Label tmp = new Label(rs.getString("Altersgruppe"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Zusatzinformationen") != null) {
-                        Label tmpBez = new Label("Zusatzinformationen:");
-                        Label tmp = new Label(rs.getString("Zusatzinformationen"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Standort") != null) {
-                        Label tmpBez = new Label("Standort:");
-                        Label tmp = new Label(rs.getString("Standort"));
-                        Button bearbeiten = new Button("Bearbeiten");
-                        bearbeiten.setOnAction(this::bearbeitenOnAction);
-                        Button loeschen = new Button("Löschen");
-                        loeschen.setOnAction(this::loeschenOnAction);
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        l.add(bearbeiten, 2, a);
-                        l.add(loeschen, 3, a);
-
-                    }
-                    String tempUntertitel = rs.getString("Untertitel");
-                    if (tempUntertitel != null) {
-                        tempUntertitel = ": " + tempUntertitel;
-                    } else {
-                        tempUntertitel = "";
-                    }
-
-                    bibliothekAccordion.getPanes().add(new TitledPane(rs.getString("Titel") + tempUntertitel, l));
+            	// Alles was nen Link hat, gehört in die Wishlist, 
+            	// der Rest wird in die jeweilige Klasse verpackt und ins Accordion eingefügt
+                if(rs.getString("Link") == null) 
+                {
+                	if(rs.getString("Typ").equalsIgnoreCase("Zeitschriften"))
+        			{
+                		Zeitschrift zeitung = new Zeitschrift(
+                				rs.getInt("ID"), 
+                				rs.getString("Titel"),
+                				rs.getString("Untertitel"),
+                				rs.getString("Herausgeber"),
+                				rs.getString("Ausgabe"), 
+                				rs.getString("Zusatzinformationen"), 
+                				rs.getString("Genre"), 
+                				rs.getString("Standort"),
+                				rs.getString("Link")
+        				);
+                		bibliothekAccordion.getPanes().add(zeitung);
+                				
+        			}
+                	else if(rs.getString("Typ").equalsIgnoreCase("Bücher"))
+                	{
+                		Buch buch = new Buch(
+                				rs.getInt("ID"), 
+                				rs.getString("Titel"),
+                				rs.getString("Untertitel"),
+                				rs.getString("Genre"),
+                				rs.getString("Standort"),
+                				rs.getString("Autor"),
+                				rs.getString("Zusatzinformationen"),
+                				rs.getString("Franchise") ,
+                				rs.getString("Altersgruppe"),
+                				rs.getString("Link")
+        				);
+                		bibliothekAccordion.getPanes().add(buch);
+                	}
+                	else
+                		System.err.println("Warning: " + rs.getString("Typ")  + " ist kein Buch/Zeitschrift!");
                 }
             }
         } catch (SQLException e)
@@ -1126,62 +1022,24 @@ public class MainController {
         }
         try
         {
+        	// Alles was nen Link hat, gehört in die Wishlist, 
+        	// der Rest kommt in die Klasse Game und ins Accordion
             while (rs.next())
             {
-                GridPane l = new GridPane();
-                l.setPadding(new Insets(10,10,10,20));
-                l.setVgap(10);
-                l.setHgap(5);
-                int a = 0;
-                if(rs.getString("Link") == null) {
-                    if (rs.getString("Franchise") != null) {
-                        Label tmpBez = new Label("Franchise:");
-                        Label tmp = new Label(rs.getString("Franchise"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Plattform") != null) {
-                        Label tmpBez = new Label("Plattform:");
-                        Label tmp = new Label(rs.getString("Plattform"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Altersgruppe") != null) {
-                        Label tmpBez = new Label("Altersgruppe:");
-                        Label tmp = new Label(rs.getString("Altersgruppe"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Zusatzinformationen") != null) {
-                        Label tmpBez = new Label("Zusatzinformationen:");
-                        Label tmp = new Label(rs.getString("Zusatzinformationen"));
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        a++;
-                    }
-                    if (rs.getString("Standort") != null) {
-                        Label tmpBez = new Label("Standort:");
-                        Label tmp = new Label(rs.getString("Standort"));
-                        Button bearbeiten = new Button("Bearbeiten");
-                        bearbeiten.setOnAction(this::bearbeitenOnAction);
-                        Button loeschen = new Button("Löschen");
-                        loeschen.setOnAction(this::loeschenOnAction);
-                        l.add(tmpBez, 0, a);
-                        l.add(tmp, 1, a);
-                        l.add(bearbeiten, 2, a);
-                        l.add(loeschen, 3, a);
-
-                    }
-                    String tempUntertitel = rs.getString("Untertitel");
-                    if (tempUntertitel != null) {
-                        tempUntertitel = ": " + tempUntertitel;
-                    } else {
-                        tempUntertitel = "";
-                    }
-                    gamesAccordion.getPanes().add(new TitledPane(rs.getString("Titel") + tempUntertitel, l));
+                if(rs.getString("Link") == null) 
+                {
+                	Spiel spiel = new Spiel(
+                			rs.getInt("ID"),
+                			rs.getString("Titel"),
+                			rs.getString("Untertitel"), 
+                			rs.getString("Altersgruppe"), 
+                			rs.getString("Zusatzinformationen"),
+                			rs.getString("Standort"),
+                			rs.getString("Franchise"), 
+                			rs.getString("Plattform"), 
+                			rs.getString("Link")
+        			);
+            		gamesAccordion.getPanes().add(spiel);
                 }
             }
         } catch (SQLException e)

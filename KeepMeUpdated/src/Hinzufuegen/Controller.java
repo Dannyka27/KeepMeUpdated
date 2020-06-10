@@ -1,6 +1,7 @@
 package Hinzufuegen;
 
 import MainWindow.Main;
+import MainWindow.mediaPanes.Medium;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -44,8 +45,8 @@ public class Controller
 			"Hörspiele", "Games", "Bücher", "Zeitschriften");
 	final ObservableList<String> hStandortChoiceBoxList = FXCollections.observableArrayList("Wohnzimmer", "Hanna",
 			"Jan");
-
-	protected int ID;
+	
+	private Medium medium;
 	
 	@FXML
 	private void boxenFuellen()
@@ -155,36 +156,16 @@ public class Controller
 			}
 		});
 	}
-
-	public void promptTitel(String titel)
+	
+	public void promptMedium(Medium medium)
 	{
-		hTitelTextField.setPromptText(titel);
-	}
-
-	public void promptUntertitel(String untertitel)
-	{
-		if (untertitel != null)
-		{
-			hUntertitelTextField.setPromptText(untertitel);
-		}
-	}
-
-	public void promptZusatzinfo(String zusatzinfo)
-	{
-		if (zusatzinfo != null)
-		{
-			hZusatzinfoTextField.setPromptText(zusatzinfo);
-		}
-	}
-
-	public void promptMediumBox(String tmedium)
-	{
-		hMediumChoiceBox.setValue(tmedium);
-	}
-
-	public void promptStandortBox(String standort)
-	{
-		hStandortChoiceBox.setValue(standort);
+		hTitelTextField.setPromptText(medium.getTitel());
+		hUntertitelTextField.setPromptText(medium.getUntertitel());
+		hZusatzinfoTextField.setPromptText(medium.getZusatzinformationen());
+		hStandortChoiceBox.setValue(medium.getStandort());
+		
+		hMediumChoiceBox.setValue(medium.getClass().getSimpleName());
+		hMediumChoiceBox.setDisable(true);
 	}
 
 	private void fensteroeffnen(int height, String pfad) throws Exception
@@ -197,7 +178,10 @@ public class Controller
 
 	public void hSpeichernOnAction(ActionEvent actionEvent)
 	{ 
-		Main.db.dbAusfuehren(String.format("UPDATE %s SET WHERE "));
+		//TODO Medium Klasse aktualisieren und dann die Speichermethode aufrufen um das 
+		// Medium in die Datenbank zu schreiben
+		medium.dbSpeichern(Main.db);
+		System.out.println("ControllerMedium Gespeichert!");
 	}
 
 	public void hAbbruchOnAction(ActionEvent actionEvent)

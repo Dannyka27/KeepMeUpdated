@@ -16,7 +16,7 @@ public class Main extends Application
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		db.druckeTabellenTitel("Serien");
+		//db.druckeTabellenTitel("Filme");
 
 		Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
 		primaryStage.setTitle("Medienkatalog");

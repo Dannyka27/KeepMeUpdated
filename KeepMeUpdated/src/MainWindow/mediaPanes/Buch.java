@@ -1,5 +1,9 @@
 package MainWindow.mediaPanes;
 
+import java.util.Arrays;
+
+import datenhaltung.Datenbank;
+
 public class Buch extends Medium
 {
 	private String genre;
@@ -27,6 +31,17 @@ public class Buch extends Medium
 		addInfo("Autor", autor);
 		addInfo("Franchise", franchise);
 		addInfo("Altersgruppe", altersgruppe);
+	}
+	
+	static final String attribs = "ID,Titel,Untertitel,Genre,Standort,Autor,Zusatzinformationen,Franchise,Altersgruppe,Link";
+	
+	@Override
+	public boolean dbSpeichern(Datenbank db)
+	{
+		String[] werte = {};
+		return db.dbAusfuehren(String.format("SELECT OR INSERT INTO %s(%s) VALUES (%s)", 
+				attribs, Arrays.toString(werte).substring(1, werte.length))
+		);	 
 	}
 
 }

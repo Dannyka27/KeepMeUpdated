@@ -1,5 +1,6 @@
 package MainWindow.mediaPanes;
 
+import datenhaltung.Datenbank;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -134,5 +135,10 @@ public class Medium extends TitledPane
 	public void setOnDelete(EventHandler<ActionEvent> value)
 	{
 		loeschen.setOnAction(value);
+	}
+	
+	public boolean dbSpeichern(Datenbank db)
+	{
+		throw new RuntimeException("Die Eltern-Klasse Medium kann nicht in einer Datenbank gespeichert werden!");
 	}
 }
