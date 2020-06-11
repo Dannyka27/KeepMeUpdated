@@ -178,8 +178,18 @@ public class Controller
 
 	public void hSpeichernOnAction(ActionEvent actionEvent)
 	{ 
-		//TODO Medium Klasse aktualisieren und dann die Speichermethode aufrufen um das 
+		// Medium Klasse aktualisieren und dann die Speichermethode aufrufen um das 
 		// Medium in die Datenbank zu schreiben
+		
+		if(medium == null)
+			medium = new Medium(-10, "", "", "", "", "");
+		
+		medium.setTitel(hTitelTextField.getText());
+		medium.setUntertitel(hUntertitelTextField.getText());
+		medium.setZusatzinformationen(hZusatzinfoTextField.getText());
+		medium.setStandort(hStandortChoiceBox.getValue());
+		medium.setLink(""); //TODO Wo isser?
+		
 		medium.dbSpeichern(Main.db);
 		System.out.println("ControllerMedium Gespeichert!");
 	}

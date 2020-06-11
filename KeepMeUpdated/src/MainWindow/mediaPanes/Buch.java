@@ -21,6 +21,8 @@ public class Buch extends Medium
 		this.altersgruppe = altersgruppe;
 
 		updateRahmenInfos();
+		
+		attribs += ",Genre,Autor,Franchise,Altersgruppe";
 	}
 
 	@Override
@@ -32,16 +34,54 @@ public class Buch extends Medium
 		addInfo("Franchise", franchise);
 		addInfo("Altersgruppe", altersgruppe);
 	}
-	
-	static final String attribs = "ID,Titel,Untertitel,Genre,Standort,Autor,Zusatzinformationen,Franchise,Altersgruppe,Link";
-	
+
 	@Override
 	public boolean dbSpeichern(Datenbank db)
 	{
-		String[] werte = {};
-		return db.dbAusfuehren(String.format("SELECT OR INSERT INTO %s(%s) VALUES (%s)", 
-				attribs, Arrays.toString(werte).substring(1, werte.length))
-		);	 
+		String[] werte = {"" + getID(), getTitel(), getUntertitel(), getZusatzinformationen(), getStandort(), getLink(),
+				getGenre(), getAutor(), getFranchise(), getAltersgruppe()
+		};
+		return db.dbAusfuehren(String.format("SELECT OR INSERT INTO %s(%s) VALUES (%s)", attribs,
+				Arrays.toString(werte).substring(1, werte.length-1)));
 	}
 
+	public String getGenre()
+	{
+		return genre;
+	}
+
+	public void setGenre(String genre)
+	{
+		this.genre = genre;
+	}
+
+	public String getAutor()
+	{
+		return autor;
+	}
+
+	public void setAutor(String autor)
+	{
+		this.autor = autor;
+	}
+
+	public String getFranchise()
+	{
+		return franchise;
+	}
+
+	public void setFranchise(String franchise)
+	{
+		this.franchise = franchise;
+	}
+
+	public String getAltersgruppe()
+	{
+		return altersgruppe;
+	}
+
+	public void setAltersgruppe(String altersgruppe)
+	{
+		this.altersgruppe = altersgruppe;
+	}
 }

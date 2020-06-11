@@ -1,5 +1,7 @@
 package MainWindow.mediaPanes;
 
+import java.util.LinkedHashMap;
+
 import datenhaltung.Datenbank;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -137,8 +139,24 @@ public class Medium extends TitledPane
 		loeschen.setOnAction(value);
 	}
 	
+	public LinkedHashMap<String, String> dbSchluesselWerte()
+	{
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+		map.put("ID", "" + getID());
+		map.put("Titel", getTitel());
+		map.put("Untertitel", getUntertitel());
+		map.put("Zusatzinformationen", getZusatzinformationen());
+		map.put("Standort", getStandort());
+		map.put("Link", getLink());
+		
+		return map;
+	}
+	
 	public boolean dbSpeichern(Datenbank db)
 	{
-		throw new RuntimeException("Die Eltern-Klasse Medium kann nicht in einer Datenbank gespeichert werden!");
+		if(getID() < 1)
+			throw new RuntimeException("Fehler beim Speichern in die Datenbank: " + getID() + " ist keine gültige ID!");
+		
+		//throw new RuntimeException("Die Klasse " + getClass().getSimpleName() + " implementiert keine Methode um in die Datenbank zu schreiben!");
 	}
 }

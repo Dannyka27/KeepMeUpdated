@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
+
+import MainWindow.mediaPanes.Medium;
 
 public class Datenbank
 {
@@ -154,5 +157,24 @@ public class Datenbank
         {
             System.err.println(e.getMessage());
         }
+    }
+    
+    public void mediumSpeichern(Medium m, String tabellenname)
+    {
+    	Map<String, String> sw = m.dbSchluesselWerte();
+    	
+    	String schluessel = "";
+    	String werte = "";
+    	
+    	for(Map.Entry<String, String> e : sw.entrySet())
+    	{
+    		if(schluessel.length() > 0)
+    			schluessel += ",";
+    		if(werte.length() > 0)
+    			werte += ",";
+    		
+    		schluessel += e.getKey();
+    		werte += e.getValue();
+    	}
     }
 }
