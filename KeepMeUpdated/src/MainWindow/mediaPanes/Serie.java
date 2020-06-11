@@ -1,5 +1,7 @@
 package MainWindow.mediaPanes;
 
+import java.util.LinkedHashMap;
+
 public class Serie extends Medium
 {
 	private String season;
@@ -28,5 +30,56 @@ public class Serie extends Medium
 		addInfo("Franchise", franchise);
 		addInfo("Medium", medium);
 	}
+	
+	@Override
+	public LinkedHashMap<String, String> dbSchluesselWerte()
+	{
+		LinkedHashMap<String, String> lhm = super.dbSchluesselWerte();
+		lhm.put("Typ", "Serien");
+		lhm.put("Season", getSeason());
+		lhm.put("Altersgruppe", getAltersgruppe());
+		lhm.put("Franchise", getFranchise());
+		lhm.put("Medium", getMedium());
+		return lhm;
+	}
 
+	public String getSeason()
+	{
+		return season;
+	}
+
+	public void setSeason(String season)
+	{
+		this.season = season;
+	}
+
+	public String getAltersgruppe()
+	{
+		return altersgruppe;
+	}
+
+	public void setAltersgruppe(String altersgruppe)
+	{
+		this.altersgruppe = altersgruppe;
+	}
+
+	public String getFranchise()
+	{
+		return franchise;
+	}
+
+	public void setFranchise(String franchise)
+	{
+		this.franchise = franchise;
+	}
+
+	public String getMedium()
+	{
+		return medium;
+	}
+
+	public void setMedium(String medium)
+	{
+		this.medium = medium;
+	}
 }

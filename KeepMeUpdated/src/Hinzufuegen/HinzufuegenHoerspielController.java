@@ -1,5 +1,8 @@
 package Hinzufuegen;
 
+import MainWindow.mediaPanes.Hoerspiel;
+import MainWindow.mediaPanes.Medium;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -42,10 +45,35 @@ public class HinzufuegenHoerspielController extends ControllerAlter{
             return false;
         }
     }
-
-    public void promptFolge(String folge)
+    
+    @Override
+    public void promptMedium(Medium medium)
     {
-        if(folge != null)
-        {hFolgeTextField.setPromptText(folge);}
+    	Hoerspiel h = (Hoerspiel) medium;
+    	
+    	hFolgeTextField.setPromptText("" + h.getFolge());
+		hAlterChoiceBox.setValue(h.getAltersgruppe());
+    	
+    	super.promptMedium(medium);
     }
+    
+    @Override
+	public void hSpeichernOnAction(ActionEvent actionEvent)
+	{
+		tabellenName = "Hörspiele";
+		
+    	Hoerspiel hoerspiel = null;
+		if (medium == null)
+			hoerspiel = new Hoerspiel(-10, "", "", -3, "", "", "", "");
+		else if (medium instanceof Hoerspiel)
+			hoerspiel = (Hoerspiel) medium;
+		else
+			throw new RuntimeException("Das Medium in HinzufuegenHoerspielController ist kein Hörspiel!");
+
+		hoerspiel.setAltersgruppe(hAlterChoiceBox.getValue());
+		hoerspiel.setFolge(Integer.parseInt(hFolgeTextField.getText()));
+
+		medium = hoerspiel;
+		super.hSpeichernOnAction(actionEvent);
+	}
 }

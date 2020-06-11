@@ -6,7 +6,7 @@ import javafx.scene.input.*;
 
 public class ControllerFranchise extends ControllerAlter{
     @FXML
-    private TextField hFranchiseTextField;
+    protected TextField hFranchiseTextField;
 
     //String getFranchise(){return hFranchiseTextField.getText();}  merken
     void initialize()

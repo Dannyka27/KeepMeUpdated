@@ -2,6 +2,7 @@ package datenhaltung;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -159,8 +160,9 @@ public class Datenbank
         }
     }
     
-    public void mediumSpeichern(Medium m, String tabellenname)
+    public void mediumSpeichern(DatenbankEintrag m, String tabellenname)
     {
+    	   	
     	Map<String, String> sw = m.dbSchluesselWerte();
     	
     	String schluessel = "";
@@ -168,13 +170,28 @@ public class Datenbank
     	
     	for(Map.Entry<String, String> e : sw.entrySet())
     	{
+    		if(e.getKey().length() < 1 || e.getValue().length() < 1)
+    			continue;
+    		
     		if(schluessel.length() > 0)
     			schluessel += ",";
     		if(werte.length() > 0)
     			werte += ",";
-    		
+    		    		
     		schluessel += e.getKey();
-    		werte += e.getValue();
+    		werte += '\'' + e.getValue() + '\'';
     	}
+    	
+    	try
+		{
+    		Statement statement = conn.createStatement();
+			statement.executeUpdate(
+					String.format("INSERT INTO " + tabellenname + "(%s) VALUES (%s)", schluessel, werte));
+			//ps.setString(1, schluessel);
+			//ps.setString(2, werte);
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
     }
 }

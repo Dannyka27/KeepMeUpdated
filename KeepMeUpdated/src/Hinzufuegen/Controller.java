@@ -46,7 +46,8 @@ public class Controller
 	final ObservableList<String> hStandortChoiceBoxList = FXCollections.observableArrayList("Wohnzimmer", "Hanna",
 			"Jan");
 	
-	private Medium medium;
+	protected Medium medium;
+	protected String tabellenName = null;
 	
 	@FXML
 	private void boxenFuellen()
@@ -180,17 +181,14 @@ public class Controller
 	{ 
 		// Medium Klasse aktualisieren und dann die Speichermethode aufrufen um das 
 		// Medium in die Datenbank zu schreiben
-		
-		if(medium == null)
-			medium = new Medium(-10, "", "", "", "", "");
-		
+			
 		medium.setTitel(hTitelTextField.getText());
 		medium.setUntertitel(hUntertitelTextField.getText());
 		medium.setZusatzinformationen(hZusatzinfoTextField.getText());
 		medium.setStandort(hStandortChoiceBox.getValue());
 		medium.setLink(""); //TODO Wo isser?
 		
-		medium.dbSpeichern(Main.db);
+		Main.db.mediumSpeichern(medium, tabellenName);
 		System.out.println("ControllerMedium Gespeichert!");
 	}
 

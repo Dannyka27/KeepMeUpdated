@@ -1,5 +1,7 @@
 package MainWindow.mediaPanes;
 
+import java.util.LinkedHashMap;
+
 public class Musik extends Medium
 {
 	private String genre;
@@ -22,5 +24,35 @@ public class Musik extends Medium
 		addInfo("Genre", genre);
 		addInfo("Franchise", franchise);
 	}
+	
+	@Override
+	public LinkedHashMap<String, String> dbSchluesselWerte()
+	{
+		LinkedHashMap<String, String> lhm = super.dbSchluesselWerte();
+		lhm.put("Typ", "Musik");
+		lhm.put("Genre", getGenre());
+		lhm.put("Franchise", getFranchise());
+		return lhm;
+	}
 
+	public String getGenre()
+	{
+		return genre;
+	}
+
+	public void setGenre(String genre)
+	{
+		this.genre = genre;
+	}
+
+	public String getFranchise()
+	{
+		return franchise;
+	}
+
+	public void setFranchise(String franchise)
+	{
+		this.franchise = franchise;
+	}
+	
 }

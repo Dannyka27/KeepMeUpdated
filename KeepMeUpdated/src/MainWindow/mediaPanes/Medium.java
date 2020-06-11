@@ -2,7 +2,7 @@ package MainWindow.mediaPanes;
 
 import java.util.LinkedHashMap;
 
-import datenhaltung.Datenbank;
+import datenhaltung.DatenbankEintrag;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 
-public class Medium extends TitledPane
+public class Medium extends TitledPane implements DatenbankEintrag
 {
 	protected int ID;
 	protected String titel;
@@ -139,10 +139,13 @@ public class Medium extends TitledPane
 		loeschen.setOnAction(value);
 	}
 	
+	@Override
 	public LinkedHashMap<String, String> dbSchluesselWerte()
 	{
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-		map.put("ID", "" + getID());
+		if(ID > 0) 
+			map.put("ID", "" + getID());
+		
 		map.put("Titel", getTitel());
 		map.put("Untertitel", getUntertitel());
 		map.put("Zusatzinformationen", getZusatzinformationen());
@@ -150,13 +153,5 @@ public class Medium extends TitledPane
 		map.put("Link", getLink());
 		
 		return map;
-	}
-	
-	public boolean dbSpeichern(Datenbank db)
-	{
-		if(getID() < 1)
-			throw new RuntimeException("Fehler beim Speichern in die Datenbank: " + getID() + " ist keine gültige ID!");
-		
-		//throw new RuntimeException("Die Klasse " + getClass().getSimpleName() + " implementiert keine Methode um in die Datenbank zu schreiben!");
 	}
 }

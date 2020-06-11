@@ -23,498 +23,350 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class MainController {
-    @FXML
-    private TableColumn<Film, String> filmeTitelC;
-    @FXML
-    private TableColumn<Film, String> filmeUntertitelC;
-    @FXML
-    private TableColumn<Film, String> filmeLinkC;
-    @FXML
-    private TableColumn<Serie, String> serienTitelC;
-    @FXML
-    private TableColumn<Serie, String> serienUntertitelC;
-    @FXML
-    private TableColumn<Serie, String> serienLinkC;
-    @FXML
-    private TableColumn<Spiel, String> gamesTitelC;
-    @FXML
-    private TableColumn<Spiel, String> gamesUntertitelC;
-    @FXML
-    private TableColumn<Spiel, String> gamesLinkC;
-    @FXML
-    private TableColumn<Hoerspiel, String> hoerspielTitelC;
-    @FXML
-    private TableColumn<Hoerspiel, String> hoerspielUntertitelC;
-    @FXML
-    private TableColumn<Hoerspiel, String> hoerspielLinkC;
-    @FXML
-    private TableColumn<Musik, String> musikTitelC;
-    @FXML
-    private TableColumn<Musik, String> musikUntertitelC;
-    @FXML
-    private TableColumn<Musik, String> musikLinkC;
-    @FXML
-    private TableColumn<Buch, String> buecherTitelC;
-    @FXML
-    private TableColumn<Buch, String> buecherUntertitelC;
-    @FXML
-    private TableColumn<Buch, String> buecherLinkC;
-    @FXML
-    private TableColumn<Zeitschrift, String> zeitschriftenTitelC;
-    @FXML
-    private TableColumn<Zeitschrift, String> zeitschriftenUntertitelC;
-    @FXML
-    private TableColumn<Zeitschrift, String> zeitschriftenLinkC;
-    @FXML
-    private ChoiceBox<String> videoSortierenChoiceBox;
-    @FXML
-    private ChoiceBox<String> audioSortierenChoiceBox;
-    @FXML
-    private ChoiceBox<String> biblioSortierenChoiceBox;
-    @FXML
-    private ChoiceBox<String> gamesSortierenChoiceBox;
-    @FXML
-    private BorderPane mainBorderPane;
-    @FXML
-    private TabPane mainTabPane;
-    @FXML
-    private Tab videothekTab;
-    @FXML
-    private Tab audiothekTab;
-    @FXML
-    private Tab bibliothekTab;
-    @FXML
-    private Tab gamesTab;
-    @FXML
-    private Tab wishlistTab;
-    @FXML
-    private ScrollPane videothekScrollPane;
-    @FXML
-    private ScrollPane audiothekScrollPane;
-    @FXML
-    private ScrollPane bibliothekScrollPane;
-    @FXML
-    private ScrollPane gamesScrollPane;
-    @FXML
-    private ScrollPane wishlistScrollPane;
-    @FXML
-    protected Accordion videothekAccordion;
-    @FXML
-    private Accordion audiothekAccordion;
-    @FXML
-    private Accordion bibliothekAccordion;
-    @FXML
-    private Accordion gamesAccordion;
-    @FXML
-    private TableView<Film> filmeTableView;
-    @FXML
-    private TableView<Hoerspiel> hoerspieleTableView;
-    @FXML
-    private TableView<Serie> serienTableView;
-    @FXML
-    private TableView<Musik> musikTableView;
-    @FXML
-    private TableView<Buch> buecherTableView;
-    @FXML
-    private TableView<Spiel> gamesTableView;
-    @FXML
-    private TableView<Zeitschrift> zeitschriftenTableView;
-    @FXML
-    private Button hinzufuegenButton;
-    @FXML
-    private Button suchenButton;
+public class MainController
+{
+	@FXML
+	private TableColumn<Film, String> filmeTitelC;
+	@FXML
+	private TableColumn<Film, String> filmeUntertitelC;
+	@FXML
+	private TableColumn<Film, String> filmeLinkC;
+	@FXML
+	private TableColumn<Serie, String> serienTitelC;
+	@FXML
+	private TableColumn<Serie, String> serienUntertitelC;
+	@FXML
+	private TableColumn<Serie, String> serienLinkC;
+	@FXML
+	private TableColumn<Spiel, String> gamesTitelC;
+	@FXML
+	private TableColumn<Spiel, String> gamesUntertitelC;
+	@FXML
+	private TableColumn<Spiel, String> gamesLinkC;
+	@FXML
+	private TableColumn<Hoerspiel, String> hoerspielTitelC;
+	@FXML
+	private TableColumn<Hoerspiel, String> hoerspielUntertitelC;
+	@FXML
+	private TableColumn<Hoerspiel, String> hoerspielLinkC;
+	@FXML
+	private TableColumn<Musik, String> musikTitelC;
+	@FXML
+	private TableColumn<Musik, String> musikUntertitelC;
+	@FXML
+	private TableColumn<Musik, String> musikLinkC;
+	@FXML
+	private TableColumn<Buch, String> buecherTitelC;
+	@FXML
+	private TableColumn<Buch, String> buecherUntertitelC;
+	@FXML
+	private TableColumn<Buch, String> buecherLinkC;
+	@FXML
+	private TableColumn<Zeitschrift, String> zeitschriftenTitelC;
+	@FXML
+	private TableColumn<Zeitschrift, String> zeitschriftenUntertitelC;
+	@FXML
+	private TableColumn<Zeitschrift, String> zeitschriftenLinkC;
+	@FXML
+	private ChoiceBox<String> videoSortierenChoiceBox;
+	@FXML
+	private ChoiceBox<String> audioSortierenChoiceBox;
+	@FXML
+	private ChoiceBox<String> biblioSortierenChoiceBox;
+	@FXML
+	private ChoiceBox<String> gamesSortierenChoiceBox;
+	@FXML
+	private BorderPane mainBorderPane;
+	@FXML
+	private TabPane mainTabPane;
+	@FXML
+	private Tab videothekTab;
+	@FXML
+	private Tab audiothekTab;
+	@FXML
+	private Tab bibliothekTab;
+	@FXML
+	private Tab gamesTab;
+	@FXML
+	private Tab wishlistTab;
+	@FXML
+	private ScrollPane videothekScrollPane;
+	@FXML
+	private ScrollPane audiothekScrollPane;
+	@FXML
+	private ScrollPane bibliothekScrollPane;
+	@FXML
+	private ScrollPane gamesScrollPane;
+	@FXML
+	private ScrollPane wishlistScrollPane;
+	@FXML
+	protected Accordion videothekAccordion;
+	@FXML
+	private Accordion audiothekAccordion;
+	@FXML
+	private Accordion bibliothekAccordion;
+	@FXML
+	private Accordion gamesAccordion;
+	@FXML
+	private TableView<Film> filmeTableView;
+	@FXML
+	private TableView<Hoerspiel> hoerspieleTableView;
+	@FXML
+	private TableView<Serie> serienTableView;
+	@FXML
+	private TableView<Musik> musikTableView;
+	@FXML
+	private TableView<Buch> buecherTableView;
+	@FXML
+	private TableView<Spiel> gamesTableView;
+	@FXML
+	private TableView<Zeitschrift> zeitschriftenTableView;
+	@FXML
+	private Button hinzufuegenButton;
+	@FXML
+	private Button suchenButton;
 
-    ObservableList<String> videoSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Filme", "Serie", "Franchise", "Standort", "Altersgruppe", "Typ");
-    ObservableList<String> audioSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Hörspiele", "Musik", "Franchise", "Folge", "Genre", "Standort", "Altersgruppe");
-    ObservableList<String> biblioSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Bücher", "Zeitschriften", "Autor", "Genre", "Franchise", "Standort", "Altersgruppe", "Herausgeber");
-    ObservableList<String> gamesSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Plattform", "Franchise", "Standort", "Altersgruppe");
-    ObservableList<Film> wfilmlist = FXCollections.observableArrayList();
-    ObservableList<Serie> wserielist = FXCollections.observableArrayList();
-    ObservableList<Hoerspiel> whoerspiellist = FXCollections.observableArrayList();
-    ObservableList<Musik> wmusiklist = FXCollections.observableArrayList();
-    ObservableList<Buch> wbuchlist = FXCollections.observableArrayList();
-    ObservableList<Zeitschrift> wzeitschriftlist = FXCollections.observableArrayList();
-    ObservableList<Spiel> wgamelist = FXCollections.observableArrayList();
+	ObservableList<String> videoSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Filme", "Serie",
+			"Franchise", "Standort", "Altersgruppe", "Typ");
+	ObservableList<String> audioSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Hörspiele", "Musik",
+			"Franchise", "Folge", "Genre", "Standort", "Altersgruppe");
+	ObservableList<String> biblioSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Bücher",
+			"Zeitschriften", "Autor", "Genre", "Franchise", "Standort", "Altersgruppe", "Herausgeber");
+	ObservableList<String> gamesSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Plattform",
+			"Franchise", "Standort", "Altersgruppe");
+	ObservableList<Film> wfilmlist = FXCollections.observableArrayList();
+	ObservableList<Serie> wserielist = FXCollections.observableArrayList();
+	ObservableList<Hoerspiel> whoerspiellist = FXCollections.observableArrayList();
+	ObservableList<Musik> wmusiklist = FXCollections.observableArrayList();
+	ObservableList<Buch> wbuchlist = FXCollections.observableArrayList();
+	ObservableList<Zeitschrift> wzeitschriftlist = FXCollections.observableArrayList();
+	ObservableList<Spiel> wgamelist = FXCollections.observableArrayList();
 
-    @FXML
-    public void hinzufuegenOnAction(ActionEvent actionEvent) throws Exception {
-        if(videothekTab.isSelected())
-        {
-            fensteroeffnen("/Hinzufuegen/HinzufuegenFilm.fxml", "Hinzufügen");
-        }
-        else if(audiothekTab.isSelected())
-        {
-            fensteroeffnen("/Hinzufuegen/HinzufuegenMusik.fxml", "Hinzufügen");
-        }
-        else if(bibliothekTab.isSelected())
-        {
-            fensteroeffnen("/Hinzufuegen/HinzufuegenBuch.fxml", "Hinzufügen");
-        }
-        else if(gamesTab.isSelected())
-        {
-            fensteroeffnen("/Hinzufuegen/HinzufuegenGame.fxml", "Hinzufügen");
-        }
-        else if(wishlistTab.isSelected()) {
-            fensteroeffnen("/Wishlist/WishlistFilm.fxml", "Wunsch offenbaren");
-        }
-    }
+	@FXML
+	public void hinzufuegenOnAction(ActionEvent actionEvent) throws Exception
+	{
+		if (videothekTab.isSelected())
+		{
+			fensteroeffnen("/Hinzufuegen/HinzufuegenFilm.fxml", "Hinzufügen");
+		} else if (audiothekTab.isSelected())
+		{
+			fensteroeffnen("/Hinzufuegen/HinzufuegenMusik.fxml", "Hinzufügen");
+		} else if (bibliothekTab.isSelected())
+		{
+			fensteroeffnen("/Hinzufuegen/HinzufuegenBuch.fxml", "Hinzufügen");
+		} else if (gamesTab.isSelected())
+		{
+			fensteroeffnen("/Hinzufuegen/HinzufuegenGame.fxml", "Hinzufügen");
+		} else if (wishlistTab.isSelected())
+		{
+			fensteroeffnen("/Wishlist/WishlistFilm.fxml", "Wunsch offenbaren");
+		}
+	}
 
-    @FXML
-    private void initialize()
-    {
-        videoSortierenChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
-        {	@Override
-        public void changed(ObservableValue<? extends String> oV, String oldValue, String newValue)
-        {
-            videoSortieren(newValue);
-        }
-        });
-        audioSortierenChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
-        {	@Override
-        public void changed(ObservableValue<? extends String> oV, String oldValue, String newValue)
-        {
-            audioSortieren(newValue);
-        }
-        });
-        biblioSortierenChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
-        {	@Override
-        public void changed(ObservableValue<? extends String> oV, String oldValue, String newValue)
-        {
-            biblioSortieren(newValue);
-        }
-        });
-        gamesSortierenChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
-        {	@Override
-        public void changed(ObservableValue<? extends String> oV, String oldValue, String newValue)
-        {
-            gamesSortieren(newValue);
-        }
-        });
-        wishlistfuellen("Filme");
-        wishlistfuellen("Hörspiele");
-        wishlistfuellen("Bücher");
-        wishlistfuellen("Spiele");
+	@FXML
+	private void initialize()
+	{
+		videoSortierenChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> oV, String oldValue, String newValue)
+			{
+				videoSortieren(newValue);
+			}
+		});
+		audioSortierenChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> oV, String oldValue, String newValue)
+			{
+				audioSortieren(newValue);
+			}
+		});
+		biblioSortierenChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> oV, String oldValue, String newValue)
+			{
+				biblioSortieren(newValue);
+			}
+		});
+		gamesSortierenChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> oV, String oldValue, String newValue)
+			{
+				gamesSortieren(newValue);
+			}
+		});
+		wishlistfuellen("Filme");
+		wishlistfuellen("Hörspiele");
+		wishlistfuellen("Bücher");
+		wishlistfuellen("Spiele");
 
-        videoSortierenChoiceBox.setValue("A-Z");
-        videoSortierenChoiceBox.setItems(videoSortierenList);
-        audioSortierenChoiceBox.setValue("A-Z");
-        audioSortierenChoiceBox.setItems(audioSortierenList);
-        biblioSortierenChoiceBox.setValue("A-Z");
-        biblioSortierenChoiceBox.setItems(biblioSortierenList);
-        gamesSortierenChoiceBox.setValue("A-Z");
-        gamesSortierenChoiceBox.setItems(gamesSortierenList);
-    }
+		videoSortierenChoiceBox.setValue("A-Z");
+		videoSortierenChoiceBox.setItems(videoSortierenList);
+		audioSortierenChoiceBox.setValue("A-Z");
+		audioSortierenChoiceBox.setItems(audioSortierenList);
+		biblioSortierenChoiceBox.setValue("A-Z");
+		biblioSortierenChoiceBox.setItems(biblioSortierenList);
+		gamesSortierenChoiceBox.setValue("A-Z");
+		gamesSortierenChoiceBox.setItems(gamesSortierenList);
+	}
 
-    @FXML
-    public void suchenOnAction(ActionEvent actionEvent) throws Exception
-    {
-        fensteroeffnen("/Suche/Suche.fxml", "Suche");
-    }
+	@FXML
+	public void suchenOnAction(ActionEvent actionEvent) throws Exception
+	{
+		fensteroeffnen("/Suche/Suche.fxml", "Suche");
+	}
 
-    @FXML
-    public void fensteroeffnen(String fxml, String titel) throws Exception
-    {
-        Parent root = FXMLLoader.load(getClass().getResource(fxml));
-        Stage primaryStage = new Stage();
-        primaryStage.setTitle(titel);
-        primaryStage.setScene(new Scene(root));
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
+	@FXML
+	public void fensteroeffnen(String fxml, String titel) throws Exception
+	{
+		Parent root = FXMLLoader.load(getClass().getResource(fxml));
+		Stage primaryStage = new Stage();
+		primaryStage.setTitle(titel);
+		primaryStage.setScene(new Scene(root));
+		primaryStage.setResizable(false);
+		primaryStage.show();
+	}
 
-    public void loeschenOnAction(ActionEvent actionEvent)
-    {
+	public void loeschenOnAction(ActionEvent actionEvent)
+	{
 
-    }
+	}
 
-    public void bearbeitenOnAction(ActionEvent actionEvent) {
-        /*GeÃ¶ffnet wird, entsprechend dem ausgewÃ¤hlten Element, die passende FXML Datei, bei der die TextFields
-        mit den Daten aus der Datenbank als PromptText gefÃ¼llt sind und die ChoiceBoxen als Default den Wert haben,
-        der in der Datenbank hinterlegt ist*/
-        if(videothekTab.isSelected())  //Es wird geprÃ¼ft, welcher Tab ausgewÃ¤hlt ist
-        {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Filme ORDER BY Titel ASC");  //passend dazu werden die Daten aus der Datenbank abgefragt
-            String text = videothekAccordion.getExpandedPane().getText();  /*Die aufgeklappte Pane wird ermittelt. Da immer nur eine geÃ¶ffnet sein kann, ist es die zu bearbeitende
-             *Das was im Header der TitledPane steht, wird in 'text' gespeichert*/
-            try {
-                while (rs.next()) //die Datenbank wird durchlaufen
-                {
-                    String tempUntertitel = rs.getString("Untertitel");
-                    /*Zu jedem Element wird ein temporÃ¤rer String fÃ¼r den Untertitel angelegt, genau wie in der initialize Methode*/
-                    if (tempUntertitel != null)
-                    {
-                        tempUntertitel = ": " + tempUntertitel;
-                    }
-                    else
-                    {
-                        tempUntertitel = "";
-                    }
+	public void bearbeitenOnAction(ActionEvent actionEvent) 
+	{
+	    /*GeÃ¶ffnet wird, entsprechend dem ausgewÃ¤hlten Element, die passende FXML Datei, bei der die TextFields
+		mit den Daten aus der Datenbank als PromptText gefÃ¼llt sind und die ChoiceBoxen als Default den Wert haben,
+		der in der Datenbank hinterlegt ist*/
+	
+		// Die aufgeklappte Pane wird ermittelt. Da immer nur eine geöffnet sein kann, ist es die zu bearbeitende
+		if(!(videothekAccordion.getExpandedPane() instanceof Medium))
+			throw new RuntimeException("Das sollte nicht passieren, ein Panel im Accordion ist kein Medium!");
+		
+    	Medium selectedMedium = (Medium) videothekAccordion.getExpandedPane();
+		
+    	Parent root;
+    	Stage primaryStage;
+    	
+    	try 
+		{
+    		if(selectedMedium instanceof Film)
+    		{
+    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenFilm.fxml"));//Die passende FXML wird geladen
+    			root = loader.load();
+    			HinzufuegenFilmController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
+    		
+    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
+    			hinzufuegenController.promptMedium(selectedMedium);
+    		
+    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
+    			primaryStage = new Stage();
+    			primaryStage.setTitle("Film bearbeiten");
+    		}
+    		
+    		else if(selectedMedium instanceof Serie)
+    		{
+    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenSerie.fxml"));//Die passende FXML wird geladen
+    			root = loader.load();
+    			HinzufuegenSerieController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
+    		
+    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
+    			hinzufuegenController.promptMedium(selectedMedium);
+    		
+    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
+    			primaryStage = new Stage();
+    			primaryStage.setTitle("Serie bearbeiten");
+    		}
+    		
+    		else if(selectedMedium instanceof Musik)
+    		{
+    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenMusik.fxml"));//Die passende FXML wird geladen
+    			root = loader.load();
+    			HinzufuegenMusikController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
+    		
+    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
+    			hinzufuegenController.promptMedium(selectedMedium);
+    		
+    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
+    			primaryStage = new Stage();
+    			primaryStage.setTitle("Musik bearbeiten");
+    		}
+    		
+    		else if(selectedMedium instanceof Hoerspiel)
+    		{
+    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenHoerspiel.fxml"));//Die passende FXML wird geladen
+    			root = loader.load();
+    			HinzufuegenHoerspielController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
+    		
+    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
+    			hinzufuegenController.promptMedium(selectedMedium);
+    		
+    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
+    			primaryStage = new Stage();
+    			primaryStage.setTitle("Hörspiel bearbeiten");
+    		}
+    		
+    		else if(selectedMedium instanceof Buch)
+    		{
+    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenBuch.fxml"));//Die passende FXML wird geladen
+    			root = loader.load();
+    			HinzufuegenBuchController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
+    		
+    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
+    			hinzufuegenController.promptMedium(selectedMedium);
+    		
+    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
+    			primaryStage = new Stage();
+    			primaryStage.setTitle("Buch bearbeiten");
+    		}
+    		
+    		else if(selectedMedium instanceof Zeitschrift)
+    		{
+    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenZeitschrift.fxml"));//Die passende FXML wird geladen
+    			root = loader.load();
+    			HinzufuegenZeitschriftController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
+    		
+    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
+    			hinzufuegenController.promptMedium(selectedMedium);
+    		
+    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
+    			primaryStage = new Stage();
+    			primaryStage.setTitle("Zeitschrift bearbeiten");
+    		}
+    		
+    		else if(selectedMedium instanceof Spiel)
+    		{
+    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenGame.fxml"));//Die passende FXML wird geladen
+    			root = loader.load();
+    			HinzufuegenGameController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
+    		
+    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
+    			hinzufuegenController.promptMedium(selectedMedium);
+    		
+    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
+    			primaryStage = new Stage();
+    			primaryStage.setTitle("Spiel bearbeiten");
+    		}
+    		
+    		else
+    		{
+    			System.err.println("Kein Plan welcher Tab ausgewählt ist...");
+    			return;
+    		}
+    			
+    		
+    		Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
+			primaryStage.show();
+			
+    	} catch (IOException e) 
+    	{
+			e.printStackTrace();
+		}
+    	
+        
+	}
 
-                    if (text.equals(rs.getString("Titel") + tempUntertitel))
-                        /*Es wird Ã¼berprÃ¼ft, ob 'text' aus dem Header mit dem Titel + temporÃ¤ren String Ã¼bereinstimmt,
-                        wenn ja ist das Element in der Datenbank gefunden*/
-                    {
-                        if(rs.getString("Typ").equals("Filme"))//es wird unterschieden nach Film und Serie(siehe else)
-                        {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenFilm.fxml"));//Die passende FXML wird geladen
-                            Parent root = loader.load();
-                            HinzufuegenFilmController hfilmcontroller = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
-
-                            //Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
-                            hfilmcontroller.promptTitel(rs.getString("Titel"));
-                            hfilmcontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hfilmcontroller.promptStandortBox(rs.getString("Standort"));
-                            hfilmcontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hfilmcontroller.promptAlterBox(rs.getString("Altersgruppe"));
-                            hfilmcontroller.promptFranchise(rs.getString("Franchise"));
-                            hfilmcontroller.promptMediumBox(rs.getString("Typ"));
-                            hfilmcontroller.promptTyp(rs.getString("Medium"));
-
-                            //Die Stage wird angelegt und die FXML hinzugefÃ¼gt
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Film bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        }
-                        else
-                        {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenSerie.fxml"));
-                            Parent root = loader.load();
-                            HinzufuegenSerieController hseriecontroller = loader.getController();
-
-                            hseriecontroller.promptTitel(rs.getString("Titel"));
-                            hseriecontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hseriecontroller.promptStandortBox(rs.getString("Standort"));
-                            hseriecontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hseriecontroller.promptAlterBox(rs.getString("Altersgruppe"));
-                            hseriecontroller.promptFranchise(rs.getString("Franchise"));
-                            hseriecontroller.promptMediumBox(rs.getString("Typ"));
-                            hseriecontroller.promptSeasonBox(rs.getString("Season"));
-                            hseriecontroller.promptTypBox(rs.getString("Medium"));
-
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Serie bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        }
-                    }
-                }
-            }
-            catch (SQLException | IOException e)
-            {
-                System.err.println(e.getMessage());
-            }
-        }
-        if(audiothekTab.isSelected())
-        {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Hörspiele ORDER BY Titel ASC");
-            String text = audiothekAccordion.getExpandedPane().getText();
-            try {
-                while (rs.next())
-                {
-                    String tempUntertitel = rs.getString("Untertitel");
-                    if (tempUntertitel != null)
-                    {
-                        tempUntertitel = ": " + tempUntertitel;
-                    }
-                    else
-                    {
-                        tempUntertitel = "";
-                    }
-
-                    if (text.equals(rs.getString("Titel") + tempUntertitel))
-                    {
-                        if(rs.getString("Typ").equals("Hörspiele"))
-                        {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenHoerspiel.fxml"));
-                            Parent root = loader.load();
-                            HinzufuegenHoerspielController hhoerspielcontroller = loader.getController();
-
-                            hhoerspielcontroller.promptTitel(rs.getString("Titel"));
-                            hhoerspielcontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hhoerspielcontroller.promptStandortBox(rs.getString("Standort"));
-                            hhoerspielcontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hhoerspielcontroller.promptAlterBox(rs.getString("Altersgruppe"));
-                            hhoerspielcontroller.promptFolge(rs.getString("Folge"));
-                            hhoerspielcontroller.promptMediumBox(rs.getString("Typ"));
-
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Hörspiel bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        }
-                        else
-                        {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenMusik.fxml"));
-                            Parent root = loader.load();
-                            HinzufuegenMusikController hmusikcontroller = loader.getController();
-
-                            hmusikcontroller.promptTitel(rs.getString("Titel"));
-                            hmusikcontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hmusikcontroller.promptStandortBox(rs.getString("Standort"));
-                            hmusikcontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hmusikcontroller.promptGenreBox(rs.getString("Genre"));
-                            hmusikcontroller.promptMediumBox(rs.getString("Typ"));
-                            hmusikcontroller.promptFranchise(rs.getString("Franchise"));
-
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Musik bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        }
-                    }
-                }
-            }
-            catch (SQLException | IOException e)
-            {
-                System.err.println(e.getMessage());
-            }
-        }
-        if(bibliothekTab.isSelected())
-        {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Bücher ORDER BY Titel ASC");
-            String text = bibliothekAccordion.getExpandedPane().getText();
-            try {
-                while (rs.next())
-                {
-                    String tempUntertitel = rs.getString("Untertitel");
-                    if (tempUntertitel != null)
-                    {
-                        tempUntertitel = ": " + tempUntertitel;
-                    }
-                    else
-                    {
-                        tempUntertitel = "";
-                    }
-
-                    if (text.equals(rs.getString("Titel") + tempUntertitel))
-                    {
-                        if (rs.getString("Typ").equals("Bücher"))
-                        {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenBuch.fxml"));
-                            Parent root = loader.load();
-                            HinzufuegenBuchController hbuchcontroller = loader.getController();
-
-                            hbuchcontroller.promptTitel(rs.getString("Titel"));
-                            hbuchcontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hbuchcontroller.promptStandortBox(rs.getString("Standort"));
-                            hbuchcontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hbuchcontroller.promptAlterBox(rs.getString("Altersgruppe"));
-                            hbuchcontroller.promptFranchise(rs.getString("Franchise"));
-                            hbuchcontroller.promptGenreBox(rs.getString("Genre"));
-                            hbuchcontroller.promptAutor(rs.getString("Autor"));
-                            hbuchcontroller.promptMediumBox(rs.getString("Typ"));
-
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Buch bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        }
-                        else
-                        {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenZeitschrift.fxml"));
-                            Parent root = loader.load();
-                            HinzufuegenZeitschriftController hzeitschriftcontroller = loader.getController();
-
-                            hzeitschriftcontroller.promptTitel(rs.getString("Titel"));
-                            hzeitschriftcontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hzeitschriftcontroller.promptStandortBox(rs.getString("Standort"));
-                            hzeitschriftcontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hzeitschriftcontroller.promptGenreBox(rs.getString("Genre"));
-                            hzeitschriftcontroller.promptHerausgeber(rs.getString("Herausgeber"));
-                            hzeitschriftcontroller.promptAusgabe(rs.getString("Ausgabe"));
-                            hzeitschriftcontroller.promptMediumBox(rs.getString("Typ"));
-
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Zeitschrift bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        }
-                    }
-                }
-            }
-            catch (SQLException | IOException e)
-            {
-                System.err.println(e.getMessage());
-            }
-        }
-        if(gamesTab.isSelected())
-        {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Spiele ORDER BY Titel ASC");
-            String text = gamesAccordion.getExpandedPane().getText();
-            try {
-                while (rs.next())
-                {
-                    String tempUntertitel = rs.getString("Untertitel");
-                    if (tempUntertitel != null)
-                    {
-                        tempUntertitel = ": " + tempUntertitel;
-                    }
-                    else
-                    {
-                        tempUntertitel = "";
-                    }
-
-                    if (text.equals(rs.getString("Titel") + tempUntertitel))
-                    {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenGame.fxml"));
-                        Parent root = loader.load();
-                        HinzufuegenGameController hgamecontroller = loader.getController();
-
-                        hgamecontroller.promptTitel(rs.getString("Titel"));
-                        hgamecontroller.promptUntertitel(rs.getString("Untertitel"));
-                        hgamecontroller.promptStandortBox(rs.getString("Standort"));
-                        hgamecontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                        hgamecontroller.promptAlterBox(rs.getString("Altersgruppe"));
-                        hgamecontroller.promptFranchise(rs.getString("Franchise"));
-                        hgamecontroller.promptPlattformBox(rs.getString("Plattform"));
-                        hgamecontroller.promptMediumBox(rs.getString("Typ"));
-
-                        Stage primaryStage = new Stage();
-                        primaryStage.setTitle("Game bearbeiten");
-                        Scene scene = new Scene(root);
-                        primaryStage.setScene(scene);
-                        primaryStage.setResizable(false);
-                        primaryStage.show();
-
-                        break;
-                    }
-                }
-            }
-            catch (SQLException | IOException e)
-            {
-                System.err.println(e.getMessage());
-            }
-        }
-
-    }
-
-    public void alertzeigen(Medium m)
+	public void alertzeigen(Medium m)
     {
         if(m instanceof Film)
         {
@@ -537,7 +389,7 @@ public class MainController {
         }
     }
 
-    public void wloeschenOnAction(ActionEvent actionEvent) {
+	public void wloeschenOnAction(ActionEvent actionEvent) {
         Medium m = null;
         if(filmeTableView.getSelectionModel().getSelectedItem() != null)
         {
@@ -624,17 +476,17 @@ public class MainController {
 
     }
 
-    public void wbearbeitenOnAction(ActionEvent actionEvent)
+	public void wbearbeitenOnAction(ActionEvent actionEvent)
     {
         //ausgewählte Zeile rausfinden
         Film filmbearbeiten = filmeTableView.getSelectionModel().getSelectedItem();
         System.out.println("Bearbeiten!");
     }
 
-    public void wwunschuebertragenOnAction(ActionEvent actionEvent) {
+	public void wwunschuebertragenOnAction(ActionEvent actionEvent) {
     }
 
-    public void wishlistfuellen(String data)
+	public void wishlistfuellen(String data)
     {
         ResultSet wl = Main.db.dbAbfrage("SELECT * FROM " + data + " ORDER BY Titel ASC");
         try {
@@ -744,7 +596,7 @@ public class MainController {
         }
     }
 
-    public void videoSortieren(String s)
+	public void videoSortieren(String s)
     {
         videothekAccordion.getPanes().clear();
         //Das Feld wird geleert, damit sich die Panes nicht jedes mal aufeinander stapeln, wenn man sortieren möchte
@@ -785,6 +637,12 @@ public class MainController {
             	// der Rest wird in die jeweilige Klasse verpackt und ins Accordion eingefügt
                 if(rs.getString("Link") == null) 
                 { 
+                	if(rs.getString("Typ") == null)
+                	{
+                		System.err.println("Warnung: In einem Eintrag in der Videothek ist der Typ NULL!");
+                		continue;
+                	}
+                	
                 	if(rs.getString("Typ").equalsIgnoreCase("Filme"))
                 	{
                 		Film film = new Film(
@@ -825,8 +683,8 @@ public class MainController {
             System.err.println(e.getMessage());
         }
     }
-    
-    public void audioSortieren(String s)
+
+	public void audioSortieren(String s)
     {
         audiothekAccordion.getPanes().clear();
 
@@ -869,6 +727,12 @@ public class MainController {
             	// der Rest wird in die jeweilige Klasse verpackt und ins Accordion eingefügt
                 if(rs.getString("Link") == null) 
                 {
+                	if(rs.getString("Typ") == null)
+                	{
+                		System.err.println("Warnung: In einem Eintrag in der Audiothek ist der Typ NULL!");
+                		continue;
+                	}
+                	
 					if(rs.getString("Typ").equalsIgnoreCase("Hörspiele"))
 					{
 						Hoerspiel hoerspiel = new Hoerspiel(
@@ -906,8 +770,8 @@ public class MainController {
             System.err.println(e.getMessage());
         }
     }
-    
-    public void biblioSortieren(String s)
+
+	public void biblioSortieren(String s)
     {
         bibliothekAccordion.getPanes().clear();
 
@@ -953,6 +817,12 @@ public class MainController {
             	// der Rest wird in die jeweilige Klasse verpackt und ins Accordion eingefügt
                 if(rs.getString("Link") == null) 
                 {
+                	if(rs.getString("Typ") == null)
+                	{
+                		System.err.println("Warnung: In einem Eintrag in der Bibliothek ist der Typ NULL!");
+                		continue;
+                	}
+                	
                 	if(rs.getString("Typ").equalsIgnoreCase("Zeitschriften"))
         			{
                 		Zeitschrift zeitung = new Zeitschrift(
@@ -994,7 +864,8 @@ public class MainController {
             System.err.println(e.getMessage());
         }
     }
-    public void gamesSortieren(String s)
+
+	public void gamesSortieren(String s)
     {
         gamesAccordion.getPanes().clear();
 

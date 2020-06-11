@@ -10,7 +10,7 @@ public class ControllerAlter extends Controller{
     @FXML
     private Label hAlterLabel;
     @FXML
-    private ChoiceBox<String> hAlterChoiceBox;
+    protected ChoiceBox<String> hAlterChoiceBox;
 
     final ObservableList<String> hAlterChoiceBoxList = FXCollections.observableArrayList("Kinder", "Familie", "Eltern");
 

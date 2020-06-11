@@ -1,8 +1,6 @@
 package MainWindow.mediaPanes;
 
-import java.util.Arrays;
-
-import datenhaltung.Datenbank;
+import java.util.LinkedHashMap;
 
 public class Buch extends Medium
 {
@@ -21,8 +19,6 @@ public class Buch extends Medium
 		this.altersgruppe = altersgruppe;
 
 		updateRahmenInfos();
-		
-		attribs += ",Genre,Autor,Franchise,Altersgruppe";
 	}
 
 	@Override
@@ -36,15 +32,17 @@ public class Buch extends Medium
 	}
 
 	@Override
-	public boolean dbSpeichern(Datenbank db)
+	public LinkedHashMap<String, String> dbSchluesselWerte()
 	{
-		String[] werte = {"" + getID(), getTitel(), getUntertitel(), getZusatzinformationen(), getStandort(), getLink(),
-				getGenre(), getAutor(), getFranchise(), getAltersgruppe()
-		};
-		return db.dbAusfuehren(String.format("SELECT OR INSERT INTO %s(%s) VALUES (%s)", attribs,
-				Arrays.toString(werte).substring(1, werte.length-1)));
+		LinkedHashMap<String, String> lhm = super.dbSchluesselWerte();
+		lhm.put("Typ", "Bücher");
+		lhm.put("Genre", getGenre());
+		lhm.put("Autor", getAutor());
+		lhm.put("Franchise", getFranchise());
+		lhm.put("Altersgruppe", getAltersgruppe());
+		return lhm;
 	}
-
+	
 	public String getGenre()
 	{
 		return genre;
