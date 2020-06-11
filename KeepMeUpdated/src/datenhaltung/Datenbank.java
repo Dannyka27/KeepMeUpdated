@@ -170,6 +170,13 @@ public class Datenbank
     	
     	for(Map.Entry<String, String> e : sw.entrySet())
     	{
+    		if(e.getValue() == null)
+    		{
+    			System.err.println("Warnung: Ein Schlüssel beim Speichern ist null (" + e.getKey() + ")!");
+    			continue;
+    		}
+    			
+    		
     		if(e.getKey().length() < 1 || e.getValue().length() < 1)
     			continue;
     		
@@ -193,5 +200,20 @@ public class Datenbank
 		{
 			e.printStackTrace();
 		}
+    }
+    
+    public int eintragLoeschen(DatenbankEintrag de, String tabellenname)
+    {
+    	try
+		{
+    		System.out.println("Lösche eintrag: " + de.toString());
+    		
+    		Statement statement = conn.createStatement();
+			return statement.executeUpdate("DELETE FROM " + tabellenname + " WHERE ID=" + de.dbSchluesselWerte().get("ID"));
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+    	return -1;
     }
 }

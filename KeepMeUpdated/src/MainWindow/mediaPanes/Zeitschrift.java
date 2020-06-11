@@ -1,6 +1,11 @@
 package MainWindow.mediaPanes;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
+
+import Hinzufuegen.HinzufuegenZeitschriftController;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 
 public class Zeitschrift extends Medium
 {
@@ -67,5 +72,30 @@ public class Zeitschrift extends Medium
 	public void setGenre(String genre)
 	{
 		this.genre = genre;
+	}
+	
+	@Override
+	public void onEdit(ActionEvent value)
+	{
+		try 
+		{
+			//Die passende FXML wird geladen
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenZeitschrift.fxml"));
+			root = loader.load();
+			HinzufuegenZeitschriftController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
+			
+			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
+			hinzufuegenController.promptMedium(this);
+			super.onEdit(value);
+		} catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public String getTabellenTitel()
+	{
+		return "Bücher";
 	}
 }

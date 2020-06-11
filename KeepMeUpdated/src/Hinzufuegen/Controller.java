@@ -190,6 +190,12 @@ public class Controller
 		
 		Main.db.mediumSpeichern(medium, tabellenName);
 		System.out.println("ControllerMedium Gespeichert!");
+		
+		//Lade Accordion neu wenn Update Methode vorhanden
+		medium.updateParentAccordion();
+		
+		Stage akutelleStage = (Stage) hAbbruchButton.getScene().getWindow();
+		akutelleStage.close();
 	}
 
 	public void hAbbruchOnAction(ActionEvent actionEvent)

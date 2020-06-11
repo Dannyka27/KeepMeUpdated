@@ -1,15 +1,20 @@
 package MainWindow.mediaPanes;
 
 import java.util.LinkedHashMap;
+import java.util.function.Consumer;
 
+import MainWindow.Main;
 import datenhaltung.DatenbankEintrag;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class Medium extends TitledPane implements DatenbankEintrag
 {
@@ -26,6 +31,10 @@ public class Medium extends TitledPane implements DatenbankEintrag
 	private GridPane pnlInfo;
 	private int infoCounter = 0;
 
+	protected Parent root;
+	
+	private Consumer<String> updateMethod;
+	
 	public Medium(int ID, String titel, String untertitel, String zusatzinformationen, String standort, String link)
 	{
 		this.ID = ID;
@@ -43,6 +52,12 @@ public class Medium extends TitledPane implements DatenbankEintrag
 		
 		bearbeiten = new Button("Bearbeiten");
 		loeschen = new Button("Löschen");
+		
+		bearbeiten.setOnAction(this::onEdit);
+		loeschen.setOnAction(e -> {
+			Main.db.eintragLoeschen(this, getTabellenTitel());
+			updateParentAccordion();
+		});
 
 		setText(titel + ": " + untertitel);
 	}
@@ -129,9 +144,17 @@ public class Medium extends TitledPane implements DatenbankEintrag
 		this.link = link;
 	}
 	
-	public void setOnEdit(EventHandler<ActionEvent> value)
+	public void onEdit(ActionEvent value)
 	{
-		bearbeiten.setOnAction(value);
+		//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
+		Stage primaryStage = new Stage();
+		primaryStage.setTitle(getClass().getSimpleName() + " bearbeiten");
+		
+		Scene scene = new Scene(root);
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.show();
+	
 	}
 	
 	public void setOnDelete(EventHandler<ActionEvent> value)
@@ -153,5 +176,27 @@ public class Medium extends TitledPane implements DatenbankEintrag
 		map.put("Link", getLink());
 		
 		return map;
+	}
+	
+	public String getTabellenTitel()
+	{
+		return null;
+	}
+	
+	public boolean updateParentAccordion()
+	{
+		if(updateMethod == null)
+		{
+			System.out.println("Hinweis: Konnte Acordion nicht updaten weil keine Update Methode spezifiziert wurde!");
+			return false;
+		}
+		
+		updateMethod.accept("");
+		return true;
+	}
+	
+	public void setUpdateMethod(Consumer<String> func)
+	{
+		this.updateMethod = func;
 	}
 }

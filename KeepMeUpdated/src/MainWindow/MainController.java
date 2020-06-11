@@ -1,12 +1,17 @@
 package MainWindow;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import Hinzufuegen.*;
-import MainWindow.mediaPanes.*;
+import MainWindow.mediaPanes.Buch;
+import MainWindow.mediaPanes.Film;
+import MainWindow.mediaPanes.Hoerspiel;
+import MainWindow.mediaPanes.Medium;
+import MainWindow.mediaPanes.Musik;
+import MainWindow.mediaPanes.Serie;
+import MainWindow.mediaPanes.Spiel;
+import MainWindow.mediaPanes.Zeitschrift;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,17 +19,27 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class MainController
 {
+	//CLUDGE
+	public static MainController instanz = null;
+	
 	@FXML
 	private TableColumn<Film, String> filmeTitelC;
 	@FXML
@@ -231,141 +246,6 @@ public class MainController
 
 	}
 
-	public void bearbeitenOnAction(ActionEvent actionEvent) 
-	{
-	    /*GeÃ¶ffnet wird, entsprechend dem ausgewÃ¤hlten Element, die passende FXML Datei, bei der die TextFields
-		mit den Daten aus der Datenbank als PromptText gefÃ¼llt sind und die ChoiceBoxen als Default den Wert haben,
-		der in der Datenbank hinterlegt ist*/
-	
-		// Die aufgeklappte Pane wird ermittelt. Da immer nur eine geöffnet sein kann, ist es die zu bearbeitende
-		if(!(videothekAccordion.getExpandedPane() instanceof Medium))
-			throw new RuntimeException("Das sollte nicht passieren, ein Panel im Accordion ist kein Medium!");
-		
-    	Medium selectedMedium = (Medium) videothekAccordion.getExpandedPane();
-		
-    	Parent root;
-    	Stage primaryStage;
-    	
-    	try 
-		{
-    		if(selectedMedium instanceof Film)
-    		{
-    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenFilm.fxml"));//Die passende FXML wird geladen
-    			root = loader.load();
-    			HinzufuegenFilmController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
-    		
-    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
-    			hinzufuegenController.promptMedium(selectedMedium);
-    		
-    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
-    			primaryStage = new Stage();
-    			primaryStage.setTitle("Film bearbeiten");
-    		}
-    		
-    		else if(selectedMedium instanceof Serie)
-    		{
-    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenSerie.fxml"));//Die passende FXML wird geladen
-    			root = loader.load();
-    			HinzufuegenSerieController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
-    		
-    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
-    			hinzufuegenController.promptMedium(selectedMedium);
-    		
-    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
-    			primaryStage = new Stage();
-    			primaryStage.setTitle("Serie bearbeiten");
-    		}
-    		
-    		else if(selectedMedium instanceof Musik)
-    		{
-    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenMusik.fxml"));//Die passende FXML wird geladen
-    			root = loader.load();
-    			HinzufuegenMusikController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
-    		
-    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
-    			hinzufuegenController.promptMedium(selectedMedium);
-    		
-    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
-    			primaryStage = new Stage();
-    			primaryStage.setTitle("Musik bearbeiten");
-    		}
-    		
-    		else if(selectedMedium instanceof Hoerspiel)
-    		{
-    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenHoerspiel.fxml"));//Die passende FXML wird geladen
-    			root = loader.load();
-    			HinzufuegenHoerspielController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
-    		
-    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
-    			hinzufuegenController.promptMedium(selectedMedium);
-    		
-    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
-    			primaryStage = new Stage();
-    			primaryStage.setTitle("Hörspiel bearbeiten");
-    		}
-    		
-    		else if(selectedMedium instanceof Buch)
-    		{
-    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenBuch.fxml"));//Die passende FXML wird geladen
-    			root = loader.load();
-    			HinzufuegenBuchController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
-    		
-    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
-    			hinzufuegenController.promptMedium(selectedMedium);
-    		
-    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
-    			primaryStage = new Stage();
-    			primaryStage.setTitle("Buch bearbeiten");
-    		}
-    		
-    		else if(selectedMedium instanceof Zeitschrift)
-    		{
-    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenZeitschrift.fxml"));//Die passende FXML wird geladen
-    			root = loader.load();
-    			HinzufuegenZeitschriftController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
-    		
-    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
-    			hinzufuegenController.promptMedium(selectedMedium);
-    		
-    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
-    			primaryStage = new Stage();
-    			primaryStage.setTitle("Zeitschrift bearbeiten");
-    		}
-    		
-    		else if(selectedMedium instanceof Spiel)
-    		{
-    			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenGame.fxml"));//Die passende FXML wird geladen
-    			root = loader.load();
-    			HinzufuegenGameController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
-    		
-    			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
-    			hinzufuegenController.promptMedium(selectedMedium);
-    		
-    			//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
-    			primaryStage = new Stage();
-    			primaryStage.setTitle("Spiel bearbeiten");
-    		}
-    		
-    		else
-    		{
-    			System.err.println("Kein Plan welcher Tab ausgewählt ist...");
-    			return;
-    		}
-    			
-    		
-    		Scene scene = new Scene(root);
-			primaryStage.setScene(scene);
-			primaryStage.setResizable(false);
-			primaryStage.show();
-			
-    	} catch (IOException e) 
-    	{
-			e.printStackTrace();
-		}
-    	
-        
-	}
-
 	public void alertzeigen(Medium m)
     {
         if(m instanceof Film)
@@ -471,16 +351,6 @@ public class MainController
         Zeitschrift zeitschriftloeschen = zeitschriftenTableView.getSelectionModel().getSelectedItem();
         Spiel spielloeschen = gamesTableView.getSelectionModel().getSelectedItem();
 
-
-
-
-    }
-
-	public void wbearbeitenOnAction(ActionEvent actionEvent)
-    {
-        //ausgewählte Zeile rausfinden
-        Film filmbearbeiten = filmeTableView.getSelectionModel().getSelectedItem();
-        System.out.println("Bearbeiten!");
     }
 
 	public void wwunschuebertragenOnAction(ActionEvent actionEvent) {
@@ -657,6 +527,7 @@ public class MainController
                                 rs.getString("Link")
                         );
                         videothekAccordion.getPanes().add(film);
+                        film.setUpdateMethod(this::videoSortieren);
                 	}
                 	else if(rs.getString("Typ").equalsIgnoreCase("Serien"))
                 	{
@@ -673,6 +544,7 @@ public class MainController
                 				rs.getString("Link")
         				);
                 		videothekAccordion.getPanes().add(serie);
+                		serie.setUpdateMethod(this::videoSortieren);
                 	}
                 	else
                 		System.err.println("Warning: " + rs.getString("Typ")  + " ist kein Film/Serie!");
@@ -745,8 +617,8 @@ public class MainController
 								rs.getString("Standort"),
 								rs.getString("Link")
 						);
-
 	                    audiothekAccordion.getPanes().add(hoerspiel);
+	                    hoerspiel.setUpdateMethod(this::audioSortieren);
 					}
 					else if(rs.getString("Typ").equalsIgnoreCase("Musik"))
 					{
@@ -760,6 +632,7 @@ public class MainController
 								rs.getString("Link")
 						);
 						audiothekAccordion.getPanes().add(musik);
+						musik.setUpdateMethod(this::audioSortieren);
 					}
 					else
 						System.err.println("Warning: " + rs.getString("Typ")  + " ist kein Hörbuch/Musik!");
@@ -837,7 +710,7 @@ public class MainController
                 				rs.getString("Link")
         				);
                 		bibliothekAccordion.getPanes().add(zeitung);
-                				
+                		zeitung.setUpdateMethod(this::biblioSortieren);
         			}
                 	else if(rs.getString("Typ").equalsIgnoreCase("Bücher"))
                 	{
@@ -854,6 +727,7 @@ public class MainController
                 				rs.getString("Link")
         				);
                 		bibliothekAccordion.getPanes().add(buch);
+                		buch.setUpdateMethod(this::biblioSortieren);
                 	}
                 	else
                 		System.err.println("Warning: " + rs.getString("Typ")  + " ist kein Buch/Zeitschrift!");
@@ -911,11 +785,20 @@ public class MainController
                 			rs.getString("Link")
         			);
             		gamesAccordion.getPanes().add(spiel);
+            		spiel.setUpdateMethod(this::gamesSortieren);
                 }
             }
         } catch (SQLException e)
         {
             System.err.println(e.getMessage());
         }
+    }
+	
+	//TODO Wofür wir die gebraucht?!?!?!
+	public void wbearbeitenOnAction(ActionEvent actionEvent)
+    {
+        //ausgewählte Zeile rausfinden
+        Film filmbearbeiten = filmeTableView.getSelectionModel().getSelectedItem();
+        System.out.println("Bearbeiten!");
     }
 }

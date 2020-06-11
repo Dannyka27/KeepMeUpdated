@@ -1,6 +1,11 @@
 package MainWindow.mediaPanes;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
+
+import Hinzufuegen.HinzufuegenSerieController;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 
 public class Serie extends Medium
 {
@@ -8,7 +13,7 @@ public class Serie extends Medium
 	private String altersgruppe;
 	private String franchise;
 	private String medium;
-
+	
 	public Serie(int ID, String titel, String untertitel, String season, String zusatzinformationen,
 			String altersgruppe, String standort, String franchise, String medium, String link)
 	{
@@ -81,5 +86,30 @@ public class Serie extends Medium
 	public void setMedium(String medium)
 	{
 		this.medium = medium;
+	}
+	
+	@Override
+	public void onEdit(ActionEvent value)
+	{
+		try 
+		{
+			//Die passende FXML wird geladen
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenSerie.fxml"));
+			root = loader.load();
+			HinzufuegenSerieController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
+			
+			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
+			hinzufuegenController.promptMedium(this);
+			super.onEdit(value);
+		} catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public String getTabellenTitel()
+	{
+		return "Filme";
 	}
 }
