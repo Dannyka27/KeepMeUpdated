@@ -35,8 +35,6 @@ public class HinzufuegenMusikController extends Controller
 	@Override
 	public void promptMedium(Medium medium)
 	{
-		tabellenName = "Hörspiele";
-		
 		Musik m = (Musik) medium;		
 		
 		if (m.getFranchise() != null)
@@ -52,8 +50,6 @@ public class HinzufuegenMusikController extends Controller
 	@Override
 	public void hSpeichernOnAction(ActionEvent actionEvent)
 	{
-		tabellenName = "Hörspiele";
-		
 		Musik musik = null;
 		if (medium == null)
 			musik = new Musik(-10, "", "", "", "", "", "", "");

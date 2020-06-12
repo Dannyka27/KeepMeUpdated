@@ -53,8 +53,6 @@ public class HinzufuegenZeitschriftController extends Controller
 	@Override
 	public void hSpeichernOnAction(ActionEvent actionEvent)
 	{
-		tabellenName = "Bücher";
-		
 		Zeitschrift zeitung = null;
 		if (medium == null)
 			zeitung = new Zeitschrift(-10, "", "", "", "", "", "", "", "");

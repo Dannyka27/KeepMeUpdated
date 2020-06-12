@@ -20,7 +20,7 @@ public class HinzufuegenSerieController extends ControllerFranchise{
     @FXML
     private ChoiceBox<String> hTypChoiceBox;
 
-    final ObservableList<String> hTypChoiceBoxList = FXCollections.observableArrayList("Normal", "Blu-ray");
+    final ObservableList<String> hTypChoiceBoxList = FXCollections.observableArrayList("Normal", "Bluray");
     final ObservableList<String> hSeasonChoiceBoxList = FXCollections.observableArrayList("1", "2", "3","4","5","6","7","8","9","10");
 
     @FXML
@@ -50,8 +50,6 @@ public class HinzufuegenSerieController extends ControllerFranchise{
     @Override
 	public void hSpeichernOnAction(ActionEvent actionEvent)
 	{
-    	tabellenName = "Filme";
-    	
     	Serie serie = null;
 		if (medium == null)
 			serie = new Serie(-10, "", "", "", "", "", "", "", "", "");

@@ -1,11 +1,14 @@
 package Wishlist;
 
+import MainWindow.MainController;
+import MainWindow.mediaPanes.Medium;
+import MainWindow.mediaPanes.Serie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 public class WishlistSerieController extends WControllerFranchise {
     @FXML
@@ -31,12 +34,38 @@ public class WishlistSerieController extends WControllerFranchise {
         wSeasonChoiceBox.setItems(wSeasonChoiceBoxList);
     }
 
-    public void promptTypBox(String typ)
+    @Override
+    public void promptMedium(Medium medium)
     {
-        wTypChoiceBox.setValue(typ);
+    	Serie s = (Serie) medium;
+    	
+    	wTypChoiceBox.setValue(s.getMedium());
+    	wSeasonChoiceBox.setValue(s.getSeason());
+    	wFranchiseTextField.setText(s.getFranchise());
+		wAlterChoiceBox.setValue(s.getAltersgruppe());
+    	
+    	super.promptMedium(medium);
     }
-    public void promptSeasonBox(String season)
-    {
-        wSeasonChoiceBox.setValue(season);
-    }
+    
+    @Override
+	public void wSpeichernOnAction(ActionEvent actionEvent)
+	{
+    	Serie serie = null;
+		if (medium == null)
+			serie = new Serie(-10, "", "", "", "", "", "", "", "", "");
+		else if (medium instanceof Serie)
+			serie = (Serie) medium;
+		else
+			throw new RuntimeException("Das Medium in HinzufuegenSerieController ist keine Serie!");
+
+		serie.setAltersgruppe(wAlterChoiceBox.getValue());
+		serie.setFranchise(wFranchiseTextField.getText());
+		serie.setMedium(wMediumChoiceBox.getValue());
+		serie.setSeason(wSeasonChoiceBox.getValue());
+
+		medium = serie;
+		super.wSpeichernOnAction(actionEvent);
+		
+		MainController.instanz.videoSortieren("");
+	}
 }

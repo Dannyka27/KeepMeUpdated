@@ -159,6 +159,11 @@ public class Datenbank
 		}
 	}
 
+	/**
+	 * 
+	 * @param m
+	 * @param tabellenname
+	 */
 	public void mediumSpeichern(DatenbankEintrag m, String tabellenname)
 	{
 		Map<String, String> sw = m.dbSchluesselWerte();

@@ -17,7 +17,7 @@ public class HinzufuegenFilmController extends ControllerFranchise{
     @FXML
     private ChoiceBox<String> hTypChoiceBox;
 
-    final ObservableList<String> hTypChoiceBoxList = FXCollections.observableArrayList("Normal", "Blu-ray");
+    final ObservableList<String> hTypChoiceBoxList = FXCollections.observableArrayList("Normal", "Bluray");
 
     @FXML
     void initialize() {
