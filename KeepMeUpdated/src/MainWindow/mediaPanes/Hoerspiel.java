@@ -24,7 +24,6 @@ public class Hoerspiel extends Medium
 	@Override
 	protected void updateInfos()
 	{
-		super.updateInfos();
 		addInfo("Folge", "" + folge);
 		addInfo("Altersgruppe", altersgruppe);
 	}

@@ -27,7 +27,6 @@ public class Zeitschrift extends Medium
 	@Override
 	protected void updateInfos()
 	{
-		super.updateInfos();
 		addInfo("Ausgabe", ausgabe);
 		addInfo("Herausgeber", herausgeber);
 		addInfo("Genre", genre);

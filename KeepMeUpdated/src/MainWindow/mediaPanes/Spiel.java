@@ -28,7 +28,6 @@ public class Spiel extends Medium
 	@Override
 	protected void updateInfos()
 	{
-		super.updateInfos();
 		addInfo("Altersgruppe", altersgruppe);
 		addInfo("Franchise", franchise);
 		addInfo("Plattform", plattform);

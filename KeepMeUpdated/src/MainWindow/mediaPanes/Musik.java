@@ -25,7 +25,6 @@ public class Musik extends Medium
 	@Override
 	protected void updateInfos()
 	{
-		super.updateInfos();
 		addInfo("Genre", genre);
 		addInfo("Franchise", franchise);
 	}

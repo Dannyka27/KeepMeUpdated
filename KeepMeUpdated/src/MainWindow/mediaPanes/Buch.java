@@ -29,7 +29,6 @@ public class Buch extends Medium
 	@Override
 	protected void updateInfos()
 	{
-		super.updateInfos();
 		addInfo("Genre", genre);
 		addInfo("Autor", autor);
 		addInfo("Franchise", franchise);

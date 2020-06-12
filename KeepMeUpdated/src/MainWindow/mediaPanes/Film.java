@@ -27,7 +27,6 @@ public class Film extends Medium
 	@Override
 	protected void updateInfos()
 	{
-		super.updateInfos();
 		addInfo("Medium", medium);
 		addInfo("Franchise", franchise);
 		addInfo("Altersgruppe", altersgruppe);

@@ -29,7 +29,6 @@ public class Serie extends Medium
 	@Override
 	protected void updateInfos()
 	{
-		super.updateInfos();
 		addInfo("Season", "" + season);
 		addInfo("Altersgruppe", altersgruppe);
 		addInfo("Franchise", franchise);
