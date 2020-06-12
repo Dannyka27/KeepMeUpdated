@@ -47,7 +47,6 @@ public class Controller
 			"Jan");
 	
 	protected Medium medium;
-	protected String tabellenName = null;
 	
 	@FXML
 	private void boxenFuellen()
@@ -190,7 +189,7 @@ public class Controller
 		medium.setStandort(hStandortChoiceBox.getValue());
 		medium.setLink(""); //TODO Wo isser?
 		
-		Main.db.mediumSpeichern(medium, tabellenName);
+		Main.db.mediumSpeichern(medium, medium.getTabellenTitel());
 		System.out.println("ControllerMedium Gespeichert!");
 		
 		//Lade Accordion neu wenn Update Methode vorhanden

@@ -1,5 +1,9 @@
 package Wishlist;
 
+import MainWindow.MainController;
+import MainWindow.mediaPanes.Hoerspiel;
+import MainWindow.mediaPanes.Medium;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -43,9 +47,34 @@ public class WishlistHoerspielController extends WControllerAlter {
         }
     }
 
-    public void promptFolge(String folge)
+    @Override
+    public void promptMedium(Medium medium)
     {
-        if(folge != null)
-        {wFolgeTextField.setPromptText(folge);}
+    	Hoerspiel h = (Hoerspiel) medium;
+    	
+    	wFolgeTextField.setPromptText("" + h.getFolge());
+		wAlterChoiceBox.setValue(h.getAltersgruppe());
+    	
+    	super.promptMedium(medium);
     }
+    
+    @Override
+	public void wSpeichernOnAction(ActionEvent actionEvent)
+	{
+    	Hoerspiel hoerspiel = null;
+		if (medium == null)
+			hoerspiel = new Hoerspiel(-10, "", "", -3, "", "", "", "");
+		else if (medium instanceof Hoerspiel)
+			hoerspiel = (Hoerspiel) medium;
+		else
+			throw new RuntimeException("Das Medium in HinzufuegenHoerspielController ist kein Hörspiel!");
+
+		hoerspiel.setAltersgruppe(wAlterChoiceBox.getValue());
+		hoerspiel.setFolge(Integer.parseInt(wFolgeTextField.getText()));
+
+		medium = hoerspiel;
+		super.wSpeichernOnAction(actionEvent);
+		
+		MainController.instanz.audioSortieren("");
+	}
 }

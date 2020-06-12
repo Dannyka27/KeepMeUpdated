@@ -61,8 +61,6 @@ public class HinzufuegenHoerspielController extends ControllerAlter{
     @Override
 	public void hSpeichernOnAction(ActionEvent actionEvent)
 	{
-		tabellenName = "Hörspiele";
-		
     	Hoerspiel hoerspiel = null;
 		if (medium == null)
 			hoerspiel = new Hoerspiel(-10, "", "", -3, "", "", "", "");

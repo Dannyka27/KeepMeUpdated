@@ -42,8 +42,6 @@ public class HinzufuegenFilmController extends ControllerFranchise{
     @Override
     public void hSpeichernOnAction(ActionEvent actionEvent)
     {
-    	tabellenName = "Filme";
-    	
 		Film film = null;
     	if(medium == null)
     		film = new Film(-10, "", "", "", "", "", "", "", "");

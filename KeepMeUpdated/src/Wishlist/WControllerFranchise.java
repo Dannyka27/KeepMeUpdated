@@ -6,7 +6,7 @@ import javafx.scene.input.*;
 
 public class WControllerFranchise extends WControllerAlter{
     @FXML
-    private TextField wFranchiseTextField;
+	protected TextField wFranchiseTextField;
 
     //String getFranchise(){return hFranchiseTextField.getText();}  merken
     void initialize()
@@ -21,10 +21,5 @@ public class WControllerFranchise extends WControllerAlter{
                     }
                 }
         );
-    }
-    public void promptFranchise(String franchise)
-    {
-        if(franchise != null)
-        {wFranchiseTextField.setPromptText(franchise);}
     }
 }

@@ -42,8 +42,6 @@ public class HinzufuegenGameController extends ControllerFranchise{
     @Override
 	public void hSpeichernOnAction(ActionEvent actionEvent)
 	{
-		tabellenName = "Spiele";
-    	
     	Spiel spiel = null;
 		if (medium == null)
 			spiel = new Spiel(-10, "", "", "", "", "", "", "", "");

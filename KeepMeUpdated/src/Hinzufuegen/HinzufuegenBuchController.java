@@ -50,8 +50,6 @@ public class HinzufuegenBuchController extends ControllerFranchise
 	@Override
 	public void hSpeichernOnAction(ActionEvent actionEvent)
 	{
-		tabellenName = "Bücher";
-
 		Buch buch = null;
 		if (medium == null)
 			buch = new Buch(-10, "", "", "", "", "", "", "", "", "");
