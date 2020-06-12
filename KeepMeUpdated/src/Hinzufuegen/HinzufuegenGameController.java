@@ -1,5 +1,6 @@
 package Hinzufuegen;
 
+import MainWindow.MainController;
 import MainWindow.mediaPanes.Medium;
 import MainWindow.mediaPanes.Spiel;
 import javafx.collections.FXCollections;
@@ -57,5 +58,7 @@ public class HinzufuegenGameController extends ControllerFranchise{
 
 		medium = spiel;
 		super.hSpeichernOnAction(actionEvent);
+		
+		MainController.instanz.gamesSortieren("");
 	}
 }

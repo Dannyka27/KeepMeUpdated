@@ -160,6 +160,8 @@ public class Controller
 	
 	public void promptMedium(Medium medium)
 	{
+		this.medium = medium;
+		
 		hTitelTextField.setPromptText(medium.getTitel());
 		hUntertitelTextField.setPromptText(medium.getUntertitel());
 		hZusatzinfoTextField.setPromptText(medium.getZusatzinformationen());

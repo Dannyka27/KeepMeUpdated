@@ -1,5 +1,7 @@
 package MainWindow;
 
+import java.util.Arrays;
+
 import datenhaltung.Datenbank;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +11,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
-
+	public static final boolean DEBUG = true;
+	
 	public static Datenbank db = new Datenbank(
 			"C:\\Users\\clair\\Nextcloud\\FH\\Semester 2\\Informatik 2\\Praktikum\\Medien.accdb");
 
@@ -27,6 +30,7 @@ public class Main extends Application
 
 	public static void main(String[] args)
 	{
+		System.out.println("Starte Programm mit Argumenten: " + Arrays.toString(args));
 		launch(args);
 	}
 }

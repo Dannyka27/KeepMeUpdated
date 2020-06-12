@@ -1,5 +1,6 @@
 package Hinzufuegen;
 
+import MainWindow.MainController;
 import MainWindow.mediaPanes.Hoerspiel;
 import MainWindow.mediaPanes.Medium;
 import javafx.event.ActionEvent;
@@ -75,5 +76,7 @@ public class HinzufuegenHoerspielController extends ControllerAlter{
 
 		medium = hoerspiel;
 		super.hSpeichernOnAction(actionEvent);
+		
+		MainController.instanz.audioSortieren("");
 	}
 }

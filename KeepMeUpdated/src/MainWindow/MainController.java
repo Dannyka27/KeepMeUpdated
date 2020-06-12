@@ -181,6 +181,8 @@ public class MainController
 	@FXML
 	private void initialize()
 	{
+		MainController.instanz = this;
+		
 		videoSortierenChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> oV, String oldValue, String newValue)

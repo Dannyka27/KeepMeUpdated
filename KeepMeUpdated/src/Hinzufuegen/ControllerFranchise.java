@@ -22,9 +22,4 @@ public class ControllerFranchise extends ControllerAlter{
         }
         );
     }
-    public void promptFranchise(String franchise)
-    {
-        if(franchise != null)
-        {hFranchiseTextField.setPromptText(franchise);}
-    }
 }

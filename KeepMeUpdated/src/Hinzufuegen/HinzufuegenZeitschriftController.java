@@ -1,5 +1,6 @@
 package Hinzufuegen;
 
+import MainWindow.MainController;
 import MainWindow.mediaPanes.Medium;
 import MainWindow.mediaPanes.Zeitschrift;
 import javafx.collections.FXCollections;
@@ -68,5 +69,7 @@ public class HinzufuegenZeitschriftController extends Controller
 
 		medium = zeitung;
 		super.hSpeichernOnAction(actionEvent);
+		
+		MainController.instanz.biblioSortieren("");
 	}
 }

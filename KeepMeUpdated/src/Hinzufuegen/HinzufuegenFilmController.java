@@ -1,6 +1,6 @@
 package Hinzufuegen;
 
-import MainWindow.mediaPanes.Buch;
+import MainWindow.MainController;
 import MainWindow.mediaPanes.Film;
 import MainWindow.mediaPanes.Medium;
 import javafx.collections.FXCollections;
@@ -47,7 +47,7 @@ public class HinzufuegenFilmController extends ControllerFranchise{
 		Film film = null;
     	if(medium == null)
     		film = new Film(-10, "", "", "", "", "", "", "", "");
-    	else if(medium instanceof Buch)
+    	else if(medium instanceof Film)
     		film = (Film) medium;
     	else
     		throw new RuntimeException("Das Medium in HinzufuegenFilmController ist kein Film!");
@@ -58,5 +58,7 @@ public class HinzufuegenFilmController extends ControllerFranchise{
     	
     	medium = film;
        	super.hSpeichernOnAction(actionEvent);
+       	
+       	MainController.instanz.videoSortieren("");
     }
 }

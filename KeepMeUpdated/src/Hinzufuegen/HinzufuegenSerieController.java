@@ -1,5 +1,6 @@
 package Hinzufuegen;
 
+import MainWindow.MainController;
 import MainWindow.mediaPanes.Medium;
 import MainWindow.mediaPanes.Serie;
 import javafx.collections.FXCollections;
@@ -66,5 +67,7 @@ public class HinzufuegenSerieController extends ControllerFranchise{
 
 		medium = serie;
 		super.hSpeichernOnAction(actionEvent);
+		
+		MainController.instanz.videoSortieren("");
 	}
 }

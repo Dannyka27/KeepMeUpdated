@@ -1,5 +1,6 @@
 package Hinzufuegen;
 
+import MainWindow.MainController;
 import MainWindow.mediaPanes.Buch;
 import MainWindow.mediaPanes.Medium;
 import javafx.collections.FXCollections;
@@ -32,39 +33,41 @@ public class HinzufuegenBuchController extends ControllerFranchise
 		hbGenreChoiceBox.setValue("Krimi");
 		hbGenreChoiceBox.setItems(hbGenreList);
 	}
-	
+
 	@Override
 	public void promptMedium(Medium medium)
 	{
 		Buch b = (Buch) medium;
-		
+
 		hbGenreChoiceBox.setValue(b.getGenre());
 		hbAutorTextField.setPromptText(b.getAutor());
 		hFranchiseTextField.setText(b.getFranchise());
 		hAlterChoiceBox.setValue(b.getAltersgruppe());
-		
+
 		super.promptMedium(medium);
 	}
 
 	@Override
-    public void hSpeichernOnAction(ActionEvent actionEvent)
-    {
+	public void hSpeichernOnAction(ActionEvent actionEvent)
+	{
 		tabellenName = "Bücher";
-		
+
 		Buch buch = null;
-    	if(medium == null)
-    		buch = new Buch(-10, "", "", "", "", "", "", "", "", "");
-    	else if(medium instanceof Buch)
-    		buch = (Buch) medium;
-    	else
-    		throw new RuntimeException("Das Medium in HinzufuegenBuchController ist kein Buch!");
-    	
-    	buch.setGenre(hbGenreChoiceBox.getValue());
-    	buch.setAutor(hbAutorTextField.getText());
-    	buch.setFranchise(hFranchiseTextField.getText());
-    	buch.setAltersgruppe(hAlterChoiceBox.getValue());
-    	
-    	medium = buch;
-       	super.hSpeichernOnAction(actionEvent);
-    }
+		if (medium == null)
+			buch = new Buch(-10, "", "", "", "", "", "", "", "", "");
+		else if (medium instanceof Buch)
+			buch = (Buch) medium;
+		else
+			throw new RuntimeException("Das Medium in HinzufuegenBuchController ist kein Buch!");
+
+		buch.setGenre(hbGenreChoiceBox.getValue());
+		buch.setAutor(hbAutorTextField.getText());
+		buch.setFranchise(hFranchiseTextField.getText());
+		buch.setAltersgruppe(hAlterChoiceBox.getValue());
+
+		medium = buch;
+		super.hSpeichernOnAction(actionEvent);
+
+		MainController.instanz.biblioSortieren("");
+	}
 }

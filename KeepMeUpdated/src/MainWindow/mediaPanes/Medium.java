@@ -76,6 +76,11 @@ public class Medium extends TitledPane implements DatenbankEintrag
 	public void updateRahmenInfos()
 	{
 		pnlInfo.getChildren().remove(0, pnlInfo.getChildren().size());
+		
+		//Zeige Datenbank IDs im Debug Modus an
+		if(Main.DEBUG)
+			addInfo("ID", "" + getID());
+		
 		addInfo("Zusatzinformationen", zusatzinformationen);
 		updateInfos();
 		addInfo("Standort", standort);
@@ -86,7 +91,19 @@ public class Medium extends TitledPane implements DatenbankEintrag
 
 	protected void updateInfos()
 	{
-
+		
+	}
+	
+	public boolean updateParentAccordion()
+	{
+		if(updateMethod == null)
+		{
+			System.out.println("Hinweis: Konnte Acordion nicht updaten weil keine Update Methode spezifiziert wurde!");
+			return false;
+		}
+		
+		updateMethod.accept("");
+		return true;
 	}
 
 	public int getID()
@@ -144,6 +161,11 @@ public class Medium extends TitledPane implements DatenbankEintrag
 		this.link = link;
 	}
 	
+	public void setUpdateMethod(Consumer<String> func)
+	{
+		this.updateMethod = func;
+	}
+	
 	public void onEdit(ActionEvent value)
 	{
 		//Die Stage wird angelegt und die FXML hinzugefÃ¼gt
@@ -154,7 +176,6 @@ public class Medium extends TitledPane implements DatenbankEintrag
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show();
-	
 	}
 	
 	public void setOnDelete(EventHandler<ActionEvent> value)
@@ -183,20 +204,9 @@ public class Medium extends TitledPane implements DatenbankEintrag
 		return null;
 	}
 	
-	public boolean updateParentAccordion()
+	@Override
+	public String toString()
 	{
-		if(updateMethod == null)
-		{
-			System.out.println("Hinweis: Konnte Acordion nicht updaten weil keine Update Methode spezifiziert wurde!");
-			return false;
-		}
-		
-		updateMethod.accept("");
-		return true;
-	}
-	
-	public void setUpdateMethod(Consumer<String> func)
-	{
-		this.updateMethod = func;
+		return String.format("%s %s: %s (%d)", getClass().getSimpleName(), getTitel(), getUntertitel(), getID());
 	}
 }

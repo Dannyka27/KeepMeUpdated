@@ -1,5 +1,6 @@
 package Hinzufuegen;
 
+import MainWindow.MainController;
 import MainWindow.mediaPanes.Medium;
 import MainWindow.mediaPanes.Musik;
 import javafx.collections.FXCollections;
@@ -66,5 +67,7 @@ public class HinzufuegenMusikController extends Controller
 
 		medium = musik;
 		super.hSpeichernOnAction(actionEvent);
+		
+		MainController.instanz.audioSortieren("");
 	}
 }
