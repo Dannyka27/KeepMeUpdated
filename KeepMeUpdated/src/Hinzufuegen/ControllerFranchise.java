@@ -8,18 +8,13 @@ public class ControllerFranchise extends ControllerAlter{
     @FXML
     protected TextField hFranchiseTextField;
 
-    //String getFranchise(){return hFranchiseTextField.getText();}  merken
     void initialize()
     {
         super.initialize();
-        hFranchiseTextField.setOnKeyPressed(keyEvent ->
-        {
-            if(keyEvent.getCode() == KeyCode.ENTER)
-            {
-                //Platzhalter für Code, wenn Enter gedrueckt wird, schreibt er den Inhalt des TextFields in die Konsole
-                System.out.println(hFranchiseTextField.getText());
-            }
-        }
-        );
+    }
+    public void promptFranchise(String franchise)
+    {
+        if(franchise != null)
+        {hFranchiseTextField.setPromptText(franchise);}
     }
 }

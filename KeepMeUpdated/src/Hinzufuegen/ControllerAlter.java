@@ -21,4 +21,9 @@ public class ControllerAlter extends Controller{
         hAlterChoiceBox.setValue("Familie");
         hAlterChoiceBox.setItems(hAlterChoiceBoxList);
     }
+
+    public void promptAlterBox(String alter)
+    {
+        hAlterChoiceBox.setValue(alter);
+    }
 }

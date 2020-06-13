@@ -1,39 +1,23 @@
 package MainWindow.mediaPanes;
 
-import java.io.IOException;
 import java.util.LinkedHashMap;
-
-import Hinzufuegen.HinzufuegenBuchController;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 
 public class Buch extends Medium
 {
 	private String genre;
-	private String autor;
-	private String franchise;
-	private String altersgruppe;
-
-	public Buch(int ID, String titel, String untertitel, String genre, String standort, String autor,
-			String zusatzinformationen, String franchise, String altersgruppe, String link)
-	{
-		super(ID, titel, untertitel, zusatzinformationen, standort, link);
-		this.genre = genre;
-		this.autor = autor;
-		this.franchise = franchise;
-		this.altersgruppe = altersgruppe;
-
-		updateRahmenInfos();
-	}
-
-	@Override
-	protected void updateInfos()
-	{
-		addInfo("Genre", genre);
-		addInfo("Autor", autor);
-		addInfo("Franchise", franchise);
-		addInfo("Altersgruppe", altersgruppe);
-	}
+    private String autor;
+    private String franchise;
+    private String altersgruppe;
+    
+    public Buch(int ID, String titel, String untertitel, String genre, String standort, String autor,
+                String zusatzinformationen, String franchise, String altersgruppe, String link)
+    {
+        super(ID, titel, untertitel, zusatzinformationen, standort, link);
+        this.genre = genre;
+        this.autor = autor;
+        this.franchise = franchise;
+        this.altersgruppe = altersgruppe;
+    }
 
 	@Override
 	public LinkedHashMap<String, String> dbSchluesselWerte()
@@ -85,25 +69,6 @@ public class Buch extends Medium
 	public void setAltersgruppe(String altersgruppe)
 	{
 		this.altersgruppe = altersgruppe;
-	}
-	
-	@Override
-	public void onEdit(ActionEvent value)
-	{
-		try 
-		{
-			//Die passende FXML wird geladen
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenBuch.fxml"));
-			root = loader.load();
-			HinzufuegenBuchController hinzufuegenController = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
-			
-			//Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
-			hinzufuegenController.promptMedium(this);
-			super.onEdit(value);
-		} catch(IOException e)
-		{
-			e.printStackTrace();
-		}
 	}
 	
 	@Override

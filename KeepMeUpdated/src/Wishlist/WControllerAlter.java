@@ -10,7 +10,7 @@ public class WControllerAlter extends WController{
     @FXML
     private Label wAlterLabel;
     @FXML
-	protected ChoiceBox<String> wAlterChoiceBox;
+    protected ChoiceBox<String> wAlterChoiceBox;
     final ObservableList<String> wAlterChoiceBoxList = FXCollections.observableArrayList("Kinder", "Familie", "Eltern");
 
     @FXML
@@ -19,5 +19,9 @@ public class WControllerAlter extends WController{
         super.initialize();
         wAlterChoiceBox.setValue("Familie");
         wAlterChoiceBox.setItems(wAlterChoiceBoxList);
+    }
+    public void promptAlterBox(String alter)
+    {
+        wAlterChoiceBox.setValue(alter);
     }
 }

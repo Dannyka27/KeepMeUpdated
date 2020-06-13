@@ -26,37 +26,30 @@ public class HinzufuegenGameController extends ControllerFranchise{
         hgPlattformChoiceBox.setValue("PS4");
         hgPlattformChoiceBox.setItems(hgPlattformChoiceBoxList);
     }
-    
-    @Override
-    public void promptMedium(Medium medium)
+
+    public void promptPlattformBox(String plattform)
     {
-    	Spiel s = (Spiel) medium;
-    	
-    	hgPlattformChoiceBox.setValue(s.getPlattform());
-    	hFranchiseTextField.setText(s.getFranchise());
-		hAlterChoiceBox.setValue(s.getAltersgruppe());
-    	
-    	super.promptMedium(medium);
+        hgPlattformChoiceBox.setValue(plattform);
     }
-    
+
     @Override
-	public void hSpeichernOnAction(ActionEvent actionEvent)
-	{
-    	Spiel spiel = null;
-		if (medium == null)
-			spiel = new Spiel(-10, "", "", "", "", "", "", "", "");
-		else if (medium instanceof Spiel)
-			spiel = (Spiel) medium;
-		else
-			throw new RuntimeException("Das Medium in HinzufuegenGameController ist kein Spiel!");
+    public void hSpeichernOnAction(ActionEvent actionEvent)
+    {
+        Spiel spiel = null;
+        if (medium == null)
+            spiel = new Spiel(-10, "", "", "", "", "", "", "", "");
+        else if (medium instanceof Spiel)
+            spiel = (Spiel) medium;
+        else
+            throw new RuntimeException("Das Medium in HinzufuegenGameController ist kein Spiel!");
 
-		spiel.setAltersgruppe(hAlterChoiceBox.getValue());
-		spiel.setFranchise(hFranchiseTextField.getText());
-		spiel.setPlattform(hgPlattformChoiceBox.getValue());
+        spiel.setAltersgruppe(hAlterChoiceBox.getValue());
+        spiel.setFranchise(hFranchiseTextField.getText());
+        spiel.setPlattform(hgPlattformChoiceBox.getValue());
 
-		medium = spiel;
-		super.hSpeichernOnAction(actionEvent);
-		
-		MainController.instanz.gamesSortieren("");
-	}
+        medium = spiel;
+        super.hSpeichernOnAction(actionEvent);
+
+        MainController.instanz.gamesSortieren("");
+    }
 }

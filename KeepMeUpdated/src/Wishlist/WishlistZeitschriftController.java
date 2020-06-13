@@ -1,7 +1,6 @@
 package Wishlist;
 
 import MainWindow.MainController;
-import MainWindow.mediaPanes.Medium;
 import MainWindow.mediaPanes.Zeitschrift;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,40 +30,40 @@ public class WishlistZeitschriftController extends WController{
         wzGenreChoiceBox.setItems(wzGenreList);
     }
 
+    public void promptAusgabe(String ausgabe)
+    {
+        if(ausgabe != null)
+        {wzAusgabeTextField.setPromptText(ausgabe);}
+    }
+    public void promptHerausgeber(String herausgeber)
+    {
+        if(herausgeber != null)
+        {wzHerausgeberTextField.setPromptText(herausgeber);}
+    }
+    public void promptGenreBox(String genre)
+    {
+        wzGenreChoiceBox.setValue(genre);
+    }
+
     @Override
-	public void promptMedium(Medium medium)
-	{
-		Zeitschrift z = (Zeitschrift) medium;
-		
-		if (z.getAusgabe() != null)
-			wzHerausgeberTextField.setPromptText(z.getAusgabe());
-		
-		if (z.getHerausgeber() != null)
-			wzHerausgeberTextField.setPromptText(z.getHerausgeber());
-		
-		wzGenreChoiceBox.setValue(z.getGenre());
-		
-		super.promptMedium(medium);
-	}
+    public void wSpeichernOnAction(ActionEvent actionEvent)
+    {
+        Zeitschrift zeitung = null;
+        if (medium == null)
+            zeitung = new Zeitschrift(-10, "", "", "", "", "", "", "", "");
+        else if (medium instanceof Zeitschrift)
+            zeitung = (Zeitschrift) medium;
+        else
+            throw new RuntimeException("Das Medium in HinzufuegenZeitschriftController ist keine Zeitschrift!");
 
-	@Override
-	public void wSpeichernOnAction(ActionEvent actionEvent)
-	{
-		Zeitschrift zeitung = null;
-		if (medium == null)
-			zeitung = new Zeitschrift(-10, "", "", "", "", "", "", "", "");
-		else if (medium instanceof Zeitschrift)
-			zeitung = (Zeitschrift) medium;
-		else
-			throw new RuntimeException("Das Medium in HinzufuegenZeitschriftController ist keine Zeitschrift!");
+        zeitung.setAusgabe(wzAusgabeTextField.getText());
+        zeitung.setHerausgeber(wzHerausgeberTextField.getText());
+        zeitung.setGenre(wzGenreChoiceBox.getValue());
 
-		zeitung.setAusgabe(wzAusgabeTextField.getText());
-		zeitung.setHerausgeber(wzHerausgeberTextField.getText());
-		zeitung.setGenre(wzGenreChoiceBox.getValue());
+        medium = zeitung;
+        super.wSpeichernOnAction(actionEvent);
 
-		medium = zeitung;
-		super.wSpeichernOnAction(actionEvent);
-		
-		MainController.instanz.biblioSortieren("");
-	}
+        MainController.instanz.wzeitschriftlist.clear();
+        MainController.instanz.wishlistfuellen("Bücher", "Zeitschriften");
+    }
 }

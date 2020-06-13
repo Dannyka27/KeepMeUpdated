@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
+
 public class HinzufuegenSerieController extends ControllerFranchise{
     @FXML
     private Label hTypLabel;
@@ -33,39 +34,35 @@ public class HinzufuegenSerieController extends ControllerFranchise{
         hSeasonChoiceBox.setValue("1");
         hSeasonChoiceBox.setItems(hSeasonChoiceBoxList);
     }
-    
-    @Override
-    public void promptMedium(Medium medium)
+
+    public void promptTypBox(String typ)
     {
-    	Serie s = (Serie) medium;
-    	
-    	hTypChoiceBox.setValue(s.getMedium());
-    	hSeasonChoiceBox.setValue(s.getSeason());
-    	hFranchiseTextField.setText(s.getFranchise());
-		hAlterChoiceBox.setValue(s.getAltersgruppe());
-    	
-    	super.promptMedium(medium);
+        hTypChoiceBox.setValue(typ);
     }
-    
+    public void promptSeasonBox(String season)
+    {
+        hSeasonChoiceBox.setValue(season);
+    }
+
     @Override
-	public void hSpeichernOnAction(ActionEvent actionEvent)
-	{
-    	Serie serie = null;
-		if (medium == null)
-			serie = new Serie(-10, "", "", "", "", "", "", "", "", "");
-		else if (medium instanceof Serie)
-			serie = (Serie) medium;
-		else
-			throw new RuntimeException("Das Medium in HinzufuegenSerieController ist keine Serie!");
+    public void hSpeichernOnAction(ActionEvent actionEvent)
+    {
+        Serie serie = null;
+        if (medium == null)
+            serie = new Serie(-10, "", "", "", "", "", "", "", "", "");
+        else if (medium instanceof Serie)
+            serie = (Serie) medium;
+        else
+            throw new RuntimeException("Das Medium in HinzufuegenSerieController ist keine Serie!");
 
-		serie.setAltersgruppe(hAlterChoiceBox.getValue());
-		serie.setFranchise(hFranchiseTextField.getText());
-		serie.setMedium(hMediumChoiceBox.getValue());
-		serie.setSeason(hSeasonChoiceBox.getValue());
+        serie.setAltersgruppe(hAlterChoiceBox.getValue());
+        serie.setFranchise(hFranchiseTextField.getText());
+        serie.setMedium(hMediumChoiceBox.getValue());
+        serie.setSeason(hSeasonChoiceBox.getValue());
 
-		medium = serie;
-		super.hSpeichernOnAction(actionEvent);
-		
-		MainController.instanz.videoSortieren("");
-	}
+        medium = serie;
+        super.hSpeichernOnAction(actionEvent);
+
+        MainController.instanz.videoSortieren("");
+    }
 }

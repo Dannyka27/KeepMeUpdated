@@ -2,13 +2,13 @@ package Hinzufuegen;
 
 import MainWindow.MainController;
 import MainWindow.mediaPanes.Film;
-import MainWindow.mediaPanes.Medium;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+
 
 
 public class HinzufuegenFilmController extends ControllerFranchise{
@@ -26,37 +26,30 @@ public class HinzufuegenFilmController extends ControllerFranchise{
         hTypChoiceBox.setValue("Normal");
         hTypChoiceBox.setItems(hTypChoiceBoxList);
     }
-    
-    @Override
-    public void promptMedium(Medium medium)
+
+    public void promptTyp(String typ)
     {
-    	Film f = (Film) medium;
-    	
-    	hTypChoiceBox.setValue(f.getMedium());
-    	hFranchiseTextField.setText(f.getFranchise());
-		hAlterChoiceBox.setValue(f.getAltersgruppe());
-    	
-    	super.promptMedium(medium);
+        hTypChoiceBox.setValue(typ);
     }
-    
+
     @Override
     public void hSpeichernOnAction(ActionEvent actionEvent)
     {
-		Film film = null;
-    	if(medium == null)
-    		film = new Film(-10, "", "", "", "", "", "", "", "");
-    	else if(medium instanceof Film)
-    		film = (Film) medium;
-    	else
-    		throw new RuntimeException("Das Medium in HinzufuegenFilmController ist kein Film!");
-    	
-    	film.setMedium(hTypChoiceBox.getValue());
-    	film.setFranchise(hFranchiseTextField.getText());
-    	film.setAltersgruppe(hAlterChoiceBox.getValue());
-    	
-    	medium = film;
-       	super.hSpeichernOnAction(actionEvent);
-       	
-       	MainController.instanz.videoSortieren("");
+        Film film = null;
+        if(medium == null)
+            film = new Film(-10, "", "", "", "", "", "", "", "");
+        else if(medium instanceof Film)
+            film = (Film) medium;
+        else
+            throw new RuntimeException("Das Medium in HinzufuegenFilmController ist kein Film!");
+
+        film.setMedium(hTypChoiceBox.getValue());
+        film.setFranchise(hFranchiseTextField.getText());
+        film.setAltersgruppe(hAlterChoiceBox.getValue());
+
+        medium = film;
+        super.hSpeichernOnAction(actionEvent);
+
+        MainController.instanz.videoSortieren("");
     }
 }

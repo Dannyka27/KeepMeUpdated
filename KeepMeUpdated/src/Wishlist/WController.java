@@ -1,5 +1,7 @@
 package Wishlist;
 
+import MainWindow.Main;
+import MainWindow.MainController;
 import MainWindow.mediaPanes.Medium;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,176 +19,196 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class WController
-{
-	@FXML
-	private AnchorPane wAnchorPane;
-	@FXML
-	private Label wStandortLabel;
-	@FXML
-	private Label wMediumLabel;
-	@FXML
-	public ChoiceBox<String> wMediumChoiceBox;
-	@FXML
-	private ChoiceBox<String> wStandortChoiceBox;
-	@FXML
-	private TextField wTitelTextField;
-	@FXML
-	private TextField wLinkTextField;
-	@FXML
-	private TextField wUntertitelTextField;
-	@FXML
-	private TextField wZusatzinfoTextField;
-	@FXML
-	private Button wAbbruchButton;
-	@FXML
-	private Button wSpeichernButton;
+public class WController {
+    @FXML
+    private AnchorPane wAnchorPane;
+    @FXML
+    private Label wStandortLabel;
+    @FXML
+    private Label wMediumLabel;
+    @FXML
+    public ChoiceBox<String> wMediumChoiceBox;
+    @FXML
+    private ChoiceBox<String> wStandortChoiceBox;
+    @FXML
+    private TextField wTitelTextField;
+    @FXML
+    private TextField wLinkTextField;
+    @FXML
+    private TextField wUntertitelTextField;
+    @FXML
+    private TextField wZusatzinfoTextField;
+    @FXML
+    private Button wAbbruchButton;
+    @FXML
+    private Button wSpeichernButton;
+    protected Medium medium;
 
-	final ObservableList<String> wMediumChoiceBoxList = FXCollections.observableArrayList("Filme", "Serien", "Musik",
-			"Hörspiele", "Games", "Bücher", "Zeitschriften");
-	final ObservableList<String> wStandortChoiceBoxList = FXCollections.observableArrayList("Wohnzimmer", "Hanna",
-			"Jan");
+    final ObservableList<String> wMediumChoiceBoxList = FXCollections.observableArrayList("Filme", "Serien", "Musik", "Hörspiele", "Games", "Bücher", "Zeitschriften");
+    final ObservableList<String> wStandortChoiceBoxList = FXCollections.observableArrayList("Wohnzimmer", "Hanna", "Jan");
 
-	protected Medium medium;
-	
-	@FXML
-	private void boxenFuellen()
-	{
-		wMediumChoiceBox.setItems(wMediumChoiceBoxList);
-		wStandortChoiceBox.setValue("Wohnzimmer");
-		wStandortChoiceBox.setItems(wStandortChoiceBoxList);
-	}
+    public void setMedium(Medium medium)
+    {
+        this.medium = medium;
+    }
 
-	@FXML
-	void initialize()
-	{
-		boxenFuellen();
-		wMediumChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observableValue, String altesMedium, String medium)
-			{
-				if (medium.equals("Filme"))
-				{
-					try
-					{
-						fensteroeffnen(530, "/Wishlist/WishlistFilm.fxml");
-					} catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				} else if (medium.equals("Serien"))
-				{
-					try
-					{
-						fensteroeffnen(570, "/Wishlist/WishlistSerie.fxml");
+    @FXML
+    private void boxenFuellen()
+    {
+        wMediumChoiceBox.setItems(wMediumChoiceBoxList);
+        wStandortChoiceBox.setValue("Wohnzimmer");
+        wStandortChoiceBox.setItems(wStandortChoiceBoxList);
+    }
 
-					} catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				} else if (medium.equals("Musik"))
-				{
-					try
-					{
-						fensteroeffnen(490, "/Wishlist/WishlistMusik.fxml");
-					} catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				} else if (medium.equals("Hörspiele"))
-				{
-					try
-					{
-						fensteroeffnen(490, "/Wishlist/WishlistHoerspiel.fxml");
-					} catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				} else if (medium.equals("Games"))
-				{
-					try
-					{
-						fensteroeffnen(530, "/Wishlist/WishlistGame.fxml");
-					} catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				} else if (medium.equals("Bücher"))
-				{
-					try
-					{
-						fensteroeffnen(575, "/Wishlist/WishlistBuch.fxml");
-					} catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				} else if (medium.equals("Zeitschriften"))
-				{
-					try
-					{
-						fensteroeffnen(535, "/Wishlist/WishlistZeitschrift.fxml");
-					} catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		wTitelTextField.setOnKeyPressed(keyEvent -> {
-			if (keyEvent.getCode() == KeyCode.ENTER)
-			{
-				// Platzhalter für Code, wenn Enter gedrueckt wird, schreibt er den Inhalt des
-				// TextFields in die Konsole
-				System.out.println(wTitelTextField.getText());
-			}
-		});
-		wUntertitelTextField.setOnKeyPressed(keyEvent -> {
-			if (keyEvent.getCode() == KeyCode.ENTER)
-			{
-				// Platzhalter für Code, wenn Enter gedrueckt wird, schreibt er den Inhalt des
-				// TextFields in die Konsole
-				System.out.println(wUntertitelTextField.getText());
-			}
-		});
-		wZusatzinfoTextField.setOnKeyPressed(keyEvent -> {
-			if (keyEvent.getCode() == KeyCode.ENTER)
-			{
-				// Platzhalter für Code, wenn Enter gedrueckt wird, schreibt er den Inhalt des
-				// TextFields in die Konsole
-				System.out.println(wZusatzinfoTextField.getText());
-			}
-		});
-	}
+    @FXML
+    void initialize() {
+        boxenFuellen();
+        wMediumChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String altesMedium, String medium) {
+                if (medium.equals("Filme"))
+                {
+                    try {
+                        fensteroeffnen(530, "/Wishlist/WishlistFilm.fxml");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (medium.equals("Serien"))
+                {
+                    try {
+                        fensteroeffnen(570, "/Wishlist/WishlistSerie.fxml");
 
-	public void promptMedium(Medium medium)
-	{
-		this.medium = medium;
-		
-		wTitelTextField.setPromptText(medium.getTitel());
-		wUntertitelTextField.setPromptText(medium.getUntertitel());
-		wZusatzinfoTextField.setPromptText(medium.getZusatzinformationen());
-		wStandortChoiceBox.setValue(medium.getStandort());
-		wLinkTextField.setText(medium.getLink());
-		wMediumChoiceBox.setValue(medium.getClass().getSimpleName());
-		wMediumChoiceBox.setDisable(true);
-	}
-	
-	private void fensteroeffnen(int height, String pfad) throws Exception
-	{
-		Stage app_stage = (Stage) wAnchorPane.getScene().getWindow();
-		app_stage.setHeight(height);
-		AnchorPane pane = FXMLLoader.load(getClass().getResource(pfad));
-		app_stage.setScene(new Scene(pane));
-	}
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (medium.equals("Musik"))
+                {
+                    try {
+                        fensteroeffnen(490, "/Wishlist/WishlistMusik.fxml");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (medium.equals("Hörspiele"))
+                {
+                    try {
+                        fensteroeffnen(490, "/Wishlist/WishlistHoerspiel.fxml");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (medium.equals("Games"))
+                {
+                    try {
+                        fensteroeffnen(530, "/Wishlist/WishlistGame.fxml");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (medium.equals("Bücher"))
+                {
+                    try {
+                        fensteroeffnen(575, "/Wishlist/WishlistBuch.fxml");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (medium.equals("Zeitschriften"))
+                {
+                    try {
+                        fensteroeffnen(535, "/Wishlist/WishlistZeitschrift.fxml");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        wTitelTextField.setOnKeyPressed(keyEvent ->
+                {
+                    if(keyEvent.getCode() == KeyCode.ENTER)
+                    {
+                        //Platzhalter für Code, wenn Enter gedrueckt wird, schreibt er den Inhalt des TextFields in die Konsole
+                        System.out.println(wTitelTextField.getText());
+                    }
+                }
+        );
+        wUntertitelTextField.setOnKeyPressed(keyEvent ->
+                {
+                    if(keyEvent.getCode() == KeyCode.ENTER)
+                    {
+                        //Platzhalter für Code, wenn Enter gedrueckt wird, schreibt er den Inhalt des TextFields in die Konsole
+                        System.out.println(wUntertitelTextField.getText());
+                    }
+                }
+        );
+        wZusatzinfoTextField.setOnKeyPressed(keyEvent ->
+                {
+                    if(keyEvent.getCode() == KeyCode.ENTER)
+                    {
+                        //Platzhalter für Code, wenn Enter gedrueckt wird, schreibt er den Inhalt des TextFields in die Konsole
+                        System.out.println(wZusatzinfoTextField.getText());
+                    }
+                }
+        );
+    }
+    public void promptTitel(String titel)
+    {
+        wTitelTextField.setPromptText(titel);
+    }
+    public void promptUntertitel(String untertitel)
+    {
+        if(untertitel != null)
+        {wUntertitelTextField.setPromptText(untertitel);}
+    }
+    public void promptZusatzinfo(String zusatzinfo)
+    {
+        if(zusatzinfo != null)
+        {wZusatzinfoTextField.setPromptText(zusatzinfo);}
+    }
+    public void promptMediumBox(String medium)
+    {
+        wMediumChoiceBox.setValue(medium);
+    }
+    public void promptStandortBox(String standort)
+    {
+        wStandortChoiceBox.setValue(standort);
+    }
+    public void promptLink(String link)
+    {
+        if(link != null)
+        {wLinkTextField.setPromptText(link);}
+    }
+    private void fensteroeffnen(int height, String pfad) throws Exception
+    {
+        Stage app_stage = (Stage) wAnchorPane.getScene().getWindow();
+        app_stage.setHeight(height);
+        AnchorPane pane = FXMLLoader.load(getClass().getResource(pfad));
+        app_stage.setScene(new Scene(pane));
+    }
+    public void wSpeichernOnAction(ActionEvent actionEvent)
+    {
+        // Medium Klasse aktualisieren und dann die Speichermethode aufrufen um das
+        // Medium in die Datenbank zu schreiben
 
-	public void wSpeichernOnAction(ActionEvent actionEvent)
-	{ // TODO abschließen und Speichern des Eingabevorgangs
-	}
+        medium.setTitel(wTitelTextField.getText());
+        medium.setUntertitel(wUntertitelTextField.getText());
+        medium.setZusatzinformationen(wZusatzinfoTextField.getText());
+        medium.setStandort(wStandortChoiceBox.getValue());
+        medium.setLink(wLinkTextField.getText());
 
-	public void wAbbruchOnAction(ActionEvent actionEvent)
-	{
-		// stage = fenster der Szene wo der Button sitzt
-		Stage akutelleStage = (Stage) wAbbruchButton.getScene().getWindow();
-		akutelleStage.close();
-	}
+        Main.db.mediumSpeichern(medium, medium.getTabellenTitel());
+        System.out.println("ControllerMedium Gespeichert!");
+
+        Stage akutelleStage = (Stage) wAbbruchButton.getScene().getWindow();
+        akutelleStage.close();
+
+    }
+    public void wAbbruchOnAction(ActionEvent actionEvent) {
+        //stage = fenster der Szene wo der Button sitzt
+        Stage akutelleStage = (Stage) wAbbruchButton.getScene().getWindow();
+        akutelleStage.close();
+    }
+
 }

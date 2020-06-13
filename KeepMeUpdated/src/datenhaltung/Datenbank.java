@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -197,22 +198,25 @@ public class Datenbank
 	}
 
 	/**
-	 * Speichert die Schlüssel-Werte Paare die von der Klasse Medium und den Kindklassen generiert werden in die Datenbank.
+	 * Speichert die Schlüssel-Werte Paare, die von der Klasse Medium und den Kindklassen generiert werden, in die Datenbank.
 	 * 
 	 * Da sich der Befehl um eine Zeile zu bearbeiten von dem Befehl eine Zeile hinzufügen unterschreidet, wird geguckt ob
 	 * das Medium eine ID hat die größer ist als Null, wenn ja wird davon ausgegangen, dass für das Medium bereits ein Eintrag
 	 * existiert und die Änderungen an dem Medium werden in die Datenbank geschrieben. Wenn nein wird ein Neuer Eintrag in der
 	 * Datenbank erzeugt.
 	 * 
-	 * Beim Abspeichern werden leere Strings oder Null behandelt als seien sie nicht vorhanden, sprich leere Strings
+	 * Beim Abspeichern werden leere Strings behandelt, als seien sie nicht vorhanden, sprich leere Strings
 	 * werden nicht in die Datenbank gespeichert und überschreiben somit keine bereits vorhandenen Daten oder Null.
+	 * 
+	 * Anders sieht es aus, wenn ein Wert in der LinkedHashMap auf NULL gesetzt ist. Dies ist z.B. nützlich, 
+	 * um den Link zu löschen um ein Medium aus der Wishlist in entsprechende Mediathek zu verschieben.
 	 * @param m Das Medium, das in die Datenbank geschrieben werden soll. Die Schlüssel-Werte Pare generiert die Klasse mit dem Aufruf von {@link MainWindow.mediaPanes.Medium#dbSchluesselWerte()} generiert.
 	 * @param tabellenname Der Name der Datenbank Tabelle, in die gespeichert werden soll. Die Methode {@link MainWindow.mediaPanes.Medium#getTabellenTitel()} liefert das gewünschte.
 	 * @return Die Anzahl an Einträgen, die geändert wurde. Dieser sollte immer 1 betragen wenn alles glatt gegangen ist, bei anderen Zahlen ist ein Fehler aufgetreten. 
 	 */
 	public int mediumSpeichern(DatenbankEintrag m, String tabellenname)
 	{
-		Map<String, String> sw = m.dbSchluesselWerte();
+		LinkedHashMap<String, String> sw = m.dbSchluesselWerte();
 
 		String schluesselI = "";
 		String werteI = "";
@@ -223,27 +227,43 @@ public class Datenbank
 
 		for (Map.Entry<String, String> e : sw.entrySet())
 		{
+			//Wenn ein Wert einer Spalte NULL ist, soll diese aus der Datenbank gelöscht werden.
 			if (e.getValue() == null)
 			{
-				System.err.println("Warnung: Ein Schlüssel beim Speichern ist null (" + e.getKey() + ")!");
-				continue;
+				System.out.printf("Der Eintrag aus %s mit Spaltenname %s wird aus der Datenbank gelöscht." + m.toString(), e.getKey());
+				
+				//Generiere String für Datenbankaufruf
+				if (schluesselI.length() > 0 && werteI.length() > 0 && paareU.length() > 0)
+				{
+					schluesselI += ",";
+					werteI += ",";
+					paareU += ",";
+				}
+
+				schluesselI += e.getKey();
+				werteI += "NULL";
+				paareU += e.getKey() + "=NULL";
 			}
-
-			//Überspringe leere Schlüssel/Werte
-			if (e.getKey().length() < 1 || e.getValue().length() < 1)
-				continue;
-
-			//Generiere String für Datenbankaufruf
-			if (schluesselI.length() > 0 && werteI.length() > 0 && paareU.length() > 0)
+			
+			//Es soll kein Wert aus einer Spalte gelöscht werden, behandle wie üblich
+			else
 			{
-				schluesselI += ",";
-				werteI += ",";
-				paareU += ",";
-			}
+				//Überspringe leere Schlüssel/Werte, da davon ausgegangen wird, das diese nicht geändert wurden.
+				if (e.getKey().length() < 1 || e.getValue().length() < 1)
+					continue;
 
-			schluesselI += e.getKey();
-			werteI += '\'' + e.getValue() + '\'';
-			paareU += e.getKey() + "='" + e.getValue() + '\'';
+				//Generiere String für Datenbankaufruf
+				if (schluesselI.length() > 0 && werteI.length() > 0 && paareU.length() > 0)
+				{
+					schluesselI += ",";
+					werteI += ",";
+					paareU += ",";
+				}
+
+				schluesselI += e.getKey();
+				werteI += '\'' + e.getValue() + '\'';
+				paareU += e.getKey() + "='" + e.getValue() + '\'';
+			}
 		}
 
 		int updated = -1;
@@ -281,23 +301,24 @@ public class Datenbank
 
 	/**
 	 * Löscht einen Eintrag aus der Datenbank. Hierfür wird die ID vom Medium heran gezogen.
-	 * @param de Das Medium, das aus der Datenbank gelöscht werden soll. 
+	 * @param id Das Medium, das aus der Datenbank gelöscht werden soll. 
+	 * @param name Der Name des Elements, kann weggelassen werden wird nur auf der Konsole ausgegeben.
 	 * @param tabellenname Der Name der Datenbank Tabelle, in die gespeichert werden soll. Die Methode {@link MainWindow.mediaPanes.Medium#getTabellenTitel()} liefert das gewünschte.
 	 * @return Die Anzahl an Einträgen, die gelöscht wurden. Dieser sollte immer 1 betragen wenn alles glatt gegangen ist, bei anderen Zahlen ist ein Fehler aufgetreten.
 	 */
-	public int eintragLoeschen(DatenbankEintrag de, String tabellenname)
-	{
-		try
-		{
-			System.out.println("Lösche eintrag: " + de.toString());
+	public int eintragLoeschen(int id, String name, String tabellenname)
+    {
+        try
+        {
+            System.out.println("Lösche eintrag: " + name);
 
-			Statement statement = conn.createStatement();
-			return statement
-					.executeUpdate("DELETE FROM " + tabellenname + " WHERE ID=" + de.dbSchluesselWerte().get("ID"));
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return -1;
-	}
+            Statement statement = conn.createStatement();
+            return statement
+                    .executeUpdate("DELETE FROM " + tabellenname + " WHERE ID=" + id);
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }
