@@ -2,19 +2,29 @@ package Hinzufuegen;
 
 import MainWindow.MainController;
 import MainWindow.mediaPanes.Hoerspiel;
+import alert.AlertAufrufe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import Newslist.Newslist;
 import org.apache.commons.lang3.StringUtils;
+
+/**
+ * Controller für HinzufuegenHoerspiel.fxml
+ * @author Hanna
+ *
+ * hSpeichernOnAction
+ * @author Anika
+ */
 
 public class HinzufuegenHoerspielController extends ControllerAlter{
     @FXML
     private TextField hFolgeTextField;
 
     @FXML
-    void initialize() {
+    void initialize()
+    {
         hMediumChoiceBox.setValue("Hörspiele");
         super.initialize();
         hFolgeTextField.setOnKeyPressed(keyEvent ->
@@ -26,11 +36,24 @@ public class HinzufuegenHoerspielController extends ControllerAlter{
         });
     }
 
+    /**
+     * Diese Methode wird aus initialize aufgerufen, wenn aus dem wFolgeTextField heraus 'Enter'
+     * oder 'Tab' gedrückt wurde. Außerdem wurde sie unten als Bedingung für die Speichern Methode
+     * eingebaut, damit nur ints gespeichert werden können. Außerdem soll es auch möglich sein,
+     * keine Folennummer anzugeben, daher wird nur versucht einen int zu parsen, wenn das Feld nicht
+     * leer ist. So wird keine Fehlermeldung ausgegeben, da sonst kein int von null geparst
+     * werden kann. Der Fehler wird über die Methode 'zahlAlert' der Klasse 'AlertAufrufe' des
+     * Packages 'alert' aufgerufen, übergeben wird der String f.
+     * @param f Die Eingabe aus dem TextField
+     * @return Wichtig für die Speichern Methode, die nur ausgeführt wird,
+     * wenn der return Wert true ist.
+     */
     private boolean isInt(String f)
     {
         try
         {
-            if (!StringUtils.isBlank(f)) {
+            if(!StringUtils.isBlank(f))
+            {
                 int folge = Integer.parseInt(f);
                 System.out.println("Folge Nummer: " + folge);
             }
@@ -38,47 +61,46 @@ public class HinzufuegenHoerspielController extends ControllerAlter{
         }
         catch(NumberFormatException e)
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Falsche Folgennummer");
-            alert.setHeaderText("Eyy, gib gefälligst ne Zahl ein!");
-            alert.setContentText("Es muss eine ganzzahlige Folgennummer eingegeben werden");
-            alert.showAndWait();
-            System.out.println("Error: " + f + " ist keine adquate Folgennummer");
+            AlertAufrufe.zahlAlert(f);
             return false;
         }
     }
 
-    public void promptFolge(String folge)
-    {
+    /*----------------------------------------------------
+    PROMPT*/
+    public void promptFolge(String folge) {
         if(folge != null)
-        {hFolgeTextField.setPromptText(folge);}
+        {hFolgeTextField.setPromptText("Folge: " +folge+ " {Zum zurücksetzten \"0\" eingeben}");
+        }
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void hSpeichernOnAction(ActionEvent actionEvent)
     {
-        Hoerspiel hoerspiel = null;
-        if (medium == null)
-            hoerspiel = new Hoerspiel(-10, "", "", "", "", "", "", "");
-        else if (medium instanceof Hoerspiel)
-            hoerspiel = (Hoerspiel) medium;
-        else
-            throw new RuntimeException("Das Medium in HinzufuegenHoerspielController ist kein Hörspiel!");
+        if(isInt(hFolgeTextField.getText())) {
+            Hoerspiel hoerspiel = null;
+            if (medium == null)
+                hoerspiel = new Hoerspiel(-10, "", "", "", "", "", "", "");
+            else if (medium instanceof Hoerspiel)
+                hoerspiel = (Hoerspiel) medium;
+            else
+                throw new RuntimeException("Das Medium in HinzufuegenHoerspielController ist kein Hörspiel!");
 
-        hoerspiel.setAltersgruppe(hAlterChoiceBox.getValue());
-        /*if(hFolgeTextField.getText().equals("0"))
+            hoerspiel.setAltersgruppe(hAlterChoiceBox.getValue());
+            if (hFolgeTextField.getText().equals("0"))
             {
                 hoerspiel.setFolge(null);
             }
             else
-            {*/
-            hoerspiel.setFolge(hFolgeTextField.getText());
-        /*}*/
+            {
+                hoerspiel.setFolge(hFolgeTextField.getText());
+            }
+            medium = hoerspiel;
+            super.hSpeichernOnAction(actionEvent);
 
-
-        medium = hoerspiel;
-        super.hSpeichernOnAction(actionEvent);
-
-        MainController.instanz.audioSortieren("");
+            MainController.instanz.audioSortieren("");
+            Newslist.newslist("Hörspiele");
+        }
     }
 }

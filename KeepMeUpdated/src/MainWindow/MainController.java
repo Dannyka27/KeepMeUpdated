@@ -1,17 +1,13 @@
 package MainWindow;
 
 import java.awt.*;
-import java.io.IOException;
 import java.net.URI;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import java.util.Optional;
-import java.util.function.Consumer;
-
-import Hinzufuegen.*;
 import MainWindow.mediaPanes.*;
-import Wishlist.*;
+import Suche.SucheController;
+import alert.AlertAufrufe;
+import bearbeitung.Bearbeitung;
 import datenhaltung.DatenbankEintrag;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -30,14 +26,18 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import org.apache.commons.lang3.StringUtils;
+import Newslist.Newslist;
+import keepMeUpdatedTools.KeepMeUpdatedTools;
 
+/**
+ * Controller für Main.fxml
+ * @author Hanna
+ * Sortierung
+ * @author Milana
+ */
 
 public class MainController {
-
     //CLUDGE
     public static MainController instanz = null;
 
@@ -142,11 +142,6 @@ public class MainController {
     @FXML
     private Button suchenButton;
 
-    private Consumer<String> updateMethod;
-
-    //WebView browser = new WebView();
-    //WebEngine webEngine = browser.getEngine();
-
     ObservableList<String> videoSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Filme", "Serie", "Franchise", "Standort", "Altersgruppe", "Typ");
     ObservableList<String> audioSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Hörspiele", "Musik", "Franchise", "Folge", "Genre", "Standort", "Altersgruppe");
     ObservableList<String> biblioSortierenList = FXCollections.observableArrayList("A-Z", "Z-A", "Bücher", "Zeitschriften", "Autor", "Genre", "Franchise", "Standort", "Altersgruppe", "Herausgeber");
@@ -158,21 +153,6 @@ public class MainController {
     public ObservableList<Buch> wbuchlist = FXCollections.observableArrayList();
     public ObservableList<Zeitschrift> wzeitschriftlist = FXCollections.observableArrayList();
     public ObservableList<Spiel> wgamelist = FXCollections.observableArrayList();
-
-    @FXML
-    public void hinzufuegenOnAction(ActionEvent actionEvent) throws Exception {
-        if (videothekTab.isSelected()) {
-            fensteroeffnen("/Hinzufuegen/HinzufuegenFilm.fxml", "Hinzufügen");
-        } else if (audiothekTab.isSelected()) {
-            fensteroeffnen("/Hinzufuegen/HinzufuegenMusik.fxml", "Hinzufügen");
-        } else if (bibliothekTab.isSelected()) {
-            fensteroeffnen("/Hinzufuegen/HinzufuegenBuch.fxml", "Hinzufügen");
-        } else if (gamesTab.isSelected()) {
-            fensteroeffnen("/Hinzufuegen/HinzufuegenGame.fxml", "Hinzufügen");
-        } else if (wishlistTab.isSelected()) {
-            fensteroeffnen("/Wishlist/WishlistFilm.fxml", "Wunsch offenbaren");
-        }
-    }
 
     @FXML
     private void initialize() {
@@ -200,13 +180,14 @@ public class MainController {
                 gamesSortieren(newValue);
             }
         });
-        wishlistfuellen("Filme", "Filme");
-        wishlistfuellen("Filme", "Serien");
-        wishlistfuellen("Hörspiele", "Hörspiele");
-        wishlistfuellen("Hörspiele", "Musik");
-        wishlistfuellen("Bücher", "Bücher");
-        wishlistfuellen("Bücher", "Zeitschriften");
-        wishlistfuellen("Spiele", "Spiele");
+
+        wishlistFuellen("Filme", "Filme");
+        wishlistFuellen("Filme", "Serien");
+        wishlistFuellen("Hörspiele", "Hörspiele");
+        wishlistFuellen("Hörspiele", "Musik");
+        wishlistFuellen("Bücher", "Bücher");
+        wishlistFuellen("Bücher", "Zeitschriften");
+        wishlistFuellen("Spiele", "Spiele");
 
         videoSortierenChoiceBox.setValue("A-Z");
         videoSortierenChoiceBox.setItems(videoSortierenList);
@@ -218,764 +199,220 @@ public class MainController {
         gamesSortierenChoiceBox.setItems(gamesSortierenList);
 
         instanz = this;
-    }
 
-    @FXML
-    public void suchenOnAction(ActionEvent actionEvent) throws Exception {
-        fensteroeffnen("/Suche/Suche.fxml", "Suche");
+        Newslist.newslist("Filme");
+        Newslist.newslist("Serien");
+        Newslist.newslist("Hörspiele");
+        Newslist.newslist("Musik");
+        Newslist.newslist("Bücher");
+        Newslist.newslist("Zeitschriften");
+        Newslist.newslist("Spiele");
     }
-
+    /*---------------------------------------------------------------------------
+    METHODEN ALLGEMEIN DIREKT AUF DER GRIDPANE UNTEN*/
+    /**
+     * Öffnet das Hinzufügen Fenster abhängig davon,
+     * welcher Tab ausgewählt ist.
+     */
     @FXML
-    public void fensteroeffnen(String fxml, String titel) throws Exception {
+    public void hinzufuegenOnAction(ActionEvent actionEvent) throws Exception {
+        if (videothekTab.isSelected()) {
+            fensterOeffnen("/Hinzufuegen/HinzufuegenFilm.fxml", "Hinzufügen");}
+        else if (audiothekTab.isSelected()) {
+            fensterOeffnen("/Hinzufuegen/HinzufuegenMusik.fxml", "Hinzufügen");}
+        else if (bibliothekTab.isSelected()) {
+            fensterOeffnen("/Hinzufuegen/HinzufuegenBuch.fxml", "Hinzufügen");}
+        else if (gamesTab.isSelected()) {
+            fensterOeffnen("/Hinzufuegen/HinzufuegenGame.fxml", "Hinzufügen");}
+        else if (wishlistTab.isSelected()) {
+            fensterOeffnen("/Wishlist/WishlistFilm.fxml", "Wunsch offenbaren");}
+    }
+    /**
+     * Template für das Öffnen der Hinzufügen bzw. Suchen Fenster
+     * @param fxml Die zu ladende FXML
+     * @param titel Hinzufügen bzw. Öffnen
+     */
+    @FXML
+    public void fensterOeffnen(String fxml, String titel) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource(fxml));
         Stage primaryStage = new Stage();
         primaryStage.setTitle(titel);
+        KeepMeUpdatedTools.stageIconSetzen(primaryStage);
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
 
-    //läuft außer Folge muss angegeben werden
-    public void bearbeitenOnAction(ActionEvent actionEvent) {
-        /*GeÃ¶ffnet wird, entsprechend dem ausgewÃ¤hlten Element, die passende FXML Datei, bei der die TextFields
-        mit den Daten aus der Datenbank als PromptText gefÃ¼llt sind und die ChoiceBoxen als Default den Wert haben,
-        der in der Datenbank hinterlegt ist*/
-        if (videothekTab.isSelected())  //Es wird geprÃ¼ft, welcher Tab ausgewÃ¤hlt ist
+    /**
+     * Öffnet das "Suchen" Fenster
+     * Über den Loader der FXML wird auf ihren Controller zugegriffen, um die dazugehörigen Methoden nutzen zu
+     * können. Der String typ wird mit "Filme" initialisiert und abgängig vom aktiven Tab neu gesetzt.
+     * Mit typ wird {@link Suche.SucheController#boxenFuellen(String)} aufgerufen, um den Wert der dortigen ChoiceBox
+     * anhängig vom aktiven Tab zu setzen.
+     * Damit auch die passenden Suchvorschläge kommen, wird mit typ außerdem {@link Suche.SucheController#suchvorschlaege(String, String)}
+     * aufgerufen. Einzig für Games muss dabei eine kleine Unterscheidung gemacht werden, da in der ChoiceBox "Games" steht,
+     * während die Datentabelle "Spiele" heißt. Diese Inkonsistenz wird auch in unserer Dokumentation unter Punkt 7 angesprochen.
+     */
+    @FXML
+    public void suchenOnAction(ActionEvent actionEvent) throws Exception {
+        FXMLLoader loader = new FXMLLoader((getClass().getResource("/Suche/Suche.fxml")));
+        Parent root = loader.load();
+        SucheController sucheController = loader.getController();
+        String typ = "Filme";
+        if(videothekTab.isSelected()) {
+            typ = "Filme";
+        }
+        else if(audiothekTab.isSelected()) {
+            typ = "Hörspiele";
+        }
+        else if(bibliothekTab.isSelected()) {
+            typ = "Bücher";
+        }
+        else if(gamesTab.isSelected()) {
+            typ = "Games";
+        }
+
+        sucheController.boxenFuellen(typ);
+        if(typ.equals("Games"))
         {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Filme ORDER BY Titel ASC");  //passend dazu werden die Daten aus der Datenbank abgefragt
-            //String text = videothekAccordion.getExpandedPane().getText();  /*Die aufgeklappte Pane wird ermittelt. Da immer nur eine geÃ¶ffnet sein kann, ist es die zu bearbeitende
-             /*Das was im Header der TitledPane steht, wird in 'text' gespeichert*/
-            try {
-                while (rs.next()) //die Datenbank wird durchlaufen
-                {
-                    String identifikation = videothekAccordion.getExpandedPane().getId();
-                    int id = Integer.parseInt(identifikation);
-                    if (rs.getInt("ID") == id)
-                    {
-                        if (rs.getString("Typ").equals("Filme"))//es wird unterschieden nach Film und Serie(siehe else)
-                        {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenFilm.fxml"));//Die passende FXML wird geladen
-                            Parent root = loader.load();
-                            HinzufuegenFilmController hfilmcontroller = loader.getController(); //Ein Objekt des entsprechenden Controllers wird erzeugt, um auf die Methoden zugreifen zu kÃ¶nnen
-                            Film f = new Film(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
-                                        rs.getString("Altersgruppe"), rs.getString("Medium"), rs.getString("Zusatzinformationen"),
-                                        rs.getString("Standort"), rs.getString("Franchise"), rs.getString("Link"));
-                            //Die promptTexte und DefaultValues werden gesetzt -> unterscheidung, was passiere soll, wenn TextFields leer sind steht in der Methode
-                            hfilmcontroller.promptTitel(rs.getString("Titel"));
-                            hfilmcontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hfilmcontroller.promptStandortBox(rs.getString("Standort"));
-                            hfilmcontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hfilmcontroller.promptAlterBox(rs.getString("Altersgruppe"));
-                            hfilmcontroller.promptFranchise(rs.getString("Franchise"));
-                            hfilmcontroller.promptMediumBox(rs.getString("Typ"));
-                            hfilmcontroller.promptTyp(rs.getString("Medium"));
-                            hfilmcontroller.setMedium(f);
-
-                            //Die Stage wird angelegt und die FXML hinzugefÃ¼gt
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Film bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        }
-                        else
-                        {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenSerie.fxml"));
-                            Parent root = loader.load();
-                            HinzufuegenSerieController hseriecontroller = loader.getController();
-                            Serie s = new Serie(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
-                                    rs.getString("Season"), rs.getString("Zusatzinformationen"), rs.getString("Altersgruppe"),
-                                    rs.getString("Standort"), rs.getString("Franchise"), rs.getString("Medium"), rs.getString("Link"));
-
-                            hseriecontroller.promptTitel(rs.getString("Titel"));
-                            hseriecontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hseriecontroller.promptStandortBox(rs.getString("Standort"));
-                            hseriecontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hseriecontroller.promptAlterBox(rs.getString("Altersgruppe"));
-                            hseriecontroller.promptFranchise(rs.getString("Franchise"));
-                            hseriecontroller.promptMediumBox(rs.getString("Typ"));
-                            hseriecontroller.promptSeasonBox(rs.getString("Season"));
-                            hseriecontroller.promptTypBox(rs.getString("Medium"));
-                            hseriecontroller.setMedium(s);
-
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Serie bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        }
-                    }
-                }
-            } catch (SQLException | IOException e) {
-                System.err.println(e.getMessage());
-            }
+            sucheController.suchvorschlaege("Spiele", "Games");
         }
-        if (audiothekTab.isSelected()) {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Hörspiele ORDER BY Titel ASC");
-            try {
-                while (rs.next()) {
-                    String identifikation = audiothekAccordion.getExpandedPane().getId();
-                    int id = Integer.parseInt(identifikation);
-                    if (rs.getInt("ID") == id)
-                    {
-                        if (rs.getString("Typ").equals("Hörspiele")) {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenHoerspiel.fxml"));
-                            Parent root = loader.load();
-                            HinzufuegenHoerspielController hhoerspielcontroller = loader.getController();
-                            Hoerspiel h = new Hoerspiel(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
-                                    rs.getString("Folge"), rs.getString("Zusatzinformationen"), rs.getString("Altersgruppe"),
-                                    rs.getString("Standort"), rs.getString("Link"));
-
-                            hhoerspielcontroller.promptTitel(rs.getString("Titel"));
-                            hhoerspielcontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hhoerspielcontroller.promptStandortBox(rs.getString("Standort"));
-                            hhoerspielcontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hhoerspielcontroller.promptAlterBox(rs.getString("Altersgruppe"));
-                            hhoerspielcontroller.promptFolge(rs.getString("Folge"));
-                            hhoerspielcontroller.promptMediumBox(rs.getString("Typ"));
-                            hhoerspielcontroller.setMedium(h);
-
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Hörspiel bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        } else {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenMusik.fxml"));
-                            Parent root = loader.load();
-                            HinzufuegenMusikController hmusikcontroller = loader.getController();
-                            Musik m = new Musik(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
-                                    rs.getString("Genre"), rs.getString("Franchise"), rs.getString("Zusatzinformationen"),
-                                    rs.getString("Standort"), rs.getString("Link"));
-
-                            hmusikcontroller.promptTitel(rs.getString("Titel"));
-                            hmusikcontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hmusikcontroller.promptStandortBox(rs.getString("Standort"));
-                            hmusikcontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hmusikcontroller.promptGenreBox(rs.getString("Genre"));
-                            hmusikcontroller.promptMediumBox(rs.getString("Typ"));
-                            hmusikcontroller.promptFranchise(rs.getString("Franchise"));
-                            hmusikcontroller.setMedium(m);
-
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Musik bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        }
-                    }
-                }
-            } catch (SQLException | IOException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-        if (bibliothekTab.isSelected()) {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Bücher ORDER BY Titel ASC");
-            try {
-                while (rs.next()) {
-                    String identifikation = bibliothekAccordion.getExpandedPane().getId();
-                    int id = Integer.parseInt(identifikation);
-                    if (rs.getInt("ID") == id)
-                    {
-                        if (rs.getString("Typ").equals("Bücher")) {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenBuch.fxml"));
-                            Parent root = loader.load();
-                            HinzufuegenBuchController hbuchcontroller = loader.getController();
-                            Buch b = new Buch(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
-                                    rs.getString("Genre"), rs.getString("Standort"), rs.getString("Autor"),
-                                    rs.getString("Zusatzinformationen"), rs.getString("Franchise"), rs.getString("Altersgruppe"),
-                                    rs.getString("Link"));
-
-                            hbuchcontroller.promptTitel(rs.getString("Titel"));
-                            hbuchcontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hbuchcontroller.promptStandortBox(rs.getString("Standort"));
-                            hbuchcontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hbuchcontroller.promptAlterBox(rs.getString("Altersgruppe"));
-                            hbuchcontroller.promptFranchise(rs.getString("Franchise"));
-                            hbuchcontroller.promptGenreBox(rs.getString("Genre"));
-                            hbuchcontroller.promptAutor(rs.getString("Autor"));
-                            hbuchcontroller.promptMediumBox(rs.getString("Typ"));
-                            hbuchcontroller.setMedium(b);
-
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Buch bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        } else {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenZeitschrift.fxml"));
-                            Parent root = loader.load();
-                            HinzufuegenZeitschriftController hzeitschriftcontroller = loader.getController();
-                            Zeitschrift z = new Zeitschrift(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
-                                    rs.getString("Herausgeber"), rs.getString("Ausgabe"), rs.getString("Zusatzinformationen"),
-                                    rs.getString("Genre"), rs.getString("Standort"), rs.getString("Link"));
-
-                            hzeitschriftcontroller.promptTitel(rs.getString("Titel"));
-                            hzeitschriftcontroller.promptUntertitel(rs.getString("Untertitel"));
-                            hzeitschriftcontroller.promptStandortBox(rs.getString("Standort"));
-                            hzeitschriftcontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                            hzeitschriftcontroller.promptGenreBox(rs.getString("Genre"));
-                            hzeitschriftcontroller.promptHerausgeber(rs.getString("Herausgeber"));
-                            hzeitschriftcontroller.promptAusgabe(rs.getString("Ausgabe"));
-                            hzeitschriftcontroller.promptMediumBox(rs.getString("Typ"));
-                            hzeitschriftcontroller.setMedium(z);
-
-                            Stage primaryStage = new Stage();
-                            primaryStage.setTitle("Zeitschrift bearbeiten");
-                            Scene scene = new Scene(root);
-                            primaryStage.setScene(scene);
-                            primaryStage.setResizable(false);
-                            primaryStage.show();
-
-                            break;
-                        }
-                    }
-                }
-            } catch (SQLException | IOException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-        if (gamesTab.isSelected()) {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Spiele ORDER BY Titel ASC");
-            try {
-                while (rs.next()) {
-                    String identifikation = gamesAccordion.getExpandedPane().getId();
-                    int id = Integer.parseInt(identifikation);
-                    if (rs.getInt("ID") == id) {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Hinzufuegen/HinzufuegenGame.fxml"));
-                        Parent root = loader.load();
-                        HinzufuegenGameController hgamecontroller = loader.getController();
-                        Spiel g = new Spiel(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
-                                rs.getString("Altersgruppe"), rs.getString("Zusatzinformationen"), rs.getString("Standort"),
-                                rs.getString("Franchise"), rs.getString("Plattform"), rs.getString("Link"));
-
-                        hgamecontroller.promptTitel(rs.getString("Titel"));
-                        hgamecontroller.promptUntertitel(rs.getString("Untertitel"));
-                        hgamecontroller.promptStandortBox(rs.getString("Standort"));
-                        hgamecontroller.promptZusatzinfo(rs.getString("Zusatzinformationen"));
-                        hgamecontroller.promptAlterBox(rs.getString("Altersgruppe"));
-                        hgamecontroller.promptFranchise(rs.getString("Franchise"));
-                        hgamecontroller.promptPlattformBox(rs.getString("Plattform"));
-                        hgamecontroller.promptMediumBox(rs.getString("Typ"));
-                        hgamecontroller.setMedium(g);
-
-                        Stage primaryStage = new Stage();
-                        primaryStage.setTitle("Game bearbeiten");
-                        Scene scene = new Scene(root);
-                        primaryStage.setScene(scene);
-                        primaryStage.setResizable(false);
-                        primaryStage.show();
-
-                        break;
-                    }
-                }
-            } catch (SQLException | IOException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-    }
-
-    //läuft
-    public void wloeschenOnAction(ActionEvent actionEvent) {
-        Medium m = null;
-        if (filmeTableView.getSelectionModel().getSelectedItem() != null) {
-            m = filmeTableView.getSelectionModel().getSelectedItem();
-            System.out.println(m);
-        } else if (serienTableView.getSelectionModel().getSelectedItem() != null) {
-            m = serienTableView.getSelectionModel().getSelectedItem();
-            System.out.println(m);
-        } else if (hoerspieleTableView.getSelectionModel().getSelectedItem() != null) {
-            m = hoerspieleTableView.getSelectionModel().getSelectedItem();
-            System.out.println(m);
-        } else if (musikTableView.getSelectionModel().getSelectedItem() != null) {
-            m = musikTableView.getSelectionModel().getSelectedItem();
-            System.out.println(m);
-        } else if (buecherTableView.getSelectionModel().getSelectedItem() != null) {
-            m = buecherTableView.getSelectionModel().getSelectedItem();
-            System.out.println(m);
-        } else if (zeitschriftenTableView.getSelectionModel().getSelectedItem() != null) {
-            m = zeitschriftenTableView.getSelectionModel().getSelectedItem();
-            System.out.println(m);
-        } else if (gamesTableView.getSelectionModel().getSelectedItem() != null) {
-            m = gamesTableView.getSelectionModel().getSelectedItem();
-            System.out.println(m);
-        }
-        alertzeigen(m);
-    }
-    public void alertzeigen(Medium m) {
-        if (m instanceof Film) {
-            Film filmloeschen = filmeTableView.getSelectionModel().getSelectedItem();
-            String filmloeschentitel = filmloeschen.getTitel();
-            System.out.println(filmloeschen);
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Film löschen");
-            alert.setContentText("Film \"" + filmloeschentitel + "\" löschen?");
-            Optional<ButtonType> antwort = alert.showAndWait();
-            if (antwort.get() == ButtonType.OK)
-            {
-                Main.db.eintragLoeschen(filmloeschen.getID(), filmloeschen.getTitel(), "Filme");
-                wfilmlist.remove(filmloeschen);
-            }
-            else
-            {
-                Alert abbruch = new Alert(Alert.AlertType.INFORMATION);
-                abbruch.setTitle("Löschen abgebrochen");
-                abbruch.setContentText("Film wurde nicht gelöscht");
-                abbruch.showAndWait();
-            }
-        }if (m instanceof Serie) {
-            Serie serieloeschen =serienTableView.getSelectionModel().getSelectedItem();
-            String serieloeschentitel = serieloeschen.getTitel();
-            System.out.println(serieloeschen);
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Serie löschen");
-            alert.setContentText("Serie \"" + serieloeschentitel + "\" löschen?");
-            Optional<ButtonType> antwort = alert.showAndWait();
-            if (antwort.get() == ButtonType.OK)
-            {
-                Main.db.eintragLoeschen(serieloeschen.getID(), serieloeschen.getTitel(), "Filme");
-                wserielist.remove(serieloeschen);
-            }
-            else
-            {
-                Alert abbruch = new Alert(Alert.AlertType.INFORMATION);
-                abbruch.setTitle("Löschen abgebrochen");
-                abbruch.setContentText("Serie wurde nicht gelöscht");
-                abbruch.showAndWait();
-            }
-        }if (m instanceof Hoerspiel) {
-            Hoerspiel hoerspielloeschen = hoerspieleTableView.getSelectionModel().getSelectedItem();
-            String hoerspielloeschentitel = hoerspielloeschen.getTitel();
-            System.out.println(hoerspielloeschen);
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Hörspiel löschen");
-            alert.setContentText("Hörspiel \"" + hoerspielloeschentitel + "\" löschen?");
-            Optional<ButtonType> antwort = alert.showAndWait();
-            if (antwort.get() == ButtonType.OK)
-            {
-                Main.db.eintragLoeschen(hoerspielloeschen.getID(), hoerspielloeschen.getTitel(), "Hörspiele");
-                whoerspiellist.remove(hoerspielloeschen);
-            }
-            else
-            {
-                Alert abbruch = new Alert(Alert.AlertType.INFORMATION);
-                abbruch.setTitle("Löschen abgebrochen");
-                abbruch.setContentText("Hörspiel wurde nicht gelöscht");
-                abbruch.showAndWait();
-            }
-        }if (m instanceof Musik) {
-            Musik musikloeschen = musikTableView.getSelectionModel().getSelectedItem();
-            String musikloeschentitel = musikloeschen.getTitel();
-            System.out.println(musikloeschen);
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Musik löschen");
-            alert.setContentText("Musik \"" + musikloeschentitel + "\" löschen?");
-            Optional<ButtonType> antwort = alert.showAndWait();
-            if (antwort.get() == ButtonType.OK)
-            {
-                Main.db.eintragLoeschen(musikloeschen.getID(), musikloeschen.getTitel(), "Hörspiele");
-                wmusiklist.remove(musikloeschen);
-            }
-            else
-            {
-                Alert abbruch = new Alert(Alert.AlertType.INFORMATION);
-                abbruch.setTitle("Löschen abgebrochen");
-                abbruch.setContentText("Musik wurde nicht gelöscht");
-                abbruch.showAndWait();
-            }
-        }if (m instanceof Buch) {
-            Buch buchloeschen = buecherTableView.getSelectionModel().getSelectedItem();
-            String buchloeschentitel = buchloeschen.getTitel();
-            System.out.println(buchloeschen);
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Buch löschen");
-            alert.setContentText("Buch \"" + buchloeschentitel + "\" löschen?");
-            Optional<ButtonType> antwort = alert.showAndWait();
-            if (antwort.get() == ButtonType.OK)
-            {
-                Main.db.eintragLoeschen(buchloeschen.getID(), buchloeschen.getTitel(), "Bücher");
-                wbuchlist.remove(buchloeschen);
-            }
-            else
-            {
-                Alert abbruch = new Alert(Alert.AlertType.INFORMATION);
-                abbruch.setTitle("Löschen abgebrochen");
-                abbruch.setContentText("Buch wurde nicht gelöscht");
-                abbruch.showAndWait();
-            }
-        }if (m instanceof Zeitschrift) {
-            Zeitschrift zeitschriftloeschen = zeitschriftenTableView.getSelectionModel().getSelectedItem();
-            String zeitschriftenloeschentitel = zeitschriftloeschen.getTitel();
-            System.out.println(zeitschriftloeschen);
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Zeitschrift löschen");
-            alert.setContentText("Zeitschrift \"" + zeitschriftenloeschentitel + "\" löschen?");
-            Optional<ButtonType> antwort = alert.showAndWait();
-            if (antwort.get() == ButtonType.OK)
-            {
-                Main.db.eintragLoeschen(zeitschriftloeschen.getID(), zeitschriftloeschen.getTitel(), "Bücher");
-                wzeitschriftlist.remove(zeitschriftloeschen);
-            }
-            else
-            {
-                Alert abbruch = new Alert(Alert.AlertType.INFORMATION);
-                abbruch.setTitle("Löschen abgebrochen");
-                abbruch.setContentText("Zeitschrift wurde nicht gelöscht");
-                abbruch.showAndWait();
-            }
-        }if (m instanceof Spiel) {
-            Spiel spielloeschen = gamesTableView.getSelectionModel().getSelectedItem();
-            String spielloeschentitel = spielloeschen.getTitel();
-            System.out.println(spielloeschen);
-
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Spiel löschen");
-            alert.setContentText("Spiel \"" + spielloeschentitel + "\" löschen?");
-            Optional<ButtonType> antwort = alert.showAndWait();
-            if (antwort.get() == ButtonType.OK)
-            {
-                Main.db.eintragLoeschen(spielloeschen.getID(), spielloeschen.getTitel(), "Spiele");
-                wgamelist.remove(spielloeschen);
-            }
-            else
-            {
-                Alert abbruch = new Alert(Alert.AlertType.INFORMATION);
-                abbruch.setTitle("Löschen abgebrochen");
-                abbruch.setContentText("Spiel wurde nicht gelöscht");
-                abbruch.showAndWait();
-            }
-        }
-    }
-
-    //läuft Folgennummer probleme
-    public void wbearbeitenOnAction(ActionEvent actionEvent) {
-        //Film filmbearbeiten = filmeTableView.getSelectionModel().getSelectedItem();
+        else
         {
-            if (wishlistTab.isSelected())
-            {
-                Film f = filmeTableView.getSelectionModel().getSelectedItem();
-                Serie s = serienTableView.getSelectionModel().getSelectedItem();
-                Hoerspiel h = hoerspieleTableView.getSelectionModel().getSelectedItem();
-                Musik m = musikTableView.getSelectionModel().getSelectedItem();
-                Buch b = buecherTableView.getSelectionModel().getSelectedItem();
-                Zeitschrift z = zeitschriftenTableView.getSelectionModel().getSelectedItem();
-                Spiel g = gamesTableView.getSelectionModel().getSelectedItem();
-                try {
-                    if(filmeTableView.isFocused())
-                    {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Wishlist/WishlistFilm.fxml"));
-                        Parent root = loader.load();
-                        WishlistFilmController wfilmcontroller = loader.getController();
-
-                        wfilmcontroller.promptTitel(f.getTitel());
-                        wfilmcontroller.promptUntertitel(f.getUntertitel());
-                        wfilmcontroller.promptStandortBox(f.getStandort());
-                        wfilmcontroller.promptZusatzinfo(f.getZusatzinformationen());
-                        wfilmcontroller.promptAlterBox(f.getAltersgruppe());
-                        wfilmcontroller.promptFranchise(f.getFranchise());
-                        wfilmcontroller.promptMediumBox("Filme");
-                        wfilmcontroller.promptTyp(f.getMedium());
-                        wfilmcontroller.promptLink(f.getLink());
-                        wfilmcontroller.setMedium(f);
-
-                        Stage primaryStage = new Stage();
-                        primaryStage.setTitle("Wunsch bearbeiten");
-                        Scene scene = new Scene(root);
-                        primaryStage.setScene(scene);
-                        primaryStage.setResizable(false);
-                        primaryStage.show();
-
-                    }
-                    else if (serienTableView.isFocused())
-                    {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Wishlist/WishlistSerie.fxml"));
-                        Parent root = loader.load();
-                        WishlistSerieController wseriecontroller = loader.getController();
-
-                        wseriecontroller.promptTitel(s.getTitel());
-                        wseriecontroller.promptUntertitel(s.getUntertitel());
-                        wseriecontroller.promptStandortBox(s.getStandort());
-                        wseriecontroller.promptZusatzinfo(s.getZusatzinformationen());
-                        wseriecontroller.promptAlterBox(s.getAltersgruppe());
-                        wseriecontroller.promptFranchise(s.getFranchise());
-                        wseriecontroller.promptMediumBox("Serien");
-                        wseriecontroller.promptSeasonBox(s.getSeason());
-                        wseriecontroller.promptTypBox(s.getMedium());
-                        wseriecontroller.promptLink(s.getLink());
-                        wseriecontroller.setMedium(s);
-
-                        Stage primaryStage = new Stage();
-                        primaryStage.setTitle("Wunsch bearbeiten");
-                        Scene scene = new Scene(root);
-                        primaryStage.setScene(scene);
-                        primaryStage.setResizable(false);
-                        primaryStage.show();
-
-                    }
-                    else if (hoerspieleTableView.isFocused())
-                    {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Wishlist/WishlistHoerspiel.fxml"));
-                        Parent root = loader.load();
-                        WishlistHoerspielController whoerspielcontroller = loader.getController();
-
-                        whoerspielcontroller.promptTitel(h.getTitel());
-                        whoerspielcontroller.promptUntertitel(h.getUntertitel());
-                        whoerspielcontroller.promptStandortBox(h.getStandort());
-                        whoerspielcontroller.promptZusatzinfo(h.getZusatzinformationen());
-                        whoerspielcontroller.promptAlterBox(h.getAltersgruppe());
-                        whoerspielcontroller.promptMediumBox("Hörspiele");
-                        whoerspielcontroller.promptFolge(h.getFolge());
-                        whoerspielcontroller.promptLink(h.getLink());
-                        whoerspielcontroller.setMedium(h);
-
-                        Stage primaryStage = new Stage();
-                        primaryStage.setTitle("Wunsch bearbeiten");
-                        Scene scene = new Scene(root);
-                        primaryStage.setScene(scene);
-                        primaryStage.setResizable(false);
-                        primaryStage.show();
-                    }
-                    else if (musikTableView.isFocused())
-                    {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Wishlist/WishlistMusik.fxml"));
-                        Parent root = loader.load();
-                        WishlistMusikController wmusikcontroller = loader.getController();
-
-                        wmusikcontroller.promptTitel(m.getTitel());
-                        wmusikcontroller.promptUntertitel(m.getUntertitel());
-                        wmusikcontroller.promptStandortBox(m.getStandort());
-                        wmusikcontroller.promptZusatzinfo(m.getZusatzinformationen());
-                        wmusikcontroller.promptFranchise(m.getFranchise());
-                        wmusikcontroller.promptMediumBox("Musik");
-                        wmusikcontroller.promptGenreBox(m.getGenre());
-                        wmusikcontroller.promptLink(m.getLink());
-                        wmusikcontroller.setMedium(m);
-
-                        Stage primaryStage = new Stage();
-                        primaryStage.setTitle("Wunsch bearbeiten");
-                        Scene scene = new Scene(root);
-                        primaryStage.setScene(scene);
-                        primaryStage.setResizable(false);
-                        primaryStage.show();
-                    }
-                    else if (buecherTableView.isFocused())
-                    {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Wishlist/WishlistBuch.fxml"));
-                        Parent root = loader.load();
-                        WishlistBuchController wbuchcontroller = loader.getController();
-
-                        wbuchcontroller.promptTitel(b.getTitel());
-                        wbuchcontroller.promptUntertitel(b.getUntertitel());
-                        wbuchcontroller.promptStandortBox(b.getStandort());
-                        wbuchcontroller.promptZusatzinfo(b.getZusatzinformationen());
-                        wbuchcontroller.promptAlterBox(b.getAltersgruppe());
-                        wbuchcontroller.promptFranchise(b.getFranchise());
-                        wbuchcontroller.promptGenreBox(b.getGenre());
-                        wbuchcontroller.promptAutor(b.getAutor());
-                        wbuchcontroller.promptMediumBox("Bücher");
-                        wbuchcontroller.promptLink(b.getLink());
-                        wbuchcontroller.setMedium(b);
-
-                        Stage primaryStage = new Stage();
-                        primaryStage.setTitle("Wunsch bearbeiten");
-                        Scene scene = new Scene(root);
-                        primaryStage.setScene(scene);
-                        primaryStage.setResizable(false);
-                        primaryStage.show();
-
-                    }
-                    else if (zeitschriftenTableView.isFocused())
-                    {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Wishlist/WishlistZeitschrift.fxml"));
-                        Parent root = loader.load();
-                        WishlistZeitschriftController wzeitschriftcontroller = loader.getController();
-
-                        wzeitschriftcontroller.promptTitel(z.getTitel());
-                        wzeitschriftcontroller.promptUntertitel(z.getUntertitel());
-                        wzeitschriftcontroller.promptStandortBox(z.getStandort());
-                        wzeitschriftcontroller.promptZusatzinfo(z.getZusatzinformationen());
-                        wzeitschriftcontroller.promptMediumBox("Zeitschriften");
-                        wzeitschriftcontroller.promptAusgabe(z.getAusgabe());
-                        wzeitschriftcontroller.promptHerausgeber(z.getHerausgeber());
-                        wzeitschriftcontroller.promptGenreBox(z.getGenre());
-                        wzeitschriftcontroller.promptLink(z.getLink());
-                        wzeitschriftcontroller.setMedium(z);
-
-                        Stage primaryStage = new Stage();
-                        primaryStage.setTitle("Wunsch bearbeiten");
-                        Scene scene = new Scene(root);
-                        primaryStage.setScene(scene);
-                        primaryStage.setResizable(false);
-                        primaryStage.show();
-
-                    }
-                    else if (gamesTableView.isFocused())
-                    {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Wishlist/WishlistGame.fxml"));
-                        Parent root = loader.load();
-                        WishlistGameController wgamecontroller = loader.getController();
-
-                        wgamecontroller.promptTitel(g.getTitel());
-                        wgamecontroller.promptUntertitel(g.getUntertitel());
-                        wgamecontroller.promptStandortBox(g.getStandort());
-                        wgamecontroller.promptZusatzinfo(g.getZusatzinformationen());
-                        wgamecontroller.promptAlterBox(g.getAltersgruppe());
-                        wgamecontroller.promptFranchise(g.getFranchise());
-                        wgamecontroller.promptMediumBox("Games");
-                        wgamecontroller.promptLink(g.getLink());
-                        wgamecontroller.setMedium(g);
-
-                        Stage primaryStage = new Stage();
-                        primaryStage.setTitle("Wunsch bearbeiten");
-                        Scene scene = new Scene(root);
-                        primaryStage.setScene(scene);
-                        primaryStage.setResizable(false);
-                        primaryStage.show();
-                    }
-                }
-                catch ( IOException e) {
-                    System.err.println(e.getMessage());
-                }
-            }
+            sucheController.suchvorschlaege(typ, typ);
+        }
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Suche");
+        KeepMeUpdatedTools.stageIconSetzen(primaryStage);
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
-    }
-
-    public void wwunschuebertragenOnAction(ActionEvent actionEvent) {
-
-    }
-
-    //läuft
-    public void wishlistfuellen(String data, String typ) {
-        ResultSet wl = Main.db.dbAbfrage("SELECT * FROM " + data + " ORDER BY Titel ASC");
+    /**
+     * Diese Methode sorgt dafür, dass sobald einer der Suchvorschläge angeklickt wurde, sich der zum Objekt passende
+     * Tab öffnet, sich die TitledPane, die das Objekt anzeigt, ausklappt und ins Sichtfeld gescrollt wird.
+     * Die Methode wird aus {@link Suche.SucheController#suchvorschlaege(String, String)} aufgerufen.
+     * Zunächst wird ein ResultSet aus der angegebenen Tabelle angelegt; danach muss ermittelt werden, wie viele Elemente
+     * sich in dem RS befinden, dafür wird zum letzten gesprungen, abgefragt und wieder vor das erste Element gesprungen,
+     * damit danach von ganz vorne das RS durchlaufen werden kann. Als Parameter ergebnis wurde der vollständige Titel
+     * übergeben, daher wird ein String name angelegt, der den vollständigen Titel des aktuellen Elements des RS enthält.
+     * Stimmen name und ergebnis überein, wird die if-Schleife ausgeführt. Es wird die ID des gefundenen Elements abgefragt
+     * und ein double anzahlpane mit 0 initialisiert. Danach wird ein Switch-Case um den Parameter tabelle ausgeführt.
+     * Am Beispiel Film:
+     * Zunächst wird im MainWindow der videothekTab ausgewählt, danach geht es in eine for-each Schleife.
+     * Für jede TitledPane im Accordion wird die ID, die in videoSortieren übergeben wurde angefragt. Stimmt
+     * diese mit der oben abgefragten ID überein, wird die if-Schleife ausgeführt.
+     * Hier werden ein paar Berechnungen durchgeführt. Das Accordion liegt in einer ScrollPane. Damit die ausgeklappte
+     * TitledPane ins Sichtfeld gescrollt wird, muss ihre relative Position, aus Höhe der zugeklappten TitledPane,
+     * der Gesamtzahl der TitledPanes(numRows) und der Nummer der aktuellen Pane(anzahlpane) ausgerechnet und als Vvalue
+     * für die vertical Scrollbar genutzt werden. -> die Berechnung ist noch nicht 100% akkurat, aber erfüllt ihren
+     * Zweck, dennoch sollte hier in Zukunft noch eine genauere Formel gefunden werden.
+     * Stimmen ID und titledpaneId nicht überein, so wird anzahlpane um 1.1 hochgezählt.
+     * -> auch dieser Wert ist nur eine Näherung durch Probieren und sollte in Zukunft genauer berechnet werden.
+     * @param ergebnis der volle Titel des Suchvorschlags, der angeklickt wurde.
+     * @param tabelle welche Tabelle abgefragt werden muss.
+     */
+    public void zeigeSuchergebnis(String ergebnis, String tabelle){
+        ResultSet rs = Main.db.dbAbfrage("SELECT * FROM "+ tabelle +" ORDER BY Titel ASC");
         try {
-            while (wl.next()) {
-                if (wl.getString("Link") != null) {
-                    if (data.equals("Filme")) {
-                        if (wl.getString("Typ").equals("Filme") && typ.equals("Filme") ) {
-                            wfilmlist.add(new Film(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
-                                    wl.getString("Altersgruppe"), wl.getString("Medium"), wl.getString("Zusatzinformationen"),
-                                    wl.getString("Standort"), wl.getString("Franchise"), wl.getString("Link")));
-
-                            filmeTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
-                            filmeUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
-                            filmeLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
-
-                            filmeTableView.setItems(wfilmlist);
-                        }
-                        else if(wl.getString("Typ").equals("Serien") && typ.equals("Serien"))
-                        {
-                            wserielist.add(new Serie(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
-                                    wl.getString("Season"), wl.getString("Zusatzinformationen"), wl.getString("Altersgruppe"),
-                                    wl.getString("Standort"), wl.getString("Franchise"), wl.getString("Medium"), wl.getString("Link")));
-
-                            serienTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
-                            serienUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
-                            serienLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
-
-                            serienTableView.setItems(wserielist);
-                        }
-                    }
-                    else if (data.equals("Hörspiele")) {
-                        if (wl.getString("Typ").equals("Hörspiele") && typ.equals("Hörspiele"))
-                        {
-                            whoerspiellist.add(new Hoerspiel(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
-                                    wl.getString("Folge"), wl.getString("Zusatzinformationen"), wl.getString("Altersgruppe"),
-                                    wl.getString("Standort"), wl.getString("Link")));
-
-                            hoerspielTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
-                            hoerspielUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
-                            hoerspielLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
-
-                            hoerspieleTableView.setItems(whoerspiellist);
-                        }
-                        else if(wl.getString("Typ").equals("Musik") && typ.equals("Musik"))
-                        {
-                            wmusiklist.add(new Musik(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
-                                    wl.getString("Genre"), wl.getString("Franchise"), wl.getString("Zusatzinformationen"),
-                                    wl.getString("Standort"), wl.getString("Link")));
-
-                            musikTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
-                            musikUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
-                            musikLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
-
-                            musikTableView.setItems(wmusiklist);
-                        }
-                    }
-                    else if (data.equals("Bücher")){
-                        if (wl.getString("Typ").equals("Bücher") && typ.equals("Bücher"))
-                        {
-                            wbuchlist.add(new Buch(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
-                                    wl.getString("Genre"), wl.getString("Standort"), wl.getString("Autor"),
-                                    wl.getString("Zusatzinformationen"), wl.getString("Franchise"), wl.getString("Altersgruppe"),
-                                    wl.getString("Link")));
-
-                            buecherTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
-                            buecherUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
-                            buecherLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
-
-                            buecherTableView.setItems(wbuchlist);
-                        }
-                        else if(wl.getString("Typ").equals("Zeitschriften") && typ.equals("Zeitschriften"))
-                        {
-                            wzeitschriftlist.add(new Zeitschrift(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
-                                    wl.getString("Herausgeber"), wl.getString("Ausgabe"), wl.getString("Zusatzinformationen"),
-                                    wl.getString("Genre"), wl.getString("Standort"), wl.getString("Link")));
-
-                            zeitschriftenTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
-                            zeitschriftenUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
-                            zeitschriftenLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
-
-                            zeitschriftenTableView.setItems(wzeitschriftlist);
-                        }
-                    }
-                    else if (data.equals("Spiele") && typ.equals("Spiele")) {
-                        wgamelist.add(new Spiel(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
-                                wl.getString("Altersgruppe"), wl.getString("Zusatzinformationen"), wl.getString("Standort"),
-                                wl.getString("Franchise"), wl.getString("Plattform"), wl.getString("Link")));
-
-                        gamesTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
-                        gamesUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
-                        gamesLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
-
-                        gamesTableView.setItems(wgamelist);
-                    } else {
-                        System.out.println("IWas ist falsch");
+            rs.last();
+            int numRows = rs.getRow();
+            rs.beforeFirst();
+            while (rs.next())
+            {
+                String name = rs.getString("Titel") + ((rs.getString("Untertitel") == null) ? "" : ": " + rs.getString("Untertitel"));
+                if(name.equals(ergebnis))
+                {
+                    String id = rs.getString("ID");
+                    double anzahlpane = 0;
+                    switch (tabelle) {
+                        case "Filme":
+                            mainTabPane.getSelectionModel().select(videothekTab);
+                            for (TitledPane p : videothekAccordion.getPanes()) {
+                                String titledpaneId = p.getId();
+                                if (id.equals(titledpaneId)) {
+                                    double geshoehe = numRows * 25.6;
+                                    double h = 25.6 * anzahlpane / geshoehe;
+                                    System.out.println(p.getHeight());
+                                    videothekScrollPane.vvalueProperty().setValue(h);
+                                    p.setExpanded(true);
+                                }
+                                anzahlpane+= 1.1;
+                            }
+                            break;
+                        case "Hörspiele":
+                            mainTabPane.getSelectionModel().select(audiothekTab);
+                            for (TitledPane p : audiothekAccordion.getPanes()) {
+                                String titledpaneId = p.getId();
+                                if (id.equals(titledpaneId)) {
+                                    double geshoehe = numRows * 25.6;
+                                    double h = 25.6 * anzahlpane / geshoehe;
+                                    audiothekScrollPane.vvalueProperty().setValue(h);
+                                    p.setExpanded(true);
+                                }
+                                anzahlpane += 1.1;
+                            }
+                            break;
+                        case "Bücher":
+                            mainTabPane.getSelectionModel().select(bibliothekTab);
+                            for (TitledPane p : bibliothekAccordion.getPanes()) {
+                                String titledpaneId = p.getId();
+                                if (id.equals(titledpaneId)) {
+                                    double geshoehe = numRows * 25.6;
+                                    double h = 25.6 * anzahlpane / geshoehe;
+                                    bibliothekScrollPane.vvalueProperty().setValue(h);
+                                    p.setExpanded(true);
+                                }
+                                anzahlpane += 1.1;
+                            }
+                            break;
+                        case "Spiele":
+                            mainTabPane.getSelectionModel().select(gamesTab);
+                            for (TitledPane p : gamesAccordion.getPanes()) {
+                                String titledpaneId = p.getId();
+                                if (id.equals(titledpaneId)) {
+                                    double geshoehe = numRows * 25.6;
+                                    double h = 25.6 * anzahlpane / geshoehe;
+                                    gamesScrollPane.vvalueProperty().setValue(h);
+                                    p.setExpanded(true);
+                                }
+                                anzahlpane += 1.1;
+                            }
+                            break;
                     }
                 }
             }
-        } catch (Exception e) {
+        }
+        catch(SQLException e) {
             e.printStackTrace();
         }
     }
 
-    //laufen
+    /*TABS UND METHODEN
+    ---------------------------------------------------------------------------*/
+    /**
+     * @author Milana
+     * Zunächst wird das Feld geleert, damit sich die Panes nicht aufeinander stapeln, wenn man sortieren möchte.
+     * Defaultmäßig wird das ResultSet mit der Sortierung alphabetisch aufsteigend angelegt.
+     * Danach wird geprüft, welche Sortierung in der ChoiceBox ausgewählt wurde, je nachdem ändert sich die
+     * SQL-Anweisung.
+     * @author Hanna
+     * Danach werden die TitledPanes angelegt, die jeweils eine Gridpane mit den Informationen aus der Datenbank
+     * enthalten. Für besseres Aussehen werden Padding und Gaps verwendet.
+     * Zusätzlich wird ein Zähler a initialisiert, der hochgezählt wird, wenn in der Datenbank Daten verfügbar sind,
+     * damit die GridPane lückenlos gefüllt wird.
+     * Da jedes Element der Datenbank hat einen Standort hat, werden hier die Button für bearbeiten und löschen
+     * angelegt, da sie so immer sichtbar sind. Danach wird ihnen die Methoden {@link MainWindow.MainController#bearbeitenOnAction(ActionEvent)}
+     * und {@link MainWindow.MainController#loeschenOnAction(ActionEvent)} zugewiesen.
+     * Zuletzt wird geprüft, ob ein Untertitel existiert, und wenn ja, wird er hinten an den Titel angehängt.
+     * Der vollständige Name wird als Name der TitledPane verwendet und ihr wird die Gridpane als Content hinzugefügt.
+     * Danach wird die ID gesetzt und die Pane in das Accordion eingefügt.
+     * Die folgenden drei Methoden analog.
+     */
     public void videoSortieren(String s) {
         videothekAccordion.getPanes().clear();
-        //Das Feld wird geleert, damit sich die Panes nicht jedes mal aufeinander stapeln, wenn man sortieren möchte
         ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Filme ORDER BY Titel ASC"); //default
-        switch (s) //Es wird geprüft, welche Sortierung in der ChoiceBox ausgewählt wurde, je nach dem ändert sich die SQL-Anweisung
-        {
+        switch (s) {
             case "A-Z":
                 rs = Main.db.dbAbfrage("SELECT * FROM Filme ORDER BY Titel ASC");
                 break;
@@ -1002,11 +439,7 @@ public class MainController {
                 break;
         }
         try {
-            //Anlegen der TitledPanes, die jeweils eine Gridpane mit den Informationen aus der Datenbank enthalten
             while (rs.next()) {
-                /*Anlegen der GridPane mit Padding und Gaps;
-                ZusÃ¤tzlich Initialisierung eines ZÃ¤hlers a, der hochgezÃ¤hlt wird, wenn in der Datenbank Daten verfÃ¼gbar sind,
-                damit die GridPane lÃ¼ckenlos gefÃ¼llt wird*/
                 GridPane l = new GridPane();
                 l.setPadding(new Insets(10, 10, 10, 20));
                 l.setVgap(10);
@@ -1016,9 +449,9 @@ public class MainController {
                     if (rs.getString("Franchise") != null) {
                         Label tmpBez = new Label("Franchise:");
                         Label tmp = new Label(rs.getString("Franchise"));
-                        l.add(tmpBez, 0, a); //der ZÃ¤hler wird als Angabe der Zeilennummer genutzt
+                        l.add(tmpBez, 0, a);
                         l.add(tmp, 1, a);
-                        a++; //und anschlieÃŸend eins hochgezÃ¤hlt
+                        a++;
                     }
                     if (rs.getString("Typ") != null) {
                         Label tmpBez = new Label("Typ:");
@@ -1051,30 +484,19 @@ public class MainController {
                     if (rs.getString("Standort") != null) {
                         Label tmpBez = new Label("Standort:");
                         Label tmp = new Label(rs.getString("Standort"));
-                        /*Jedes Element der Datenbank hat einen Standort, daher werden hier auch die Button fÃ¼r
-                        bearbeiten und lÃ¶schen angelegt, da sie so immer sichtbar sind, danach wird ihnen die OnAction-Methode
-                        zugewiesen, die dieselbe ist wie aus dem ContextMenu heraus*/
                         Button bearbeiten = new Button("Bearbeiten");
                         bearbeiten.setOnAction(this::bearbeitenOnAction);
                         Button loeschen = new Button("Löschen");
                         loeschen.setOnAction(this::loeschenOnAction);
-                        //Labels und Button werden in die GridPane eingefÃ¼gt
                         l.add(tmpBez, 0, a);
                         l.add(tmp, 1, a);
                         l.add(bearbeiten, 2, a);
                         l.add(loeschen, 3, a);
                     }
-                     /*es wird geprÃ¼ft, ob ein Untertitel existiert, dafÃ¼r wird die Abfrage aus der Datenbank in einem
-                     temporÃ¤ren String gespeichert. Wenn ein Untertitel existiert, wird der String mit ': ' vorne ergÃ¤nzt.
-                     Wenn nicht wird der String auf '' gesetzt.
-                     Dann wird der TitledPane der Titel aus der Datenbank, der temporÃ¤ren String und die Gridpane hinzugefÃ¼gt*/
-                    String tempUntertitel = rs.getString("Untertitel");
-                    if (tempUntertitel != null) {
-                        tempUntertitel = ": " + tempUntertitel;
-                    } else {
-                        tempUntertitel = "";
-                    }
-                    TitledPane p = new TitledPane(rs.getString("Titel") + tempUntertitel, l);
+                    String name = rs.getString("Titel")
+                            +((rs.getString("Untertitel") == null) ? "" : ": "
+                            + rs.getString("Untertitel"));
+                    TitledPane p = new TitledPane(name, l);
                     p.setId(rs.getString("ID"));
                     videothekAccordion.getPanes().add(p);
                 }
@@ -1126,7 +548,7 @@ public class MainController {
                     if (rs.getString("Franchise") != null) {
                         Label tmpBez = new Label("Franchise:");
                         Label tmp = new Label(rs.getString("Franchise"));
-                        l.add(tmpBez, 0, a); //der ZÃ¤hler wird als Angabe der Zeilennummer genutzt
+                        l.add(tmpBez, 0, a);
                         l.add(tmp, 1, a);
                         a++;
                     }
@@ -1170,13 +592,8 @@ public class MainController {
                         l.add(bearbeiten, 2, a);
                         l.add(loeschen, 3, a);
                     }
-                    String tempUntertitel = rs.getString("Untertitel");
-                    if (tempUntertitel != null) {
-                        tempUntertitel = ": " + tempUntertitel;
-                    } else {
-                        tempUntertitel = "";
-                    }
-                    TitledPane p = new TitledPane(rs.getString("Titel") + tempUntertitel, l);
+                    String name = rs.getString("Titel") + ((rs.getString("Untertitel") == null) ? "" : ": " + rs.getString("Untertitel"));
+                    TitledPane p = new TitledPane(name, l);
                     p.setId(rs.getString("ID"));
                     audiothekAccordion.getPanes().add(p);
                 }
@@ -1231,14 +648,14 @@ public class MainController {
                     if (rs.getString("Franchise") != null) {
                         Label tmpBez = new Label("Franchise:");
                         Label tmp = new Label(rs.getString("Franchise"));
-                        l.add(tmpBez, 0, a); //der ZÃ¤hler wird als Angabe der Zeilennummer genutzt
+                        l.add(tmpBez, 0, a);
                         l.add(tmp, 1, a);
-                        a++; //und anschlieÃŸend eins hochgezÃ¤hlt
+                        a++;
                     }
                     if (rs.getString("Genre") != null) {
                         Label tmpBez = new Label("Genre:");
                         Label tmp = new Label(rs.getString("Genre"));
-                        l.add(tmpBez, 0, a); //der ZÃ¤hler wird als Angabe der Zeilennummer genutzt
+                        l.add(tmpBez, 0, a);
                         l.add(tmp, 1, a);
                         a++;
                     }
@@ -1297,13 +714,8 @@ public class MainController {
                         l.add(loeschen, 3, a);
 
                     }
-                    String tempUntertitel = rs.getString("Untertitel");
-                    if (tempUntertitel != null) {
-                        tempUntertitel = ": " + tempUntertitel;
-                    } else {
-                        tempUntertitel = "";
-                    }
-                    TitledPane p = new TitledPane(rs.getString("Titel") + tempUntertitel, l);
+                    String name = rs.getString("Titel") + ((rs.getString("Untertitel") == null) ? "" : ": " + rs.getString("Untertitel"));
+                    TitledPane p = new TitledPane(name, l);
                     p.setId(rs.getString("ID"));
                     bibliothekAccordion.getPanes().add(p);
                 }
@@ -1384,13 +796,8 @@ public class MainController {
                         l.add(loeschen, 3, a);
 
                     }
-                    String tempUntertitel = rs.getString("Untertitel");
-                    if (tempUntertitel != null) {
-                        tempUntertitel = ": " + tempUntertitel;
-                    } else {
-                        tempUntertitel = "";
-                    }
-                    TitledPane p = new TitledPane(rs.getString("Titel") + tempUntertitel, l);
+                    String name = rs.getString("Titel") + ((rs.getString("Untertitel") == null) ? "" : ": " + rs.getString("Untertitel"));
+                    TitledPane p = new TitledPane(name, l);
                     p.setId(rs.getString("ID"));
                     gamesAccordion.getPanes().add(p);
                 }
@@ -1400,177 +807,678 @@ public class MainController {
         }
     }
 
-    //funkt nur mit Swing, nicht mit FX
+    /*--------button der titledpanes--------*/
+    /**
+     * Zunächst wird geprüft, welche Tab selektiert ist, dazu passend werden die Daten aus der Datenbank abgefragt.
+     * Danach wird ermittelt, welche Pane aufgeklappt ist; da defaultmäßig immer nur eine Pane geöffnet sein kann,
+     * ist es die zu Bearbeitende. In {@link MainWindow.MainController#videoSortieren(String)}, bzw. die Anderen analog,
+     * wurde jeder TitledPane die ID gegeben, die in der Datenbank zu dem jeweiligen Element hinterlegt ist. Diese wird
+     * nun aus der Aufgeklappten ausgelesen und die Datenbank wird durchlaufen. Wurde das Element gefunden, für das die
+     * ID der Pane und die des Elements übereinstimmen, wird überprüft, ob es sich um einen Film oder eine Serie handelt.
+     * Je nachdem wird mit dem gefundenen Element ein neuer Film / neue Serie angelegt und die Methode
+     * {@link bearbeitung.Bearbeitung#bearbeitenoeffnen(Medium, String, String)} aufgerufen.
+     * Übergeben werden der Film / Serie, der Typ und die zu ladende FXML.*/
+    public void bearbeitenOnAction(ActionEvent actionEvent) {
+        if (videothekTab.isSelected()) {
+            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Filme ORDER BY Titel ASC");
+            String identifikation = videothekAccordion.getExpandedPane().getId();
+            int id = Integer.parseInt(identifikation);
+
+            try {
+                while (rs.next())
+                {
+                    if (rs.getInt("ID") == id) {
+                        if (rs.getString("Typ").equals("Filme"))
+                        {
+                            Film f = new Film(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Altersgruppe"), rs.getString("Medium"), rs.getString("Zusatzinformationen"),
+                                    rs.getString("Standort"), rs.getString("Franchise"), rs.getString("Link"));
+                            Bearbeitung.bearbeitenoeffnen(f, "Film", "/Hinzufuegen/HinzufuegenFilm.fxml");
+                        }
+                        else {
+                            Serie s = new Serie(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Season"), rs.getString("Zusatzinformationen"), rs.getString("Altersgruppe"),
+                                    rs.getString("Standort"), rs.getString("Franchise"), rs.getString("Medium"), rs.getString("Link"));
+                            Bearbeitung.bearbeitenoeffnen(s, "Serie", "/Hinzufuegen/HinzufuegenSerie.fxml");
+                        }
+                        break;
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        if (audiothekTab.isSelected()) {
+            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Hörspiele ORDER BY Titel ASC");
+            String identifikation = audiothekAccordion.getExpandedPane().getId();
+            int id = Integer.parseInt(identifikation);
+
+            try {
+                while (rs.next()) {
+                    if (rs.getInt("ID") == id) {
+                        if (rs.getString("Typ").equals("Hörspiele")) {
+                            Hoerspiel h = new Hoerspiel(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Folge"), rs.getString("Zusatzinformationen"), rs.getString("Altersgruppe"),
+                                    rs.getString("Standort"), rs.getString("Link"));
+                            Bearbeitung.bearbeitenoeffnen(h, "Hörspiel", "/Hinzufuegen/HinzufuegenHoerspiel.fxml");
+
+                        } else {
+                            Musik m = new Musik(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Genre"), rs.getString("Franchise"), rs.getString("Zusatzinformationen"),
+                                    rs.getString("Standort"), rs.getString("Link"));
+                            Bearbeitung.bearbeitenoeffnen(m, "Musik", "/Hinzufuegen/HinzufuegenMusik.fxml");
+                        }
+                        break;
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        if (bibliothekTab.isSelected()) {
+            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Bücher ORDER BY Titel ASC");
+            String identifikation = bibliothekAccordion.getExpandedPane().getId();
+            int id = Integer.parseInt(identifikation);
+
+            try {
+                while (rs.next()) {
+                    if (rs.getInt("ID") == id) {
+                        if (rs.getString("Typ").equals("Bücher")) {
+                            Buch b = new Buch(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Genre"), rs.getString("Standort"), rs.getString("Autor"),
+                                    rs.getString("Zusatzinformationen"), rs.getString("Franchise"), rs.getString("Altersgruppe"),
+                                    rs.getString("Link"));
+                            Bearbeitung.bearbeitenoeffnen(b, "Buch", "/Hinzufuegen/HinzufuegenBuch.fxml");
+
+                        } else {
+                            Zeitschrift z = new Zeitschrift(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Herausgeber"), rs.getString("Ausgabe"), rs.getString("Zusatzinformationen"),
+                                    rs.getString("Genre"), rs.getString("Standort"), rs.getString("Link"));
+                            Bearbeitung.bearbeitenoeffnen(z, "Zeitschrift", "/Hinzufuegen/HinzufuegenZeitschrift.fxml");
+                        }
+                        break;
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        if (gamesTab.isSelected()) {
+            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Spiele ORDER BY Titel ASC");
+            String identifikation = gamesAccordion.getExpandedPane().getId();
+            int id = Integer.parseInt(identifikation);
+
+            try {
+                while (rs.next()) {
+                    if (rs.getInt("ID") == id) {
+                            Spiel g = new Spiel(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                rs.getString("Altersgruppe"), rs.getString("Zusatzinformationen"), rs.getString("Standort"),
+                                rs.getString("Franchise"), rs.getString("Plattform"), rs.getString("Link"));
+                            Bearbeitung.bearbeitenoeffnen(g, "Spiel", "/Hinzufuegen/HinzufuegenGame.fxml");
+                        break;
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+    /**
+     * Auch hier wird die ID der Pane abgefragt und das jeweilige RS durchlaufen, bis eine übereinstimmung gefunden
+     * wurde. Es wird zwischen dem Typ unterschieden und ein entsprechendes Objekt mit den Daten aus der Datenbank angelegt.
+     * {@link alert.AlertAufrufe#loeschenAlert(String, String, Medium)} wird aufgerufen, die einen boolean Wert zurückliefert.
+     * Wird true zurückgegeben, wird {@link MainWindow.MainController#videoSortieren(String)} aufgerufen,
+     * die die jeweilige -thek aktualisiert.
+     */
+    public void loeschenOnAction(ActionEvent actionEvent) {
+        if (videothekTab.isSelected()) {
+            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Filme ORDER BY Titel ASC");
+            String identifikation = videothekAccordion.getExpandedPane().getId();
+            int id = Integer.parseInt(identifikation);
+            try {
+                while (rs.next())
+                {
+                    if (rs.getInt("ID") == id) {
+                        if (rs.getString("Typ").equals("Filme"))
+                        {
+                            Film f = new Film(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Altersgruppe"), rs.getString("Medium"), rs.getString("Zusatzinformationen"),
+                                    rs.getString("Standort"), rs.getString("Franchise"), rs.getString("Link"));
+                            if(AlertAufrufe.loeschenAlert("Film", "Filme", f))
+                            {
+                                videoSortieren("");
+                            }
+                        }
+                        else {
+                            Serie s = new Serie(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Season"), rs.getString("Zusatzinformationen"), rs.getString("Altersgruppe"),
+                                    rs.getString("Standort"), rs.getString("Franchise"), rs.getString("Medium"), rs.getString("Link"));
+                            if(AlertAufrufe.loeschenAlert("Serie", "Filme", s))
+                            {
+                                videoSortieren("");
+                            }
+                        }
+                        break;
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        if (audiothekTab.isSelected()) {
+            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Hörspiele ORDER BY Titel ASC");
+            String identifikation = audiothekAccordion.getExpandedPane().getId();
+            int id = Integer.parseInt(identifikation);
+
+            try {
+                while (rs.next()) {
+                    if (rs.getInt("ID") == id) {
+                        if (rs.getString("Typ").equals("Hörspiele")) {
+                            Hoerspiel h = new Hoerspiel(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Folge"), rs.getString("Zusatzinformationen"), rs.getString("Altersgruppe"),
+                                    rs.getString("Standort"), rs.getString("Link"));
+                            if(AlertAufrufe.loeschenAlert("Hörspiel", "Hörspiele", h))
+                            {
+                                audioSortieren("");
+                            }
+                        } else {
+                            Musik m = new Musik(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Genre"), rs.getString("Franchise"), rs.getString("Zusatzinformationen"),
+                                    rs.getString("Standort"), rs.getString("Link"));
+                            if(AlertAufrufe.loeschenAlert("Musik", "Hörspiele", m))
+                            {
+                                audioSortieren("");
+                            }
+                        }
+                        break;
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        if (bibliothekTab.isSelected()) {
+            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Bücher ORDER BY Titel ASC");
+            String identifikation = bibliothekAccordion.getExpandedPane().getId();
+            int id = Integer.parseInt(identifikation);
+
+            try {
+                while (rs.next()) {
+                    if (rs.getInt("ID") == id) {
+                        if (rs.getString("Typ").equals("Bücher")) {
+                            Buch b = new Buch(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Genre"), rs.getString("Standort"), rs.getString("Autor"),
+                                    rs.getString("Zusatzinformationen"), rs.getString("Franchise"), rs.getString("Altersgruppe"),
+                                    rs.getString("Link"));
+                            if(AlertAufrufe.loeschenAlert("Buch", "Bücher", b))
+                            {
+                                biblioSortieren("");
+                            }
+                        } else {
+                            Zeitschrift z = new Zeitschrift(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                    rs.getString("Herausgeber"), rs.getString("Ausgabe"), rs.getString("Zusatzinformationen"),
+                                    rs.getString("Genre"), rs.getString("Standort"), rs.getString("Link"));
+                            if(AlertAufrufe.loeschenAlert("Zeitschrift", "Bücher", z))
+                            {
+                                biblioSortieren("");
+                            }
+                        }
+                        break;
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        if (gamesTab.isSelected()) {
+            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Spiele ORDER BY Titel ASC");
+            String identifikation = gamesAccordion.getExpandedPane().getId();
+            int id = Integer.parseInt(identifikation);
+
+            try {
+                while (rs.next()) {
+                    if (rs.getInt("ID") == id) {
+                        Spiel g = new Spiel(rs.getInt("ID"), rs.getString("Titel"), rs.getString("Untertitel"),
+                                rs.getString("Altersgruppe"), rs.getString("Zusatzinformationen"), rs.getString("Standort"),
+                                rs.getString("Franchise"), rs.getString("Plattform"), rs.getString("Link"));
+                        if(AlertAufrufe.loeschenAlert("Spiel", "Spiele", g))
+                        {
+                            gamesSortieren("");
+                        }
+                        break;
+                    }
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+
+    /*WISHLIST UND METHODEN
+    ---------------------------------------------------------------------------*/
+    /**
+     * wishlistFuellen wird bei Start des Programms aufgerufen, zudem jedes Mal, nachdem ein Objekt
+     * bearbeitet / neu hinzugefügt und gespeichert wurde, bzw. ein Wunsch aus der Wishlist in den
+     * Katalog übertragen wurde.
+     * Es muss nicht jedes Mal die gesamte Wishlist neu gefüllt werden, da die Wishlisten
+     * je Typ getrennt sind und immer nur eins auf einmal bearbeitet bzw. übertragen werden kann.
+     * Außerdem wird geprüft, ob ein Link in der Datenbank vorhanden ist, da auf der Wishlist nur Objekte,
+     * die einen Link haben angezeigt werden sollen.
+     * Es werden Objekte des spezifischen Typs erzeugt und auf der dazugehörigen List gespeichert.
+     * Danach werden die Spalten der Tabelle mit den erlangten Daten aus der List gefüllt.
+     * Damit das Objekt aus der TableView verschwindet, wenn es über
+     * {@link MainWindow.MainController#wLoeschenOnAction(ActionEvent)} -> {@link MainWindow.MainController#alertZeigen(Medium)}
+     * von der Liste entfernt wird, müssen die ELemente mit setItems() anstatt getItems().setAll()
+     * hinzugefügt werden.
+     * @param data Gibt an aus welcher Tabelle die Daten geholt werden müssen.
+     * @param typ Gibt genau an welche Tabelle und List aktualisiert werden soll.
+     */
+    public void wishlistFuellen(String data, String typ) {
+        ResultSet wl = Main.db.dbAbfrage("SELECT * FROM " + data + " ORDER BY Titel ASC");
+        try {
+            while (wl.next()) {
+                if (wl.getString("Link") != null) {
+                    if (data.equals("Filme"))
+                    {
+                        if (wl.getString("Typ").equals("Filme") && typ.equals("Filme"))
+                        {
+                            wfilmlist.add(new Film(wl.getInt("ID"), wl.getString("Titel"),
+                                    wl.getString("Untertitel"), wl.getString("Altersgruppe"),
+                                    wl.getString("Medium"), wl.getString("Zusatzinformationen"),
+                                    wl.getString("Standort"), wl.getString("Franchise"),
+                                    wl.getString("Link")));
+
+                            filmeTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
+                            filmeUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
+                            filmeLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
+
+                            filmeTableView.setItems(wfilmlist);
+                        }
+                        else if (wl.getString("Typ").equals("Serien") && typ.equals("Serien"))
+                        {
+                            wserielist.add(new Serie(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
+                                    wl.getString("Season"), wl.getString("Zusatzinformationen"), wl.getString("Altersgruppe"),
+                                    wl.getString("Standort"), wl.getString("Franchise"), wl.getString("Medium"), wl.getString("Link")));
+
+                            serienTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
+                            serienUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
+                            serienLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
+
+                            serienTableView.setItems(wserielist);
+                        }
+                    }
+                    else if (data.equals("Hörspiele"))
+                    {
+                        if (wl.getString("Typ").equals("Hörspiele") && typ.equals("Hörspiele"))
+                        {
+                            whoerspiellist.add(new Hoerspiel(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
+                                    wl.getString("Folge"), wl.getString("Zusatzinformationen"), wl.getString("Altersgruppe"),
+                                    wl.getString("Standort"), wl.getString("Link")));
+
+                            hoerspielTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
+                            hoerspielUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
+                            hoerspielLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
+
+                            hoerspieleTableView.setItems(whoerspiellist);
+                        }
+                        else if (wl.getString("Typ").equals("Musik") && typ.equals("Musik"))
+                        {
+                            wmusiklist.add(new Musik(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
+                                    wl.getString("Genre"), wl.getString("Franchise"), wl.getString("Zusatzinformationen"),
+                                    wl.getString("Standort"), wl.getString("Link")));
+
+                            musikTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
+                            musikUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
+                            musikLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
+
+                            musikTableView.setItems(wmusiklist);
+                        }
+                    }
+                    else if (data.equals("Bücher"))
+                    {
+                        if (wl.getString("Typ").equals("Bücher") && typ.equals("Bücher"))
+                        {
+                            wbuchlist.add(new Buch(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
+                                    wl.getString("Genre"), wl.getString("Standort"), wl.getString("Autor"),
+                                    wl.getString("Zusatzinformationen"), wl.getString("Franchise"), wl.getString("Altersgruppe"),
+                                    wl.getString("Link")));
+
+                            buecherTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
+                            buecherUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
+                            buecherLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
+
+                            buecherTableView.setItems(wbuchlist);
+                        }
+                        else if (wl.getString("Typ").equals("Zeitschriften") && typ.equals("Zeitschriften"))
+                        {
+                            wzeitschriftlist.add(new Zeitschrift(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
+                                    wl.getString("Herausgeber"), wl.getString("Ausgabe"), wl.getString("Zusatzinformationen"),
+                                    wl.getString("Genre"), wl.getString("Standort"), wl.getString("Link")));
+
+                            zeitschriftenTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
+                            zeitschriftenUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
+                            zeitschriftenLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
+
+                            zeitschriftenTableView.setItems(wzeitschriftlist);
+                        }
+                    }
+                    else if (data.equals("Spiele") && typ.equals("Spiele"))
+                    {
+                        wgamelist.add(new Spiel(wl.getInt("ID"), wl.getString("Titel"), wl.getString("Untertitel"),
+                                wl.getString("Altersgruppe"), wl.getString("Zusatzinformationen"), wl.getString("Standort"),
+                                wl.getString("Franchise"), wl.getString("Plattform"), wl.getString("Link")));
+
+                        gamesTitelC.setCellValueFactory(new PropertyValueFactory<>("Titel"));
+                        gamesUntertitelC.setCellValueFactory(new PropertyValueFactory<>("Untertitel"));
+                        gamesLinkC.setCellValueFactory(new PropertyValueFactory<>("Link"));
+
+                        gamesTableView.setItems(wgamelist);
+                    }
+                    else
+                    {
+                        System.out.println("IWas ist falsch");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*------------contextmenu------------*/
+    /**
+     * Wird aus dem ContextMenu 'Bearbeiten' aus der Wishlist aufgerufen. Am Beispiel eines Films:
+     * Die filmeTableView wird durch eine List gefüllt. In dieser List befinden sich ausschließlich Objekte
+     * der Klasse Filme. Daher kann man das Objekt, das bearbeitet werden soll, mit getSelectionModel.getSelectedItem()
+     * ansprechen.
+     * Ist die filmeTableView fokussiert, wird das ausgewählte Objekt in dem Film f gespeichert und der Methode
+     * {@link bearbeitung.Bearbeitung#wbearbeitenoeffnen(Medium, String, String)} übergeben, und zusätzlich der
+     * Typ (hier: 'Film') und die zu ladende FXML.
+     */
+    public void wBearbeitenOnAction(ActionEvent actionEvent) {
+                if (filmeTableView.isFocused()) {
+                    Film f = filmeTableView.getSelectionModel().getSelectedItem();
+                    Bearbeitung.wbearbeitenoeffnen(f, "Film", "/Wishlist/WishlistFilm.fxml");
+                    filmeTableView.getSelectionModel().clearSelection();
+                }
+                else if (serienTableView.isFocused()) {
+                    Serie s = serienTableView.getSelectionModel().getSelectedItem();
+                    Bearbeitung.wbearbeitenoeffnen(s, "Serie", "/Wishlist/WishlistSerie.fxml");
+                    serienTableView.getSelectionModel().clearSelection();
+                }
+                else if (hoerspieleTableView.isFocused()) {
+                    Hoerspiel h = hoerspieleTableView.getSelectionModel().getSelectedItem();
+                    Bearbeitung.wbearbeitenoeffnen(h, "Hörspiel", "/Wishlist/WishlistHoerspiel.fxml");
+                    hoerspieleTableView.getSelectionModel().clearSelection();
+                }
+                else if (musikTableView.isFocused()) {
+                    Musik m = musikTableView.getSelectionModel().getSelectedItem();
+                    Bearbeitung.wbearbeitenoeffnen(m, "Musik", "/Wishlist/WishlistMusik.fxml");
+                    musikTableView.getSelectionModel().clearSelection();
+                }
+                else if (buecherTableView.isFocused()) {
+                    Buch b = buecherTableView.getSelectionModel().getSelectedItem();
+                    Bearbeitung.wbearbeitenoeffnen(b, "Buch", "/Wishlist/WishlistBuch.fxml");
+                    buecherTableView.getSelectionModel().clearSelection();
+                }
+                else if (zeitschriftenTableView.isFocused()) {
+                    Zeitschrift z = zeitschriftenTableView.getSelectionModel().getSelectedItem();
+                    Bearbeitung.wbearbeitenoeffnen(z, "Zeitschrift", "/Wishlist/WishlistZeitschrift.fxml");
+                    zeitschriftenTableView.getSelectionModel().clearSelection();
+                }
+                else if (gamesTableView.isFocused()) {
+                    Spiel g = gamesTableView.getSelectionModel().getSelectedItem();
+                    Bearbeitung.wbearbeitenoeffnen(g, "Spiel", "/Wishlist/WishlistGame.fxml");
+                    gamesTableView.getSelectionModel().clearSelection();
+                }
+    }
+    /**
+     * Wird aus dem ContextMenu 'Wunsch übertragen' aus der Wishlist aufgerufen.
+     * Je nachdem welche TableView fokussiert ist, wird das ausgewählte Objekt abgefragt und an
+     * {@link alert.AlertAufrufe#wunschUebertragenAlert(String, Medium)} übergeben, zusätzlich der Typ.
+     * Diese Methode gibt einen boolean Wert zurück. Ist dieser true, wird der Link des Objekts auf null gesetzt, die Methode
+     * {@link datenhaltung.Datenbank#mediumSpeichern(DatenbankEintrag, String)} aufgerufen und ihr das Objekt und der
+     * Tabellenname übergeben. Danach wird ein {@link alert.AlertAufrufe#infoAlert(String, String, String, String)}
+     * ausgegeben, der bestätigt, dass sich das Objekt nun in der jeweiligen -thek befindet. Schließlich wird das Objekt von
+     * der zur Tabelle passenden List entfernt; Zudem wird die Newslist aktualisiert und die Auswahl geleert.
+     */
+    public void wWunschUebertragenOnAction(ActionEvent actionEvent) {
+            try {
+                if (filmeTableView.isFocused())
+                {
+                    Film f = filmeTableView.getSelectionModel().getSelectedItem();
+                    if(AlertAufrufe.wunschUebertragenAlert("Film", f))
+                    {
+                        f.setLink(null);
+                        Main.db.mediumSpeichern(f, "Filme");
+                        AlertAufrufe.infoAlert(f.getTitel(), f.getUntertitel(), "Der Film", "der Videothek");
+                        videoSortieren("");
+                        wfilmlist.remove(f);
+                        Newslist.newslist("Filme");
+                        filmeTableView.getSelectionModel().clearSelection();
+                    }
+                }
+                if (serienTableView.isFocused())
+                {
+                    Serie s = serienTableView.getSelectionModel().getSelectedItem();
+                    if(AlertAufrufe.wunschUebertragenAlert("Serie", s)) {
+                        s.setLink(null);
+                        Main.db.mediumSpeichern(s, "Filme");
+                        AlertAufrufe.infoAlert(s.getTitel(), s.getUntertitel(), "Die Serie", "der Videothek");
+                        videoSortieren("");
+                        wserielist.remove(s);
+                        Newslist.newslist("Serien");
+                        serienTableView.getSelectionModel().clearSelection();
+                    }
+                }
+                if (gamesTableView.isFocused())
+                {
+                    Spiel g = gamesTableView.getSelectionModel().getSelectedItem();
+                    if(AlertAufrufe.wunschUebertragenAlert("Spiel", g)) {
+                        g.setLink(null);
+                        Main.db.mediumSpeichern(g, "Spiele");
+                        AlertAufrufe.infoAlert(g.getTitel(), g.getUntertitel(), "Das Spiel", "Games");
+                        gamesSortieren("");
+                        wgamelist.remove(g);
+                        Newslist.newslist("Spiele");
+                        gamesTableView.getSelectionModel().clearSelection();
+                    }
+                }
+                if (hoerspieleTableView.isFocused())
+                {
+                    Hoerspiel h = hoerspieleTableView.getSelectionModel().getSelectedItem();
+                    if(AlertAufrufe.wunschUebertragenAlert("Hörspiel", h)) {
+                        h.setLink(null);
+                        Main.db.mediumSpeichern(h, "Hörspiele");
+                        AlertAufrufe.infoAlert(h.getTitel(), h.getUntertitel(), "Das Hörspiel", "der Audiothek");
+                        audioSortieren("");
+                        whoerspiellist.remove(h);
+                        Newslist.newslist("Hörspiele");
+                        hoerspieleTableView.getSelectionModel().clearSelection();
+                    }
+                }
+                if (musikTableView.isFocused())
+                {
+                    Musik m = musikTableView.getSelectionModel().getSelectedItem();
+                    if(AlertAufrufe.wunschUebertragenAlert("Musik", m)) {
+                        m.setLink(null);
+                        Main.db.mediumSpeichern(m, "Hörspiele");
+                        AlertAufrufe.infoAlert(m.getTitel(), m.getUntertitel(), "Die Musik", "der Audiothek");
+                        audioSortieren("");
+                        wmusiklist.remove(m);
+                        Newslist.newslist("Musik");
+                        musikTableView.getSelectionModel().clearSelection();
+                    }
+                }
+                if (buecherTableView.isFocused())
+                {
+                    Buch b = buecherTableView.getSelectionModel().getSelectedItem();
+                    if(AlertAufrufe.wunschUebertragenAlert("Buch", b)) {
+                        b.setLink(null);
+                        Main.db.mediumSpeichern(b, "Bücher");
+                        AlertAufrufe.infoAlert(b.getTitel(), b.getUntertitel(), "Das Buch", "der Bibliothek");
+                        biblioSortieren("");
+                        wbuchlist.remove(b);
+                        Newslist.newslist("Bücher");
+                        buecherTableView.getSelectionModel().clearSelection();
+                    }
+                }
+                if (zeitschriftenTableView.isFocused())
+                {
+                    Zeitschrift z = zeitschriftenTableView.getSelectionModel().getSelectedItem();
+                    if(AlertAufrufe.wunschUebertragenAlert("Zeitschrift", z)) {
+                        z.setLink(null);
+                        Main.db.mediumSpeichern(z, "Bücher");
+                        AlertAufrufe.infoAlert(z.getTitel(), z.getUntertitel(), "Die Zeitschrift", "der Bibliothek");
+                        biblioSortieren("");
+                        wzeitschriftlist.remove(z);
+                        Newslist.newslist("Zeitschriften");
+                        zeitschriftenTableView.getSelectionModel().clearSelection();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+    }
+
+    /**
+     * Wird aus dem ContextMenu 'Link folgen' aus der Wishlist aufgerufen.
+     * Je nachdem welche TableView fokussiert ist, wird das ausgewählte Objekt abgefragt und dessen Link an die Methode
+     * {@link MainWindow.MainController#folgeLink(String)} übergeben. Danach wird die Selektion der Tabelle geleert.
+     */
+    public void wLinkFolgenOnAction(ActionEvent actionEvent) {
+        if (filmeTableView.isFocused()) {
+            Film f = filmeTableView.getSelectionModel().getSelectedItem();
+            folgeLink(f.getLink());
+            filmeTableView.getSelectionModel().clearSelection();
+        }
+        else if (serienTableView.isFocused()) {
+            Serie s = serienTableView.getSelectionModel().getSelectedItem();
+            folgeLink(s.getLink());
+            serienTableView.getSelectionModel().clearSelection();
+        }
+        else if (hoerspieleTableView.isFocused()) {
+            Hoerspiel h = hoerspieleTableView.getSelectionModel().getSelectedItem();
+            folgeLink(h.getLink());
+            hoerspieleTableView.getSelectionModel().clearSelection();
+        }
+        else if (musikTableView.isFocused()) {
+            Musik m = musikTableView.getSelectionModel().getSelectedItem();
+            folgeLink(m.getLink());
+            musikTableView.getSelectionModel().clearSelection();
+        }
+        else if (buecherTableView.isFocused()) {
+            Buch b = buecherTableView.getSelectionModel().getSelectedItem();
+            folgeLink(b.getLink());
+            buecherTableView.getSelectionModel().clearSelection();
+        }
+        else if (zeitschriftenTableView.isFocused()) {
+            Zeitschrift z = zeitschriftenTableView.getSelectionModel().getSelectedItem();
+            folgeLink(z.getLink());
+            zeitschriftenTableView.getSelectionModel().clearSelection();
+        }
+        else if (gamesTableView.isFocused()) {
+            Spiel g = gamesTableView.getSelectionModel().getSelectedItem();
+            folgeLink(g.getLink());
+            gamesTableView.getSelectionModel().clearSelection();
+        }
+    }
     public void folgeLink(String link) {
         try {
-            //webEngine.load(link);
             Desktop.getDesktop().browse(new URI(link));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void wlinkfolgenOnAction(ActionEvent actionEvent) {
-        Medium m;
+
+    /**
+     * Es wird das ausgewählte Objekt aus der TableView in m gespeichert
+     * und an {@link MainWindow.MainController#alertZeigen(Medium)} übergeben.
+     */
+    public void wLoeschenOnAction(ActionEvent actionEvent) {
+        Medium m = null;
         if (filmeTableView.getSelectionModel().getSelectedItem() != null) {
-            m = filmeTableView.getSelectionModel().getSelectedItem();
-            folgeLink(m.getLink());
-            filmeTableView.getSelectionModel().clearSelection();
-        } else if (serienTableView.getSelectionModel().getSelectedItem() != null) {
-            m = serienTableView.getSelectionModel().getSelectedItem();
-            folgeLink(m.getLink());
-            serienTableView.getSelectionModel().clearSelection();
-        } else if (hoerspieleTableView.getSelectionModel().getSelectedItem() != null) {
-            m = hoerspieleTableView.getSelectionModel().getSelectedItem();
-            folgeLink(m.getLink());
-            hoerspieleTableView.getSelectionModel().clearSelection();
-        } else if (musikTableView.getSelectionModel().getSelectedItem() != null) {
-            m = musikTableView.getSelectionModel().getSelectedItem();
-            folgeLink(m.getLink());
-            musikTableView.getSelectionModel().clearSelection();
-        } else if (buecherTableView.getSelectionModel().getSelectedItem() != null) {
-            m = buecherTableView.getSelectionModel().getSelectedItem();
-            folgeLink(m.getLink());
-            buecherTableView.getSelectionModel().clearSelection();
-        } else if (zeitschriftenTableView.getSelectionModel().getSelectedItem() != null) {
-            m = zeitschriftenTableView.getSelectionModel().getSelectedItem();
-            folgeLink(m.getLink());
-            zeitschriftenTableView.getSelectionModel().clearSelection();
-        } else if (gamesTableView.getSelectionModel().getSelectedItem() != null) {
-            m = gamesTableView.getSelectionModel().getSelectedItem();
-            folgeLink(m.getLink());
-            gamesTableView.getSelectionModel().clearSelection();
-        }
+            m = filmeTableView.getSelectionModel().getSelectedItem();}
+        else if (serienTableView.getSelectionModel().getSelectedItem() != null) {
+            m = serienTableView.getSelectionModel().getSelectedItem();}
+        else if (hoerspieleTableView.getSelectionModel().getSelectedItem() != null) {
+            m = hoerspieleTableView.getSelectionModel().getSelectedItem();}
+        else if (musikTableView.getSelectionModel().getSelectedItem() != null) {
+            m = musikTableView.getSelectionModel().getSelectedItem();}
+        else if (buecherTableView.getSelectionModel().getSelectedItem() != null) {
+            m = buecherTableView.getSelectionModel().getSelectedItem();}
+        else if (zeitschriftenTableView.getSelectionModel().getSelectedItem() != null) {
+            m = zeitschriftenTableView.getSelectionModel().getSelectedItem();}
+        else if (gamesTableView.getSelectionModel().getSelectedItem() != null) {
+            m = gamesTableView.getSelectionModel().getSelectedItem();}
+        alertZeigen(m);
     }
-
-    //läuft und aktualisiert
-    public void loeschenOnAction(ActionEvent actionEvent) {
-        if (videothekTab.isSelected())  //Es wird geprÃ¼ft, welcher Tab ausgewÃ¤hlt ist
+    /**
+     * Es wird abgefragt, von welcher Kindesklasse das übergebene Objekt eine Instanz ist.
+     * Entsprechend wird {@link alert.AlertAufrufe#loeschenAlert(String, String, Medium)}
+     * aufgerufen. Übergeben werden der Typ und der Tabellenname, die zu dem Objekt passen.
+     * Wenn die aufgerufene Methode 'true' zurückliefert, wird das Objekt von der Liste, die
+     * die Wünsche enthält, entfernt und die Auswahl geleert.
+     * @param m Das übergebene Objekt, das eine Instanz des ausgewählten Objekts in der TableView ist.
+     */
+    public void alertZeigen(Medium m) {
+        if (m instanceof Film)
         {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Filme ORDER BY Titel ASC");  //passend dazu werden die Daten aus der Datenbank abgefragt
-            String identifikation = videothekAccordion.getExpandedPane().getId();
-            int id = Integer.parseInt(identifikation);
-
-            try {
-                while (rs.next()) //die Datenbank wird durchlaufen
-                {
-                    if (rs.getInt("ID") == id) {
-
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setTitle("Film löschen");
-                        alert.setContentText("Film \"" + rs.getString("Titel") + "\" löschen?");
-                        Optional<ButtonType> antwort = alert.showAndWait();
-                        if (antwort.get() == ButtonType.OK)
-                        {
-                            Main.db.eintragLoeschen(rs.getInt("ID"), rs.getString("Titel"), "Filme");
-                            videoSortieren("");
-                        }
-                        else
-                        {
-                            Alert abbruch = new Alert(Alert.AlertType.INFORMATION);
-                            abbruch.setTitle("Löschen abgebrochen");
-                            abbruch.setContentText("Film wurde nicht gelöscht");
-                            abbruch.showAndWait();
-                        }
-                    }
-                }
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
+            if(AlertAufrufe.loeschenAlert("Film", "Filme", m))
+            {
+                wfilmlist.remove(m);
             }
+            filmeTableView.getSelectionModel().clearSelection();
         }
-        if (audiothekTab.isSelected())  //Es wird geprÃ¼ft, welcher Tab ausgewÃ¤hlt ist
+        if (m instanceof Serie)
         {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Hörspiele ORDER BY Titel ASC");  //passend dazu werden die Daten aus der Datenbank abgefragt
-            String identifikation = audiothekAccordion.getExpandedPane().getId();
-            int id = Integer.parseInt(identifikation);
-            try {
-                while (rs.next()) //die Datenbank wird durchlaufen
-                {
-                    if (rs.getInt("ID") == id) {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setTitle("Hörspiel löschen");
-                        alert.setContentText("Hörspiel \"" + rs.getString("Titel") + "\" löschen?");
-                        Optional<ButtonType> antwort = alert.showAndWait();
-                        if (antwort.get() == ButtonType.OK)
-                        {
-                            Main.db.eintragLoeschen(rs.getInt("ID"), rs.getString("Titel"), "Hörspiele");
-                            audioSortieren("");
-                        }
-                        else
-                        {
-                            Alert abbruch = new Alert(Alert.AlertType.INFORMATION);
-                            abbruch.setTitle("Löschen abgebrochen");
-                            abbruch.setContentText("Hörspiel wurde nicht gelöscht");
-                            abbruch.showAndWait();
-                        }
-                    }
-                }
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
+            if(AlertAufrufe.loeschenAlert("Serie", "Filme", m))
+            {
+                wserielist.remove(m);
             }
+            serienTableView.getSelectionModel().clearSelection();
         }
-        if (bibliothekTab.isSelected())  //Es wird geprÃ¼ft, welcher Tab ausgewÃ¤hlt ist
+        if (m instanceof Hoerspiel)
         {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Bücher ORDER BY Titel ASC");  //passend dazu werden die Daten aus der Datenbank abgefragt
-            String identifikation = bibliothekAccordion.getExpandedPane().getId();
-            int id = Integer.parseInt(identifikation);
-
-            try {
-                while (rs.next()) //die Datenbank wird durchlaufen
-                {
-                    if (rs.getInt("ID") == id) {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setTitle("Buch löschen");
-                        alert.setContentText("Buch \"" + rs.getString("Titel") + "\" löschen?");
-                        Optional<ButtonType> antwort = alert.showAndWait();
-                        if (antwort.get() == ButtonType.OK)
-                        {
-                            Main.db.eintragLoeschen(rs.getInt("ID"), rs.getString("Titel"), "Bücher");
-                            biblioSortieren("");
-                        }
-                        else
-                        {
-                            Alert abbruch = new Alert(Alert.AlertType.INFORMATION);
-                            abbruch.setTitle("Löschen abgebrochen");
-                            abbruch.setContentText("Buch wurde nicht gelöscht");
-                            abbruch.showAndWait();
-                        }
-                    }
-                }
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
+            if(AlertAufrufe.loeschenAlert("Hörspiel", "Hörspiele", m))
+            {
+                whoerspiellist.remove(m);
             }
+            hoerspieleTableView.getSelectionModel().clearSelection();
         }
-        if (gamesTab.isSelected())  //Es wird geprÃ¼ft, welcher Tab ausgewÃ¤hlt ist
+        if (m instanceof Musik)
         {
-            ResultSet rs = Main.db.dbAbfrage("SELECT * FROM Spiele ORDER BY Titel ASC");  //passend dazu werden die Daten aus der Datenbank abgefragt
-            String identifikation = gamesAccordion.getExpandedPane().getId();
-            int id = Integer.parseInt(identifikation);
-
-            try {
-                while (rs.next()) //die Datenbank wird durchlaufen
-                {
-                    if (rs.getInt("ID") == id) {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setTitle("Spiel löschen");
-                        alert.setContentText("Spiel \"" + rs.getString("Titel") + "\" löschen?");
-                        Optional<ButtonType> antwort = alert.showAndWait();
-                        if (antwort.get() == ButtonType.OK)
-                        {
-                            Main.db.eintragLoeschen(rs.getInt("ID"), rs.getString("Titel"), "Spiele");
-                            gamesSortieren("");
-                        }
-                        else
-                        {
-                            Alert abbruch = new Alert(Alert.AlertType.INFORMATION);
-                            abbruch.setTitle("Löschen abgebrochen");
-                            abbruch.setContentText("Spiel wurde nicht gelöscht");
-                            abbruch.showAndWait();
-                        }
-                    }
-                }
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
+            if(AlertAufrufe.loeschenAlert("Musik", "Hörspiele", m))
+            {
+                wmusiklist.remove(m);
             }
+            musikTableView.getSelectionModel().clearSelection();
+        }
+        if (m instanceof Buch)
+        {
+            if(AlertAufrufe.loeschenAlert("Buch", "Bücher", m))
+            {
+                wbuchlist.remove(m);
+            }
+            buecherTableView.getSelectionModel().clearSelection();
+        }
+        if (m instanceof Zeitschrift)
+        {
+            if(AlertAufrufe.loeschenAlert("Zeitschrift", "Bücher", m))
+            {
+                wzeitschriftlist.remove(m);
+            }
+            zeitschriftenTableView.getSelectionModel().clearSelection();
+        }
+        if (m instanceof Spiel)
+        {
+            if(AlertAufrufe.loeschenAlert("Spiel", "Spiele", m))
+            {
+                wgamelist.remove(m);
+            }
+            gamesTableView.getSelectionModel().clearSelection();
         }
     }
 }

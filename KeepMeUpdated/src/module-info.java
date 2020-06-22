@@ -5,6 +5,8 @@ module KeepMeUpdated
 	requires javafx.controls;
 	requires javafx.web;
 	requires java.sql;
+	requires org.apache.commons.lang3;
+	requires controlsfx;
 	
 	//Dämlicherweise müssen hier alle Pakete aufgelistet werden, die JavaFX enthalten, sowohl in exports, als auch in opens...
 	exports MainWindow;

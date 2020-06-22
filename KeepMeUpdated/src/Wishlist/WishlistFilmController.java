@@ -9,6 +9,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
+/**
+ * Controller für WishlistFilm.fxml
+ * @author Hanna
+ *
+ * wSpeichernOnAction
+ * @author Anika
+ */
+
 public class WishlistFilmController extends WControllerFranchise{
     @FXML
     private Label wTypLabel;
@@ -25,11 +33,14 @@ public class WishlistFilmController extends WControllerFranchise{
         wTypChoiceBox.setItems(wTypChoiceBoxList);
     }
 
-    public void promptTyp(String typ)
+    /*----------------------------------------------------
+    PROMPT*/
+    public void promptTypBox(String typ)
     {
         wTypChoiceBox.setValue(typ);
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void wSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -49,6 +60,6 @@ public class WishlistFilmController extends WControllerFranchise{
         super.wSpeichernOnAction(actionEvent);
 
         MainController.instanz.wfilmlist.clear();
-        MainController.instanz.wishlistfuellen("Filme", "Filme");
+        MainController.instanz.wishlistFuellen("Filme", "Filme");
     }
 }

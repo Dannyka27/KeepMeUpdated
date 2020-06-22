@@ -77,5 +77,10 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="KeepMeUpdated/lib/javafx-sdk-11.0.2/bin"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/controlsfx-8.40.14/controlsfx-8.40.14.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

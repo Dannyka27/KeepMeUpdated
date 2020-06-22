@@ -2,7 +2,6 @@ package Hinzufuegen;
 
 import MainWindow.MainController;
 import MainWindow.mediaPanes.Buch;
-import MainWindow.mediaPanes.Medium;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,6 +9,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import Newslist.Newslist;
+
+/**
+ * Controller für HinzufuegenBuch.fxml
+ * @author Hanna
+ *
+ * hSpeichernOnAction
+ * @author Anika
+ */
 
 public class HinzufuegenBuchController extends ControllerFranchise{
     @FXML
@@ -30,16 +38,18 @@ public class HinzufuegenBuchController extends ControllerFranchise{
         hbGenreChoiceBox.setItems(hbGenreList);
     }
 
+    /*----------------------------------------------------
+    PROMPT*/
     public void promptGenreBox(String genre)
     {
         hbGenreChoiceBox.setValue(genre);
     }
-
     public void promptAutor(String autor)
     {
         hbAutorTextField.setPromptText(autor);
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void hSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -60,5 +70,6 @@ public class HinzufuegenBuchController extends ControllerFranchise{
         super.hSpeichernOnAction(actionEvent);
 
         MainController.instanz.biblioSortieren("");
+        Newslist.newslist("Bücher");
     }
 }

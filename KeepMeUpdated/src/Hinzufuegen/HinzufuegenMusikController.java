@@ -9,6 +9,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import Newslist.Newslist;
+
+/**
+ * Controller für HinzufuegenMusik.fxml
+ * @author Hanna
+ *
+ * hSpeichernOnAction
+ * @author Anika
+ */
 
 public class HinzufuegenMusikController extends Controller{
     @FXML
@@ -28,15 +37,18 @@ public class HinzufuegenMusikController extends Controller{
         hmGenreChoiceBox.setItems(hmGenreChoiceBoxList);
     }
 
+    /*----------------------------------------------------
+    PROMPT*/
     public void promptGenreBox(String genre)
     {
         hmGenreChoiceBox.setValue(genre);
     }
-    public void promptFranchise(String franchise)
-    {
+    public void promptFranchise(String franchise) {
         if(franchise != null)
         {hFranchiseTextField.setPromptText(franchise);}
     }
+
+    /*----------------------------------------------------*/
     @Override
     public void hSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -55,5 +67,6 @@ public class HinzufuegenMusikController extends Controller{
         super.hSpeichernOnAction(actionEvent);
 
         MainController.instanz.audioSortieren("");
+        Newslist.newslist("Musik");
     }
 }

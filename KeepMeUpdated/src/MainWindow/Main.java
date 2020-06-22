@@ -6,21 +6,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import keepMeUpdatedTools.KeepMeUpdatedTools;
 
+public class Main extends Application {
 
-public class Main extends Application 
-{
-	public static boolean DEBUG = false;
-	
-
-    public static Datenbank db = new Datenbank("C:\\Users\\Jannled\\Downloads\\Medien.accdb");
+    //Der Pfad müsste für Sie persönlich angepasst werden.
+    public static Datenbank db = new Datenbank("C:\\Users\\clair\\Nextcloud\\FH\\Semester 2\\Informatik 2\\Praktikum\\Medien.accdb");
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-       // db.druckeTabellenTitel("Serien");
 
         Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
         primaryStage.setTitle("Medienkatalog");
+        KeepMeUpdatedTools.stageIconSetzen(primaryStage);
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();

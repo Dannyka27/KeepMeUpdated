@@ -8,7 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+
+/**
+ * Controller für WishlistGame.fxml
+ * @author Hanna
+ *
+ * wSpeichernOnAction
+ * @author Anika
+ */
 
 public class WishlistGameController extends WControllerFranchise {
     @FXML
@@ -27,11 +34,14 @@ public class WishlistGameController extends WControllerFranchise {
 
     }
 
+    /*----------------------------------------------------
+    PROMPT*/
     public void promptPlattformBox(String plattform)
     {
         wgPlattformChoiceBox.setValue(plattform);
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void wSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -51,6 +61,6 @@ public class WishlistGameController extends WControllerFranchise {
         super.wSpeichernOnAction(actionEvent);
 
         MainController.instanz.wgamelist.clear();
-        MainController.instanz.wishlistfuellen("Spiele", "Spiele");
+        MainController.instanz.wishlistFuellen("Spiele", "Spiele");
     }
 }

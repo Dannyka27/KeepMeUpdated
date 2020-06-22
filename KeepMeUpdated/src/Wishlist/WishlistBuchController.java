@@ -10,6 +10,14 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller für WishlistBuch.fxml
+ * @author Hanna
+ *
+ * wSpeichernOnAction
+ * @author Anika
+ */
+
 public class WishlistBuchController extends WControllerFranchise{
     @FXML
     private Label wbGenreLabel;
@@ -28,16 +36,19 @@ public class WishlistBuchController extends WControllerFranchise{
         wbGenreChoiceBox.setValue("Krimi");
         wbGenreChoiceBox.setItems(wbGenreList);
     }
+
+    /*----------------------------------------------------
+    PROMPT*/
     public void promptGenreBox(String genre)
     {
         wbGenreChoiceBox.setValue(genre);
     }
-
     public void promptAutor(String autor)
     {
         wbAutorTextField.setPromptText(autor);
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void wSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -58,6 +69,6 @@ public class WishlistBuchController extends WControllerFranchise{
         super.wSpeichernOnAction(actionEvent);
 
         MainController.instanz.wbuchlist.clear();
-        MainController.instanz.wishlistfuellen("Bücher", "Bücher");
+        MainController.instanz.wishlistFuellen("Bücher", "Bücher");
     }
 }

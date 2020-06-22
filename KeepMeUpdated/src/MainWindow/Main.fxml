@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindow.MainController">
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@mainstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainWindow.MainController">
     <center>
         <TabPane fx:id="mainTabPane" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="104.0" BorderPane.alignment="CENTER">
             <tabs>
@@ -39,7 +39,7 @@
                                             </rowConstraints>
                                             <children>
                                                 <Label text="Sortieren nach:" />
-                                                <ChoiceBox fx:id="videoSortierenChoiceBox" prefHeight="26.0" prefWidth="235.0" GridPane.columnIndex="1" />
+                                            <ChoiceBox fx:id="videoSortierenChoiceBox" prefHeight="26.0" prefWidth="235.0" GridPane.columnIndex="1" />
                                             </children>
                                             <VBox.margin>
                                                 <Insets bottom="15.0" left="50.0" right="50.0" top="20.0" />
@@ -191,7 +191,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <ScrollPane fx:id="wishlistScrollPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <ScrollPane fx:id="wishlistScrollPane" layoutY="29.0" prefHeight="292.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
                                     <content>
                                         <GridPane hgap="10.0" prefHeight="1000.0" prefWidth="580.0" vgap="5.0">
                                             <columnConstraints>
@@ -215,9 +215,9 @@
                                                         <Label text="Filme" />
                                                         <TableView fx:id="filmeTableView" prefHeight="200.0" prefWidth="200.0">
                                                             <columns>
-                                                                <TableColumn fx:id="filmeTitelC" prefWidth="75.0" text="Titel" />
-                                                                <TableColumn fx:id="filmeUntertitelC" prefWidth="75.0" text="Untertitel" />
-                                                                <TableColumn fx:id="filmeLinkC" prefWidth="75.0" text="Link" />
+                                                                <TableColumn fx:id="filmeTitelC" prefWidth="75.0" sortable="false" text="Titel" />
+                                                                <TableColumn fx:id="filmeUntertitelC" prefWidth="75.0" sortable="false" text="Untertitel" />
+                                                                <TableColumn fx:id="filmeLinkC" prefWidth="75.0" sortable="false" text="Link" />
                                                             </columns>
                                                             <columnResizePolicy>
                                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -225,10 +225,10 @@
                                                             <contextMenu>
                                                                 <ContextMenu>
                                                                     <items>
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wlinkfolgenOnAction" text="Link folgen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLoeschenOnAction" text="Löschen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wBearbeitenOnAction" text="Bearbeiten" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wWunschUebertragenOnAction" text="Wunsch übertragen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLinkFolgenOnAction" text="Link folgen" />
                                                                     </items>
                                                                 </ContextMenu>
                                                             </contextMenu>
@@ -240,9 +240,9 @@
                                                         <Label text="Serien" />
                                                         <TableView fx:id="serienTableView" prefHeight="200.0" prefWidth="200.0">
                                                             <columns>
-                                                                <TableColumn fx:id="serienTitelC" prefWidth="75.0" text="Titel" />
-                                                                <TableColumn fx:id="serienUntertitelC" prefWidth="75.0" text="Untertitel" />
-                                                                <TableColumn fx:id="serienLinkC" prefWidth="75.0" text="Link" />
+                                                                <TableColumn fx:id="serienTitelC" prefWidth="75.0" sortable="false" text="Titel" />
+                                                                <TableColumn fx:id="serienUntertitelC" prefWidth="75.0" sortable="false" text="Untertitel" />
+                                                                <TableColumn fx:id="serienLinkC" prefWidth="75.0" sortable="false" text="Link" />
                                                             </columns>
                                                             <columnResizePolicy>
                                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -250,10 +250,10 @@
                                                             <contextMenu>
                                                                 <ContextMenu>
                                                                     <items>
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wlinkfolgenOnAction" text="Link folgen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLoeschenOnAction" text="Löschen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wBearbeitenOnAction" text="Bearbeiten" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wWunschUebertragenOnAction" text="Wunsch übertragen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLinkFolgenOnAction" text="Link folgen" />
                                                                     </items>
                                                                 </ContextMenu>
                                                             </contextMenu>
@@ -265,9 +265,9 @@
                                                         <Label text="Games" />
                                                         <TableView fx:id="gamesTableView" prefHeight="200.0" prefWidth="200.0">
                                                             <columns>
-                                                                <TableColumn fx:id="gamesTitelC" prefWidth="75.0" text="Titel" />
-                                                                <TableColumn fx:id="gamesUntertitelC" prefWidth="75.0" text="Untertitel" />
-                                                                <TableColumn fx:id="gamesLinkC" prefWidth="75.0" text="Link" />
+                                                                <TableColumn fx:id="gamesTitelC" prefWidth="75.0" sortable="false" text="Titel" />
+                                                                <TableColumn fx:id="gamesUntertitelC" prefWidth="75.0" sortable="false" text="Untertitel" />
+                                                                <TableColumn fx:id="gamesLinkC" prefWidth="75.0" sortable="false" text="Link" />
                                                             </columns>
                                                             <columnResizePolicy>
                                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -275,10 +275,10 @@
                                                             <contextMenu>
                                                                 <ContextMenu>
                                                                     <items>
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wlinkfolgenOnAction" text="Link folgen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLoeschenOnAction" text="Löschen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wBearbeitenOnAction" text="Bearbeiten" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wWunschUebertragenOnAction" text="Wunsch übertragen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLinkFolgenOnAction" text="Link folgen" />
                                                                     </items>
                                                                 </ContextMenu>
                                                             </contextMenu>
@@ -290,9 +290,9 @@
                                                         <Label text="Hörspiele" />
                                                         <TableView fx:id="hoerspieleTableView" prefHeight="200.0" prefWidth="200.0">
                                                             <columns>
-                                                                <TableColumn fx:id="hoerspielTitelC" prefWidth="75.0" text="Titel" />
-                                                                <TableColumn fx:id="hoerspielUntertitelC" prefWidth="75.0" text="Untertitel" />
-                                                                <TableColumn fx:id="hoerspielLinkC" prefWidth="75.0" text="Link" />
+                                                                <TableColumn fx:id="hoerspielTitelC" prefWidth="75.0" sortable="false" text="Titel" />
+                                                                <TableColumn fx:id="hoerspielUntertitelC" prefWidth="75.0" sortable="false" text="Untertitel" />
+                                                                <TableColumn fx:id="hoerspielLinkC" prefWidth="75.0" sortable="false" text="Link" />
                                                             </columns>
                                                             <columnResizePolicy>
                                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -300,10 +300,10 @@
                                                             <contextMenu>
                                                                 <ContextMenu>
                                                                     <items>
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wlinkfolgenOnAction" text="Link folgen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLoeschenOnAction" text="Löschen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wBearbeitenOnAction" text="Bearbeiten" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wWunschUebertragenOnAction" text="Wunsch übertragen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLinkFolgenOnAction" text="Link folgen" />
                                                                     </items>
                                                                 </ContextMenu>
                                                             </contextMenu>
@@ -315,9 +315,9 @@
                                                         <Label text="Musik" />
                                                         <TableView fx:id="musikTableView" prefHeight="200.0" prefWidth="200.0">
                                                             <columns>
-                                                                <TableColumn fx:id="musikTitelC" prefWidth="75.0" text="Titel" />
-                                                                <TableColumn fx:id="musikUntertitelC" prefWidth="75.0" text="Untertitel" />
-                                                                <TableColumn fx:id="musikLinkC" prefWidth="75.0" text="Link" />
+                                                                <TableColumn fx:id="musikTitelC" prefWidth="75.0" sortable="false" text="Titel" />
+                                                                <TableColumn fx:id="musikUntertitelC" prefWidth="75.0" sortable="false" text="Untertitel" />
+                                                                <TableColumn fx:id="musikLinkC" prefWidth="75.0" sortable="false" text="Link" />
                                                             </columns>
                                                             <columnResizePolicy>
                                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -325,10 +325,10 @@
                                                             <contextMenu>
                                                                 <ContextMenu>
                                                                     <items>
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wlinkfolgenOnAction" text="Link folgen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLoeschenOnAction" text="Löschen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wBearbeitenOnAction" text="Bearbeiten" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wWunschUebertragenOnAction" text="Wunsch übertragen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLinkFolgenOnAction" text="Link folgen" />
                                                                     </items>
                                                                 </ContextMenu>
                                                             </contextMenu>
@@ -340,9 +340,9 @@
                                                         <Label text="Bücher" />
                                                         <TableView fx:id="buecherTableView" prefHeight="200.0" prefWidth="200.0">
                                                             <columns>
-                                                                <TableColumn fx:id="buecherTitelC" prefWidth="75.0" text="Titel" />
-                                                                <TableColumn fx:id="buecherUntertitelC" prefWidth="75.0" text="Untertitel" />
-                                                                <TableColumn fx:id="buecherLinkC" prefWidth="75.0" text="Link" />
+                                                                <TableColumn fx:id="buecherTitelC" prefWidth="75.0" sortable="false" text="Titel" />
+                                                                <TableColumn fx:id="buecherUntertitelC" prefWidth="75.0" sortable="false" text="Untertitel" />
+                                                                <TableColumn fx:id="buecherLinkC" prefWidth="75.0" sortable="false" text="Link" />
                                                             </columns>
                                                             <columnResizePolicy>
                                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -350,10 +350,10 @@
                                                             <contextMenu>
                                                                 <ContextMenu>
                                                                     <items>
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wlinkfolgenOnAction" text="Link folgen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLoeschenOnAction" text="Löschen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wBearbeitenOnAction" text="Bearbeiten" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wWunschUebertragenOnAction" text="Wunsch übertragen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLinkFolgenOnAction" text="Link folgen" />
                                                                     </items>
                                                                 </ContextMenu>
                                                             </contextMenu>
@@ -365,9 +365,9 @@
                                                         <Label text="Zeitschriften" />
                                                         <TableView fx:id="zeitschriftenTableView" prefHeight="200.0" prefWidth="200.0">
                                                             <columns>
-                                                                <TableColumn fx:id="zeitschriftenTitelC" prefWidth="75.0" text="Titel" />
-                                                                <TableColumn fx:id="zeitschriftenUntertitelC" prefWidth="75.0" text="Untertitel" />
-                                                                <TableColumn fx:id="zeitschriftenLinkC" prefWidth="75.0" text="Link" />
+                                                                <TableColumn fx:id="zeitschriftenTitelC" prefWidth="75.0" sortable="false" text="Titel" />
+                                                                <TableColumn fx:id="zeitschriftenUntertitelC" prefWidth="75.0" sortable="false" text="Untertitel" />
+                                                                <TableColumn fx:id="zeitschriftenLinkC" prefWidth="75.0" sortable="false" text="Link" />
                                                             </columns>
                                                             <columnResizePolicy>
                                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -375,10 +375,10 @@
                                                             <contextMenu>
                                                                 <ContextMenu>
                                                                     <items>
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wloeschenOnAction" text="Löschen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wbearbeitenOnAction" text="Bearbeiten" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wwunschuebertragenOnAction" text="Wunsch übertragen" />
-                                                                        <MenuItem mnemonicParsing="false" onAction="#wlinkfolgenOnAction" text="Link folgen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLoeschenOnAction" text="Löschen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wBearbeitenOnAction" text="Bearbeiten" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wWunschUebertragenOnAction" text="Wunsch übertragen" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#wLinkFolgenOnAction" text="Link folgen" />
                                                                     </items>
                                                                 </ContextMenu>
                                                             </contextMenu>

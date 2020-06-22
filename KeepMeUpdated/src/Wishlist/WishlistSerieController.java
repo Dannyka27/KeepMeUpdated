@@ -8,7 +8,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+
+/**
+ * Controller für WishlistSerie.fxml
+ * @author Hanna
+ *
+ * wSpeichernOnAction
+ * @author Anika
+ */
 
 public class WishlistSerieController extends WControllerFranchise {
     @FXML
@@ -34,6 +41,8 @@ public class WishlistSerieController extends WControllerFranchise {
         wSeasonChoiceBox.setItems(wSeasonChoiceBoxList);
     }
 
+    /*----------------------------------------------------
+    PROMPT*/
     public void promptTypBox(String typ)
     {
         wTypChoiceBox.setValue(typ);
@@ -43,6 +52,7 @@ public class WishlistSerieController extends WControllerFranchise {
         wSeasonChoiceBox.setValue(season);
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void wSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -63,6 +73,6 @@ public class WishlistSerieController extends WControllerFranchise {
         super.wSpeichernOnAction(actionEvent);
 
         MainController.instanz.wserielist.clear();
-        MainController.instanz.wishlistfuellen("Filme", "Serien");
+        MainController.instanz.wishlistFuellen("Filme", "Serien");
     }
 }

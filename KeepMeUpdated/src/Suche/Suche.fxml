@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,9 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Suche.SucheController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="190.0" prefWidth="400.0" styleClass="background" stylesheets="@searchstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Suche.SucheController">
    <children>
-      <VBox fx:id="sVBox" alignment="TOP_CENTER" layoutX="174.0" layoutY="132.0" prefHeight="450.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="sVBox" alignment="TOP_CENTER" layoutX="174.0" layoutY="132.0" prefHeight="190.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label text="Suche">
                <VBox.margin>
@@ -40,12 +39,7 @@
                   <Insets bottom="20.0" left="30.0" right="30.0" />
                </VBox.margin>
             </GridPane>
-            <ListView fx:id="sVorschlaegeListView" prefHeight="236.0" prefWidth="340.0">
-               <VBox.margin>
-                  <Insets bottom="20.0" left="30.0" right="30.0" />
-               </VBox.margin>
-            </ListView>
-            <Button fx:id="sSchließenButton" mnemonicParsing="false" onAction="#sSchließenAction" text="Schließen" />
+            <Button fx:id="sSchliessenButton" mnemonicParsing="false" onAction="#sSchliessenAction" text="Schließen" />
          </children></VBox>
    </children>
 </AnchorPane>

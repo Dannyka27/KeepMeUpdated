@@ -1,7 +1,6 @@
 package Hinzufuegen;
 
 import MainWindow.MainController;
-import MainWindow.mediaPanes.Medium;
 import MainWindow.mediaPanes.Serie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +8,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import Newslist.Newslist;
 
+/**
+ * Controller für HinzufuegenSerie.fxml
+ * @author Hanna
+ *
+ * hSpeichernOnAction
+ * @author Anika
+ */
 
 public class HinzufuegenSerieController extends ControllerFranchise{
     @FXML
@@ -35,6 +42,8 @@ public class HinzufuegenSerieController extends ControllerFranchise{
         hSeasonChoiceBox.setItems(hSeasonChoiceBoxList);
     }
 
+    /*----------------------------------------------------
+    PROMPT*/
     public void promptTypBox(String typ)
     {
         hTypChoiceBox.setValue(typ);
@@ -44,6 +53,7 @@ public class HinzufuegenSerieController extends ControllerFranchise{
         hSeasonChoiceBox.setValue(season);
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void hSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -64,5 +74,6 @@ public class HinzufuegenSerieController extends ControllerFranchise{
         super.hSpeichernOnAction(actionEvent);
 
         MainController.instanz.videoSortieren("");
+        Newslist.newslist("Serien");
     }
 }

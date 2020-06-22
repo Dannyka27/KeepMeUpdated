@@ -10,6 +10,14 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller für WishlistMusik.fxml
+ * @author Hanna
+ *
+ * wSpeichernOnAction
+ * @author Anika
+ */
+
 public class WishlistMusikController extends WController {
     @FXML
     private TextField wFranchiseTextField;
@@ -28,16 +36,18 @@ public class WishlistMusikController extends WController {
         wmGenreChoiceBox.setItems(wmGenreChoiceBoxList);
     }
 
+    /*----------------------------------------------------
+    PROMPT*/
     public void promptGenreBox(String genre)
     {
         wmGenreChoiceBox.setValue(genre);
     }
-    public void promptFranchise(String franchise)
-    {
+    public void promptFranchise(String franchise) {
         if(franchise != null)
         {wFranchiseTextField.setPromptText(franchise);}
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void wSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -56,6 +66,6 @@ public class WishlistMusikController extends WController {
         super.wSpeichernOnAction(actionEvent);
 
         MainController.instanz.wmusiklist.clear();
-        MainController.instanz.wishlistfuellen("Hörspiele", "Musik");
+        MainController.instanz.wishlistFuellen("Hörspiele", "Musik");
     }
 }

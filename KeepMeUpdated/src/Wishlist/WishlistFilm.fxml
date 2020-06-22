@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="wAnchorPane" prefHeight="490.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Wishlist.WishlistFilmController">
+<AnchorPane fx:id="wAnchorPane" prefHeight="490.0" prefWidth="400.0" styleClass="background" stylesheets="@wishliststyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Wishlist.WishlistFilmController">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="490.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>

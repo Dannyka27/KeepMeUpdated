@@ -1,8 +1,6 @@
 package Hinzufuegen;
 
-
 import MainWindow.MainController;
-import MainWindow.mediaPanes.Medium;
 import MainWindow.mediaPanes.Zeitschrift;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,7 +8,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;;
+import javafx.scene.control.TextField;
+import Newslist.Newslist;
+
+/**
+ * Controller für HinzufuegenZeitschrift.fxml
+ * @author Hanna
+ *
+ * hSpeichernOnAction
+ * @author Anika
+ */
 
 public class HinzufuegenZeitschriftController extends Controller{
     @FXML
@@ -32,13 +39,13 @@ public class HinzufuegenZeitschriftController extends Controller{
         hzGenreChoiceBox.setItems(hzGenreList);
     }
 
-    public void promptAusgabe(String ausgabe)
-    {
+    /*----------------------------------------------------
+    PROMPT*/
+    public void promptAusgabe(String ausgabe) {
         if(ausgabe != null)
-        {hzHerausgeberTextField.setPromptText(ausgabe);}
+        {hAusgabeTextField.setPromptText(ausgabe);}
     }
-    public void promptHerausgeber(String herausgeber)
-    {
+    public void promptHerausgeber(String herausgeber) {
         if(herausgeber != null)
         {hzHerausgeberTextField.setPromptText(herausgeber);}
     }
@@ -47,6 +54,7 @@ public class HinzufuegenZeitschriftController extends Controller{
         hzGenreChoiceBox.setValue(genre);
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void hSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -66,5 +74,6 @@ public class HinzufuegenZeitschriftController extends Controller{
         super.hSpeichernOnAction(actionEvent);
 
         MainController.instanz.biblioSortieren("");
+        Newslist.newslist("Zeitschriften");
     }
 }

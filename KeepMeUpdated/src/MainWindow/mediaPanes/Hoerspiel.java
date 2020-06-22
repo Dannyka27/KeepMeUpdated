@@ -6,6 +6,7 @@ public class Hoerspiel extends Medium
 {
     private String folge;
     private String altersgruppe;
+
     public Hoerspiel(int ID,
                     String titel,
                     String untertitel,
@@ -19,10 +20,9 @@ public class Hoerspiel extends Medium
         this.folge = folge;
         this.altersgruppe = altersgruppe;
     }
-    
+
     @Override
-    public LinkedHashMap<String, String> dbSchluesselWerte()
-    {
+    public LinkedHashMap<String, String> dbSchluesselWerte() {
         LinkedHashMap<String, String> lhm = super.dbSchluesselWerte();
         lhm.put("Typ", "Hörspiele");
         lhm.put("Folge", getFolge());
@@ -30,28 +30,30 @@ public class Hoerspiel extends Medium
         return lhm;
     }
 
-    public String getFolge()
-    {
-        return folge;
-    }
 
-    public void setFolge(String folge)
+    /*----------------------------------------------------
+    GETTER & SETTER*/
+    @Override
+    public String getTabellenTitel()
     {
-        this.folge = folge;
+        return "Hörspiele";
     }
 
     public String getAltersgruppe()
     {
         return altersgruppe;
     }
+    public String getFolge()
+    {
+        return folge;
+    }
 
     public void setAltersgruppe(String altersgruppe)
     {
         this.altersgruppe = altersgruppe;
     }
-    @Override
-    public String getTabellenTitel()
+    public void setFolge(String folge)
     {
-        return "Hörspiele";
+        this.folge = folge;
     }
 }

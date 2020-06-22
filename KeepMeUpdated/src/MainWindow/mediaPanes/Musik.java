@@ -4,56 +4,54 @@ import java.util.LinkedHashMap;
 
 public class Musik extends Medium
 {
-	private String genre;
-	private String franchise; // von mir noch eingefügt
+    private String genre;
+    private String franchise;
 
-	public Musik(int ID,
-			String titel, 
-			String untertitel,
-			String genre,
-			String franchise, // von mir noch eingefügt
-			String zusatzinformationen,
-			String standort, 
-			String link)
-	{
-		super(ID, titel, untertitel, zusatzinformationen, standort, link);
-		this.genre = genre;
-		this.franchise = franchise; // von mir noch eingefügt
-	}
+    public Musik(int ID,
+                 String titel,
+                 String untertitel,
+                 String genre,
+                 String franchise,
+                 String zusatzinformationen,
+                 String standort,
+                 String link)
+    {
+        super(ID, titel, untertitel, zusatzinformationen, standort, link);
+        this.genre = genre;
+        this.franchise = franchise;
+    }
 
-	@Override
-	public LinkedHashMap<String, String> dbSchluesselWerte()
-	{
-		LinkedHashMap<String, String> lhm = super.dbSchluesselWerte();
-		lhm.put("Typ", "Musik");
-		lhm.put("Genre", getGenre());
-		lhm.put("Franchise", getFranchise());
-		return lhm;
-	}
+    @Override
+    public LinkedHashMap<String, String> dbSchluesselWerte() {
+        LinkedHashMap<String, String> lhm = super.dbSchluesselWerte();
+        lhm.put("Typ", "Musik");
+        lhm.put("Genre", getGenre());
+        lhm.put("Franchise", getFranchise());
+        return lhm;
+    }
 
-	public String getGenre()
-	{
-		return genre;
-	}
+    /*----------------------------------------------------
+    GETTER & SETTER*/
+    @Override
+    public String getTabellenTitel()
+    {
+        return "Hörspiele";
+    }
+    public String getFranchise()
+    {
+        return franchise;
+    }
+    public String getGenre()
+    {
+        return genre;
+    }
 
-	public void setGenre(String genre)
-	{
-		this.genre = genre;
-	}
-
-	public String getFranchise()
-	{
-		return franchise;
-	}
-
-	public void setFranchise(String franchise)
-	{
-		this.franchise = franchise;
-	}
-
-	@Override
-	public String getTabellenTitel()
-	{
-		return "Hörspiele";
-	}
+    public void setFranchise(String franchise)
+    {
+        this.franchise = franchise;
+    }
+    public void setGenre(String genre)
+    {
+        this.genre = genre;
+    }
 }

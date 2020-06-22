@@ -10,6 +10,14 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller für WishlistZeitschrift.fxml
+ * @author Hanna
+ *
+ * wSpeichernOnAction
+ * @author Anika
+ */
+
 public class WishlistZeitschriftController extends WController{
     @FXML
     private TextField wzAusgabeTextField;
@@ -30,13 +38,13 @@ public class WishlistZeitschriftController extends WController{
         wzGenreChoiceBox.setItems(wzGenreList);
     }
 
-    public void promptAusgabe(String ausgabe)
-    {
+    /*----------------------------------------------------
+    PROMPT*/
+    public void promptAusgabe(String ausgabe) {
         if(ausgabe != null)
         {wzAusgabeTextField.setPromptText(ausgabe);}
     }
-    public void promptHerausgeber(String herausgeber)
-    {
+    public void promptHerausgeber(String herausgeber) {
         if(herausgeber != null)
         {wzHerausgeberTextField.setPromptText(herausgeber);}
     }
@@ -45,6 +53,7 @@ public class WishlistZeitschriftController extends WController{
         wzGenreChoiceBox.setValue(genre);
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void wSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -64,6 +73,6 @@ public class WishlistZeitschriftController extends WController{
         super.wSpeichernOnAction(actionEvent);
 
         MainController.instanz.wzeitschriftlist.clear();
-        MainController.instanz.wishlistfuellen("Bücher", "Zeitschriften");
+        MainController.instanz.wishlistFuellen("Bücher", "Zeitschriften");
     }
 }

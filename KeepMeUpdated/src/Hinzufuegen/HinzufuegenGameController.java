@@ -1,7 +1,6 @@
 package Hinzufuegen;
 
 import MainWindow.MainController;
-import MainWindow.mediaPanes.Medium;
 import MainWindow.mediaPanes.Spiel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +8,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import Newslist.Newslist;
+
+/**
+ * Controller für HinzufuegenGame.fxml
+ * @author Hanna
+ *
+ * hSpeichernOnAction
+ * @author Anika
+ */
 
 public class HinzufuegenGameController extends ControllerFranchise{
 
@@ -27,11 +35,14 @@ public class HinzufuegenGameController extends ControllerFranchise{
         hgPlattformChoiceBox.setItems(hgPlattformChoiceBoxList);
     }
 
+    /*----------------------------------------------------
+    PROMPT*/
     public void promptPlattformBox(String plattform)
     {
         hgPlattformChoiceBox.setValue(plattform);
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void hSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -51,5 +62,6 @@ public class HinzufuegenGameController extends ControllerFranchise{
         super.hSpeichernOnAction(actionEvent);
 
         MainController.instanz.gamesSortieren("");
+        Newslist.newslist("Spiele");
     }
 }

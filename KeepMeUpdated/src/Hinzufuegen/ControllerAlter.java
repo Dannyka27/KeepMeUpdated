@@ -6,6 +6,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
+/**
+ * Oberklasse der .fxml Controller, die eine Altersangabe haben. (Hinzufuegen)
+ * Erbt von Controller
+ * @author Hanna
+ */
+
 public class ControllerAlter extends Controller{
     @FXML
     private Label hAlterLabel;
@@ -22,6 +28,8 @@ public class ControllerAlter extends Controller{
         hAlterChoiceBox.setItems(hAlterChoiceBoxList);
     }
 
+    /*----------------------------------------------------
+    PROMPT*/
     public void promptAlterBox(String alter)
     {
         hAlterChoiceBox.setValue(alter);

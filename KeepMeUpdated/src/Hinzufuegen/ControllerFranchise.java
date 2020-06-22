@@ -2,18 +2,25 @@ package Hinzufuegen;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.input.*;
+
+/**
+ * Oberklasse der .fxml Controller, die eine Altersangabe und eine
+ * Franchiseangabe haben. (Hinzufuegen)
+ * Erbt von ControllerAlter.
+ * @author Hanna
+ */
 
 public class ControllerFranchise extends ControllerAlter{
     @FXML
     protected TextField hFranchiseTextField;
 
-    void initialize()
-    {
+    void initialize() {
         super.initialize();
     }
-    public void promptFranchise(String franchise)
-    {
+
+    /*----------------------------------------------------
+    PROMPT*/
+    public void promptFranchise(String franchise) {
         if(franchise != null)
         {hFranchiseTextField.setPromptText(franchise);}
     }

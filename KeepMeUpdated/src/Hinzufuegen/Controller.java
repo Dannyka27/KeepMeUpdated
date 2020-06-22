@@ -1,7 +1,6 @@
 package Hinzufuegen;
 
 import MainWindow.Main;
-import MainWindow.mediaPanes.Film;
 import MainWindow.mediaPanes.Medium;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,12 +14,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.sql.ResultSet;
-import java.util.function.Consumer;
+/**
+ * Oberklasse der .fxml Controller (Hinzufuegen)
+ * @author Hanna
+ *
+ * hSpeichernOnAction & setMedium
+ * @author Anika
+ */
 
 public class Controller {
     @FXML
@@ -34,9 +37,9 @@ public class Controller {
     @FXML
     private ChoiceBox<String> hStandortChoiceBox;
     @FXML
-    public TextField hTitelTextField;
+    private TextField hTitelTextField;
     @FXML
-    private TextField hUntertitelTextField;
+    protected TextField hUntertitelTextField;
     @FXML
     private TextField hZusatzinfoTextField;
     @FXML
@@ -50,118 +53,123 @@ public class Controller {
     final ObservableList<String> hStandortChoiceBoxList = FXCollections.observableArrayList("Wohnzimmer", "Hanna", "Jan");
 
     @FXML
-    private void boxenFuellen()
-    {
-        hMediumChoiceBox.setItems(hMediumChoiceBoxList);
-        hStandortChoiceBox.setValue("Wohnzimmer");
-        hStandortChoiceBox.setItems(hStandortChoiceBoxList);
-    }
-
-    @FXML
     void initialize() {
         boxenFuellen();
         hMediumChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String altesMedium, String medium) {
-                if (medium.equals("Filme"))
-                {
-                    try {
-                        fensteroeffnen(485, "/Hinzufuegen/HinzufuegenFilm.fxml");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                else if (medium.equals("Serien"))
-                {
-                    try {
-                        fensteroeffnen(525, "/Hinzufuegen/HinzufuegenSerie.fxml");
+                switch (medium) {
+                    case "Filme":
+                        try {
+                            fensterOeffnen(485, "/Hinzufuegen/HinzufuegenFilm.fxml");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "Serien":
+                        try {
+                            fensterOeffnen(525, "/Hinzufuegen/HinzufuegenSerie.fxml");
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                else if (medium.equals("Musik"))
-                {
-                    try {
-                        fensteroeffnen(445, "/Hinzufuegen/HinzufuegenMusik.fxml");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                else if (medium.equals("Hörspiele"))
-                {
-                    try {
-                        fensteroeffnen(449, "/Hinzufuegen/HinzufuegenHoerspiel.fxml");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                else if (medium.equals("Games"))
-                {
-                    try {
-                        fensteroeffnen(485, "/Hinzufuegen/HinzufuegenGame.fxml");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                else if (medium.equals("Bücher"))
-                {
-                    try {
-                        fensteroeffnen(530, "/Hinzufuegen/HinzufuegenBuch.fxml");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                else if (medium.equals("Zeitschriften"))
-                {
-                    try {
-                        fensteroeffnen(490, "/Hinzufuegen/HinzufuegenZeitschrift.fxml");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "Musik":
+                        try {
+                            fensterOeffnen(445, "/Hinzufuegen/HinzufuegenMusik.fxml");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "Hörspiele":
+                        try {
+                            fensterOeffnen(449, "/Hinzufuegen/HinzufuegenHoerspiel.fxml");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "Games":
+                        try {
+                            fensterOeffnen(485, "/Hinzufuegen/HinzufuegenGame.fxml");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "Bücher":
+                        try {
+                            fensterOeffnen(530, "/Hinzufuegen/HinzufuegenBuch.fxml");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "Zeitschriften":
+                        try {
+                            fensterOeffnen(490, "/Hinzufuegen/HinzufuegenZeitschrift.fxml");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
                 }
             }
         });
     }
 
-    public void promptTitel(String titel)
-    {
+    /**
+     * Setzen der Items und Default Werte
+     */
+    @FXML
+    private void boxenFuellen(){
+        hMediumChoiceBox.setItems(hMediumChoiceBoxList);
+        hStandortChoiceBox.setValue("Wohnzimmer");
+        hStandortChoiceBox.setItems(hStandortChoiceBoxList);
+    }
+
+    /*----------------------------------------------------
+    SETZEN DER PROMPT WERTE*/
+    public void promptStandortBox(String standort) {
+        hStandortChoiceBox.setValue(standort);
+    }
+    public void promptTitel(String titel) {
         hTitelTextField.setPromptText(titel);
     }
-    public void promptUntertitel(String untertitel)
-    {
+    /**
+     * Bei Untertitel und Zusatzinfo wird als PromptText das gesetzt, was in der Datenbank
+     * hinterlegt ist. Ist nichts hinterlegt, ist der PromptText der Default Text aus der FXML.
+     * Diese Unterscheidung gibt es bei Titel nicht, da dieser immer vorhanden ist.
+     */
+    public void promptUntertitel(String untertitel) {
         if(untertitel != null)
         {hUntertitelTextField.setPromptText(untertitel);}
     }
-    public void promptZusatzinfo(String zusatzinfo)
-    {
+    public void promptZusatzinfo(String zusatzinfo) {
         if(zusatzinfo != null)
         {hZusatzinfoTextField.setPromptText(zusatzinfo);}
     }
-    public void promptMediumBox(String tmedium)
-    {
-        hMediumChoiceBox.setValue(tmedium);
-    }
-    public void promptStandortBox(String standort)
-    {
-        hStandortChoiceBox.setValue(standort);
-    }
 
-    private void fensteroeffnen(int height, String pfad) throws Exception
-    {
+    /**
+     * Um je nach Auswahl in der ChoiceBox die passende FXML in passender Höhe zu laden.
+     * Es wird die aktuelle Stage ermittelt, die Höhe angepasst und die FXML ersetzt, um immer
+     * nur eine gleichzeitig zu haben.
+     * @param height Die Höhe, die die FXML benötigt, um nicht verzerrt zu sein.
+     * @param pfad Pfad der FXML.
+     */
+    private void fensterOeffnen(int height, String pfad) throws Exception {
         Stage app_stage = (Stage) hAnchorPane.getScene().getWindow();
         app_stage.setHeight(height);
         AnchorPane pane = FXMLLoader.load(getClass().getResource(pfad));
         app_stage.setScene(new Scene(pane));
     }
 
-    public void setMedium(Medium medium)
-    {
-        this.medium = medium;
+    /**
+     * Die aktuelle Stage wird durch den hAbbruchButton ermittelt und geschlossen
+     */
+    public void hAbbruchOnAction(ActionEvent actionEvent) {
+        Stage akutelleStage = (Stage) hAbbruchButton.getScene().getWindow();
+        akutelleStage.close();
     }
 
-    public void hSpeichernOnAction(ActionEvent actionEvent)
-    {
+    /*----------------------------------------------------*/
+    public void hSpeichernOnAction(ActionEvent actionEvent) {
         // Medium Klasse aktualisieren und dann die Speichermethode aufrufen um das
         // Medium in die Datenbank zu schreiben
 
@@ -177,10 +185,8 @@ public class Controller {
         Stage akutelleStage = (Stage) hAbbruchButton.getScene().getWindow();
         akutelleStage.close();
     }
-
-    public void hAbbruchOnAction(ActionEvent actionEvent) {
-        //stage = fenster der Szene wo der Button sitzt
-        Stage akutelleStage = (Stage) hAbbruchButton.getScene().getWindow();
-        akutelleStage.close();
+    public void setMedium(Medium medium)
+    {
+        this.medium = medium;
     }
 }

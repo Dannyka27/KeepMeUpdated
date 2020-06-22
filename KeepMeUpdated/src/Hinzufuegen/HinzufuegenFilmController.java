@@ -8,8 +8,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import Newslist.Newslist;
 
-
+/**
+ * Controller für HinzufuegenFilm.fxml
+ * @author Hanna
+ *
+ * hSpeichernOnAction
+ * @author Anika
+ */
 
 public class HinzufuegenFilmController extends ControllerFranchise{
     @FXML
@@ -27,11 +34,14 @@ public class HinzufuegenFilmController extends ControllerFranchise{
         hTypChoiceBox.setItems(hTypChoiceBoxList);
     }
 
-    public void promptTyp(String typ)
+    /*----------------------------------------------------
+    PROMPT*/
+    public void promptTypBox(String typ)
     {
         hTypChoiceBox.setValue(typ);
     }
 
+    /*----------------------------------------------------*/
     @Override
     public void hSpeichernOnAction(ActionEvent actionEvent)
     {
@@ -51,5 +61,6 @@ public class HinzufuegenFilmController extends ControllerFranchise{
         super.hSpeichernOnAction(actionEvent);
 
         MainController.instanz.videoSortieren("");
+        Newslist.newslist("Filme");
     }
 }
